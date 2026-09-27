@@ -102,13 +102,11 @@
         <p class="text-xs text-slate-400 mt-1">Ingresa con tus credenciales para acceder a tu personaje.</p>
       </div>
 
-      <!-- Pestañas de Login / Registro -->
       <div class="flex border-b border-cyan-900 mb-6">
         <button id="tabLogin" onclick="switchAuthTab('login')" class="w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold">Iniciar Sesión</button>
         <button id="tabRegister" onclick="switchAuthTab('register')" class="w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300">Crear Cuenta</button>
       </div>
 
-      <!-- Formulario Auth -->
       <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Correo Electrónico</label>
@@ -118,9 +116,7 @@
           <label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Contraseña</label>
           <input type="password" id="authPassword" required minlength="6" class="w-full tech-input p-2.5 rounded-sm text-sm" placeholder="******">
         </div>
-
         <p id="authError" class="text-xs text-red-400 font-mono hidden text-center"></p>
-
         <button type="submit" id="authBtnSubmit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold py-3 uppercase tracking-wider transition shadow-[0_0_15px_rgba(0,240,255,0.4)]">
           Ingresar al Sistema
         </button>
@@ -136,75 +132,50 @@
     </div>
     
     <nav class="space-y-4">
-      <button onclick="mostrarSeccion('editor')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 rounded-none border border-cyan-800 transition duration-200 flex items-center gap-3">
-        <span>⚙️</span> Mi Personaje (Editor)
-      </button>
-      <button onclick="mostrarSeccion('jugadores')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 rounded-none border border-cyan-800 transition duration-200 flex items-center gap-3">
-        <span>🌐</span> Lista de Jugadores
-      </button>
-      <button onclick="mostrarSeccion('tienda')" class="w-full text-left font-tech-title text-amber-300 hover:text-black hover:bg-amber-400 p-3 rounded-none border border-amber-800 transition duration-200 flex items-center gap-3">
-        <span>🛒</span> Tienda de Objetos
-      </button>
+      <button onclick="mostrarSeccion('editor')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 rounded-none border border-cyan-800 transition duration-200 flex items-center gap-3"><span>⚙️</span> Mi Personaje (Editor)</button>
+      <button onclick="mostrarSeccion('jugadores')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 rounded-none border border-cyan-800 transition duration-200 flex items-center gap-3"><span>🌐</span> Lista de Jugadores</button>
+      <button onclick="mostrarSeccion('tienda')" class="w-full text-left font-tech-title text-amber-300 hover:text-black hover:bg-amber-400 p-3 rounded-none border border-amber-800 transition duration-200 flex items-center gap-3"><span>🛒</span> Tienda de Objetos</button>
+      <button onclick="mostrarSeccion('misiones')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-3 rounded-none border border-purple-800 transition duration-200 flex items-center gap-3"><span>📜</span> Tablón de Misiones</button>
       
       <div class="border-t border-cyan-900 pt-4 mt-6">
         <div class="text-[11px] font-mono text-cyan-400/70 mb-1 truncate" id="userEmailDisplay">Usuario: ---</div>
         <div id="adminBadgeDisplay" class="hidden text-[10px] font-tech-title text-red-400 font-bold mb-3 uppercase">🛡️ Rol: Administrador</div>
-        <button onclick="cerrarSesion()" class="w-full text-left font-tech-title text-red-400 hover:bg-red-950/60 p-3 border border-red-900 transition flex items-center gap-3 uppercase text-xs font-bold">
-          <span>🚪</span> Cerrar Sesión
-        </button>
+        <button onclick="cerrarSesion()" class="w-full text-left font-tech-title text-red-400 hover:bg-red-950/60 p-3 border border-red-900 transition flex items-center gap-3 uppercase text-xs font-bold"><span>🚪</span> Cerrar Sesión</button>
       </div>
     </nav>
   </div>
 
   <div class="max-w-6xl mx-auto tech-card p-6 md:p-8 relative">
     
-    <!-- Encabezado Sci-Fi -->
     <header class="border-b border-cyan-500/40 pb-6 mb-8 flex justify-between items-center gap-4">
       <div class="flex items-center gap-4">
-        <!-- Botón Menú Hamburguesa -->
         <button onclick="toggleMenu()" class="bg-cyan-950 border border-cyan-400 text-cyan-300 p-2.5 rounded-none hover:bg-cyan-400 hover:text-black transition shadow-[0_0_10px_rgba(0,240,255,0.3)]">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
-
         <span class="text-3xl text-cyan-400">⚙️</span>
         <div>
-          <h1 class="text-2xl md:text-3xl font-tech-title text-cyan-400 font-bold uppercase tracking-widest drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">
-            Terminal de Personaje
-          </h1>
+          <h1 class="text-2xl md:text-3xl font-tech-title text-cyan-400 font-bold uppercase tracking-widest drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">Terminal de Personaje</h1>
           <span id="estadoRed" class="text-xs text-amber-400 font-tech-title">🔌 CONECTANDO A RED NUBE GLOBAL...</span>
         </div>
       </div>
     </header>
 
-    <!-- Banner Modo Lectura -->
     <div id="readOnlyBanner" class="hidden mb-6 bg-amber-950/80 border border-amber-500 text-amber-200 p-3 rounded-sm flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        <span class="text-xl">👁️</span>
-        <span class="font-tech-title text-xs tracking-wider uppercase">[ MODO LECTURA ] Inspeccionando ficha pública de usuario. No se pueden realizar cambios.</span>
-      </div>
+      <div class="flex items-center gap-2"><span class="text-xl">👁️</span><span class="font-tech-title text-xs tracking-wider uppercase">[ MODO LECTURA ] Inspeccionando ficha pública de usuario.</span></div>
       <button onclick="volverAMiFicha()" class="bg-amber-500 hover:bg-amber-400 text-black font-tech-title text-xs px-3 py-1 font-bold">Volver a Mi Personaje</button>
     </div>
 
     <!-- SECCIÓN: EDITOR / FICHA PRINCIPAL -->
     <div id="seccionEditor">
-
       <div class="flex justify-end gap-3 mb-6">
-        <!-- Botón de guardado personal -->
-        <button id="saveBtn" onclick="solicitarGuardado()" class="bg-cyan-600 hover:bg-cyan-500 text-black font-tech-title font-bold py-2.5 px-6 rounded-none border border-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.4)] transition duration-200 uppercase tracking-wider">
-          💾 Sincronizar Datos
-        </button>
-        <!-- Botón exclusivo Admin para guardar ficha ajena -->
-        <button id="adminSaveBtn" onclick="solicitarGuardado()" class="hidden bg-amber-600 hover:bg-amber-500 text-black font-tech-title font-bold py-2.5 px-6 rounded-none border border-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.4)] transition duration-200 uppercase tracking-wider">
-          🛡️ Guardar Ficha de Usuario (Admin)
-        </button>
+        <button id="saveBtn" onclick="solicitarGuardado()" class="bg-cyan-600 hover:bg-cyan-500 text-black font-tech-title font-bold py-2.5 px-6 rounded-none border border-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.4)] transition uppercase tracking-wider">💾 Sincronizar Datos</button>
+        <button id="adminSaveBtn" onclick="solicitarGuardado()" class="hidden bg-amber-600 hover:bg-amber-500 text-black font-tech-title font-bold py-2.5 px-6 rounded-none border border-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.4)] transition uppercase tracking-wider">🛡️ Guardar Ficha (Admin)</button>
       </div>
 
-      <!-- Datos Generales -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <!-- Datos Generales + Patrocinador -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
         <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre del Sujeto</label>
+          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre</label>
           <input type="text" id="nombre" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nombre">
         </div>
         <div>
@@ -216,13 +187,16 @@
           <input type="text" id="raza" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Raza">
         </div>
         <div>
+          <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por</label>
+          <input type="text" id="patrocinador" class="w-full tech-input border-purple-900 rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Sin Patrocinador">
+        </div>
+        <div>
           <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel / Rango</label>
           <input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nivel">
           <span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span>
         </div>
       </div>
 
-      <!-- Puntos de Armadura, Arma, PV y Deniques -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center">
           <label class="block text-xs font-tech-title font-bold text-amber-400 uppercase mb-1">Puntos de Armadura</label>
@@ -238,187 +212,61 @@
         </div>
         <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center border-amber-500/60">
           <label class="block text-xs font-tech-title font-bold text-amber-300 uppercase mb-1">💰 Deniques</label>
-          <input type="text" id="deniques" value="0" oninput="actualizarSistemas();" class="w-full bg-transparent text-center text-2xl font-tech-title font-bold text-amber-400 focus:outline-none" placeholder="0 / inf">
+          <input type="text" id="deniques" value="0" oninput="actualizarSistemas();" class="w-full bg-transparent text-center text-2xl font-tech-title font-bold text-amber-400 focus:outline-none disabled:opacity-50">
           <span id="deniquesFormateado" class="text-[10px] text-amber-300/80 font-mono block mt-0.5">0 Deniques</span>
         </div>
       </div>
 
-      <!-- Panel de Reserva y Monto -->
+      <!-- Panel de Puntos -->
       <div class="bg-slate-900/80 border border-cyan-500/50 p-4 rounded-sm mb-6 flex flex-col lg:flex-row justify-between items-center gap-4 shadow-lg">
         <div>
           <h3 class="text-md font-tech-title text-cyan-400 uppercase tracking-wider">// Núcleo de Asignación de Puntos</h3>
-          <p class="text-xs text-slate-400">Cada Nivel otorga 10 Puntos Disponibles. Ajusta el monto (+/-) para asignar a estadísticas.</p>
+          <p class="text-xs text-slate-400">Cada Nivel otorga 10 Puntos Disponibles. Ajusta el monto (+/-).</p>
         </div>
         <div class="flex flex-wrap items-center justify-center gap-4">
-          
-          <div class="bg-black/60 px-3 py-1.5 rounded border border-emerald-800 text-center min-w-[100px]">
-            <span class="block text-[10px] text-slate-400 font-tech-title uppercase">Disponibles</span>
-            <span id="puntosDisponiblesText" class="text-xl font-tech-title font-bold text-emerald-400">10</span>
-          </div>
-
-          <div class="flex items-center gap-2">
-            <label class="text-xs font-tech-title text-cyan-300 uppercase">Monto (+/-):</label>
-            <input type="text" id="montoPuntos" value="1" oninput="actualizarSistemas();" placeholder="0" class="w-28 tech-input text-center rounded px-2 py-1 text-lg font-tech-title font-bold text-cyan-300">
-          </div>
-
-          <div class="bg-black/60 px-3 py-1.5 rounded border border-cyan-800 text-center min-w-[90px]">
-            <span class="block text-[10px] text-slate-400 font-tech-title uppercase">Totales</span>
-            <span id="puntosTotalesText" class="text-xl font-tech-title font-bold text-cyan-400">70</span>
-          </div>
-
-          <div class="bg-black/60 px-3 py-1.5 rounded border border-cyan-800 text-center min-w-[90px]">
-            <span class="block text-[10px] text-slate-400 font-tech-title uppercase">Usados</span>
-            <span id="puntosUsadosText" class="text-xl font-tech-title font-bold text-amber-400">0</span>
-          </div>
-
+          <div class="bg-black/60 px-3 py-1.5 rounded border border-emerald-800 text-center min-w-[100px]"><span class="block text-[10px] text-slate-400 font-tech-title uppercase">Disponibles</span><span id="puntosDisponiblesText" class="text-xl font-tech-title font-bold text-emerald-400">10</span></div>
+          <div class="flex items-center gap-2"><label class="text-xs font-tech-title text-cyan-300 uppercase">Monto (+/-):</label><input type="text" id="montoPuntos" value="1" oninput="actualizarSistemas();" placeholder="0" class="w-28 tech-input text-center rounded px-2 py-1 text-lg font-tech-title font-bold text-cyan-300"></div>
+          <div class="bg-black/60 px-3 py-1.5 rounded border border-cyan-800 text-center min-w-[90px]"><span class="block text-[10px] text-slate-400 font-tech-title uppercase">Totales</span><span id="puntosTotalesText" class="text-xl font-tech-title font-bold text-cyan-400">70</span></div>
+          <div class="bg-black/60 px-3 py-1.5 rounded border border-cyan-800 text-center min-w-[90px]"><span class="block text-[10px] text-slate-400 font-tech-title uppercase">Usados</span><span id="puntosUsadosText" class="text-xl font-tech-title font-bold text-amber-400">0</span></div>
         </div>
       </div>
 
-      <!-- Atributos Principales -->
-      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">
-        // Parámetros Físicos y Moduladores
-      </h2>
-
+      <!-- Atributos -->
+      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Parámetros Físicos y Moduladores</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-        
-        <!-- VIDA / PV -->
-        <div class="bg-black/50 border border-emerald-800 p-3 rounded-sm text-center flex flex-col justify-between">
-          <span class="block text-xs font-tech-title font-bold text-emerald-400 mb-1">VIDA (PV)</span>
-          <div class="text-xs text-slate-400 mb-2">Pts: <span id="pv_pts" class="font-tech-title font-bold text-emerald-400">10</span></div>
-          <div class="flex justify-center items-center gap-2 mb-3">
-            <button onclick="modificarPunto('pv', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button>
-            <button onclick="modificarPunto('pv', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button>
-          </div>
-          <div class="bg-emerald-950/40 rounded border border-emerald-800/60 p-2">
-            <span class="block text-[10px] text-emerald-400 uppercase font-bold">Total PV</span>
-            <span id="pv_val" class="text-lg font-tech-title font-bold text-emerald-300">500 PV</span>
-            <button onclick="toggleExpand('pv')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver valor completo</button>
-            <div id="pv_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-emerald-500/40 text-[11px] font-mono text-emerald-200 break-all"></div>
-          </div>
-        </div>
-
+        <!-- VIDA -->
+        <div class="bg-black/50 border border-emerald-800 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-emerald-400 mb-1">VIDA (PV)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="pv_pts" class="font-tech-title font-bold text-emerald-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('pv', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('pv', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-emerald-950/40 rounded border border-emerald-800/60 p-2"><span class="block text-[10px] text-emerald-400 uppercase font-bold">Total PV</span><span id="pv_val" class="text-lg font-tech-title font-bold text-emerald-300">500 PV</span><button onclick="toggleExpand('pv')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="pv_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-emerald-500/40 text-[11px] font-mono text-emerald-200 break-all"></div></div></div>
         <!-- FUERZA -->
-        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between">
-          <span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">FUERZA</span>
-          <div class="text-xs text-slate-400 mb-2">Pts: <span id="fuerza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div>
-          <div class="flex justify-center items-center gap-2 mb-3">
-            <button onclick="modificarPunto('fuerza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button>
-            <button onclick="modificarPunto('fuerza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button>
-          </div>
-          <div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2">
-            <span class="block text-[10px] text-cyan-400 uppercase font-bold">Carga Real</span>
-            <span id="fuerza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 Kg</span>
-            <button onclick="toggleExpand('fuerza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver valor completo</button>
-            <div id="fuerza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div>
-          </div>
-        </div>
-
+        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">FUERZA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="fuerza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('fuerza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('fuerza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Carga Real</span><span id="fuerza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 Kg</span><button onclick="toggleExpand('fuerza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="fuerza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
         <!-- DESTREZA -->
-        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between">
-          <span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">DESTREZA</span>
-          <div class="text-xs text-slate-400 mb-2">Pts: <span id="destreza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div>
-          <div class="flex justify-center items-center gap-2 mb-3">
-            <button onclick="modificarPunto('destreza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button>
-            <button onclick="modificarPunto('destreza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button>
-          </div>
-          <div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2">
-            <span class="block text-[10px] text-cyan-400 uppercase font-bold">Velocidad</span>
-            <span id="destreza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m/s</span>
-            <button onclick="toggleExpand('destreza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver valor completo</button>
-            <div id="destreza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div>
-          </div>
-        </div>
-
+        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">DESTREZA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="destreza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('destreza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('destreza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Velocidad</span><span id="destreza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m/s</span><button onclick="toggleExpand('destreza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="destreza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
         <!-- CONSTITUCIÓN -->
-        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between">
-          <span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">CONSTITUCIÓN</span>
-          <div class="text-xs text-slate-400 mb-2">Pts: <span id="constitucion_pts" class="font-tech-title font-bold text-cyan-400">10</span></div>
-          <div class="flex justify-center items-center gap-2 mb-3">
-            <button onclick="modificarPunto('constitucion', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button>
-            <button onclick="modificarPunto('constitucion', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button>
-          </div>
-          <div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2">
-            <span class="block text-[10px] text-cyan-400 uppercase font-bold">Defensa</span>
-            <span id="constitucion_val" class="text-lg font-tech-title font-bold text-cyan-300">300 Df</span>
-            <button onclick="toggleExpand('constitucion')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver valor completo</button>
-            <div id="constitucion_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div>
-          </div>
-        </div>
-
+        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">CONSTITUCIÓN</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="constitucion_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('constitucion', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('constitucion', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Defensa</span><span id="constitucion_val" class="text-lg font-tech-title font-bold text-cyan-300">300 Df</span><button onclick="toggleExpand('constitucion')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="constitucion_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
         <!-- INTELIGENCIA -->
-        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between">
-          <span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">INTELIGENCIA</span>
-          <div class="text-xs text-slate-400 mb-2">Pts: <span id="inteligencia_pts" class="font-tech-title font-bold text-cyan-400">10</span></div>
-          <div class="flex justify-center items-center gap-2 mb-3">
-            <button onclick="modificarPunto('inteligencia', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button>
-            <button onclick="modificarPunto('inteligencia', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button>
-          </div>
-          <div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2">
-            <span class="block text-[10px] text-cyan-400 uppercase font-bold">Energía Arcana</span>
-            <span id="inteligencia_val" class="text-lg font-tech-title font-bold text-cyan-300">1k J</span>
-            <button onclick="toggleExpand('inteligencia')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver valor completo</button>
-            <div id="inteligencia_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div>
-          </div>
-        </div>
-
-        <!-- SENTIDOS (ST) -->
-        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between">
- <span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">SENTIDOS (ST)</span>
-          <div class="text-xs text-slate-400 mb-2">Pts: <span id="sentidos_pts" class="font-tech-title font-bold text-cyan-400">10</span></div>
-          <div class="flex justify-center items-center gap-2 mb-3">
-            <button onclick="modificarPunto('sentidos', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button>
-            <button onclick="modificarPunto('sentidos', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button>
-          </div>
-          <div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2">
-            <span class="block text-[10px] text-cyan-400 uppercase font-bold">Alcance / Percepción</span>
-            <span id="sentidos_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m</span>
-            <button onclick="toggleExpand('sentidos')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver valor completo</button>
-            <div id="sentidos_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div>
-          </div>
-        </div>
-
+        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">INTELIGENCIA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="inteligencia_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('inteligencia', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('inteligencia', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Energía Arcana</span><span id="inteligencia_val" class="text-lg font-tech-title font-bold text-cyan-300">1k J</span><button onclick="toggleExpand('inteligencia')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="inteligencia_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
+        <!-- SENTIDOS -->
+        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">SENTIDOS (ST)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="sentidos_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('sentidos', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('sentidos', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Alcance / Percepción</span><span id="sentidos_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m</span><button onclick="toggleExpand('sentidos')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="sentidos_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
       </div>
 
       <!-- Módulos de Habilidades -->
-      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">
-        // Módulos de Habilidades
-      </h2>
-
+      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Módulos de Habilidades</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">1. Habilidades de Clase</label>
-          <textarea id="habClase" rows="4" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Registrar habilidades pasivas y activas de clase..."></textarea>
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">2. Habilidades de Raza</label>
-          <textarea id="habRaza" rows="4" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Registrar rasgo y cualidades raciales..."></textarea>
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">3. Habilidades Únicas / Definitivas</label>
-          <textarea id="habUnicas" rows="4" class="w-full tech-input border-purple-900 focus:border-purple-500 rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Técnicas definitivas o habilidades especiales únicas..."></textarea>
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-red-400 mb-2">4. Habilidades Clase Desastre</label>
-          <textarea id="habDesastre" rows="4" class="w-full tech-input hazard-border rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Capacidades de destrucción masiva o estados críticos..."></textarea>
-        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">1. Habilidades de Clase</label><textarea id="habClase" rows="4" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">2. Habilidades de Raza</label><textarea id="habRaza" rows="4" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
+        <div><label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">3. Habilidades Únicas / Definitivas</label><textarea id="habUnicas" rows="4" class="w-full tech-input border-purple-900 focus:border-purple-500 rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
+        <div><label class="block text-xs font-tech-title uppercase text-red-400 mb-2">4. Habilidades Clase Desastre</label><textarea id="habDesastre" rows="4" class="w-full tech-input hazard-border rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
       </div>
 
-      <!-- Inventario y Notas -->
-      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">
-        // Almacenamiento y Registros Adicionales
-      </h2>
-
+      <!-- Inventario, Notas, Apariencia -->
+      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Almacenamiento y Registros Adicionales</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">Equipamiento e Inventario</label>
-          <textarea id="inventario" rows="5" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Objetos, equipamiento, consumibles..."></textarea>
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">Bitácora y Notas del Sistema</label>
-          <textarea id="notas" rows="5" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Notas adicionales, misiones, enlaces..."></textarea>
-        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">Equipamiento e Inventario</label><textarea id="inventario" rows="5" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">Bitácora y Notas del Sistema</label><textarea id="notas" rows="5" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
       </div>
-
+      <div class="mt-6">
+        <label class="block text-xs font-tech-title uppercase text-emerald-400 mb-2">Apariencia e Historia (Lore)</label>
+        <textarea id="apariencia" rows="5" class="w-full tech-input border-emerald-900 focus:border-emerald-500 rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Descripción física del personaje, sus orígenes, trasfondo y desarrollo personal..."></textarea>
+      </div>
     </div>
 
     <!-- SECCIÓN: LISTA DE JUGADORES -->
@@ -426,164 +274,107 @@
       <div class="flex justify-between items-center border-b border-cyan-900 pb-3 mb-6">
         <div>
           <h2 class="text-xl font-tech-title text-cyan-400 uppercase tracking-widest">// RED DE PERSONAJES REGISTRADOS</h2>
-          <p class="text-xs text-slate-400">Selecciona cualquier jugador para inspeccionar su ficha técnica en tiempo real.</p>
+          <p class="text-xs text-slate-400">Selecciona cualquier jugador para inspeccionar su ficha técnica.</p>
         </div>
       </div>
-
-      <div id="contenedorListaJugadores" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Generado dinámicamente desde Firebase -->
-      </div>
+      <div id="contenedorListaJugadores" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
     <!-- SECCIÓN: TIENDA DE OBJETOS -->
     <div id="seccionTienda" class="hidden">
       <div class="flex justify-between items-center border-b border-amber-500/40 pb-3 mb-6">
         <div>
-          <h2 class="text-xl font-tech-title text-amber-400 uppercase tracking-widest">// MERCADO CENTRAL DE EQUIPAMIENTO</h2>
-          <p class="text-xs text-slate-400">Publica o adquiere ítems registrados con su precio en Deniques.</p>
+          <h2 class="text-xl font-tech-title text-amber-400 uppercase tracking-widest">// MERCADO CENTRAL</h2>
+          <p class="text-xs text-slate-400">Adquiere ítems con tus Deniques reales. Los fondos se transfieren al vendedor.</p>
         </div>
-        <button onclick="abrirModalAgregarObjeto()" class="bg-amber-600 hover:bg-amber-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase tracking-wider transition">
-          ➕ Publicar Objeto en Tienda
-        </button>
+        <button onclick="abrirModalAgregarObjeto()" class="bg-amber-600 hover:bg-amber-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">➕ Publicar Objeto</button>
       </div>
-
-      <div id="contenedorTienda" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Generado dinámicamente desde Firebase -->
-      </div>
+      <div id="contenedorTienda" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
+    <!-- SECCIÓN: MISIONES -->
+    <div id="seccionMisiones" class="hidden">
+      <div class="flex justify-between items-center border-b border-purple-500/50 pb-3 mb-6">
+        <div><h2 class="text-xl font-tech-title text-purple-400 uppercase tracking-widest">// TABLÓN DE MISIONES Y ENCARGOS</h2><p class="text-xs text-slate-400">Revisa encargos globales de la red y tus misiones personales asginadas.</p></div>
+        <button id="btnNuevaMisionAdmin" onclick="abrirModalMision()" class="hidden bg-purple-600 hover:bg-purple-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">➕ Crear Misión (Admin)</button>
+      </div>
+      <h3 class="text-md font-tech-title text-purple-300 uppercase tracking-wider mb-4 border-l-2 border-purple-500 pl-2">Misiones Globales (Públicas)</h3>
+      <div id="contenedorMisionesGlobales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
+      <h3 class="text-md font-tech-title text-cyan-300 uppercase tracking-wider mb-4 border-l-2 border-cyan-500 pl-2">Mis Misiones Personales</h3>
+      <div id="contenedorMisionesPersonales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
   </div>
 
-  <!-- MODAL: CONFIRMACIÓN DE GUARDADO -->
+  <!-- MODAL: GUARDADO -->
   <div id="modalConfirmarGuardado" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
-    <div class="bg-slate-950 border-2 border-cyan-400 max-w-md w-full p-6 shadow-[0_0_30px_rgba(0,240,255,0.3)] text-center relative">
-      <div class="text-cyan-400 text-5xl mb-3">⚠️</div>
-      <h3 class="text-lg font-tech-title text-cyan-400 uppercase tracking-wider mb-2">// ¿DESEA GUARDAR LA INFORMACIÓN?</h3>
-      <p class="text-xs text-slate-400 mb-6 font-tech-body">
-        Al confirmar, los datos se actualizarán en el registro global de la cuenta y serán visibles en tiempo real.
-      </p>
-
-      <div class="flex justify-center gap-4">
-        <button onclick="cancelarGuardado()" class="px-5 py-2.5 bg-slate-900 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase hover:bg-slate-800 transition">
-          ✕ Rechazar
-        </button>
-        <button onclick="ejecutarGuardadoConfirmado()" class="px-6 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold text-xs uppercase tracking-wider transition shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-          ✔ Confirmar
-        </button>
-      </div>
+    <div class="bg-slate-950 border-2 border-cyan-400 max-w-md w-full p-6 text-center shadow-[0_0_30px_rgba(0,240,255,0.3)]">
+      <div class="text-cyan-400 text-5xl mb-3">⚠️</div><h3 class="text-lg font-tech-title text-cyan-400 uppercase tracking-wider mb-2">// ¿GUARDAR INFORMACIÓN?</h3><p class="text-xs text-slate-400 mb-6 font-tech-body">Al confirmar, los datos se actualizarán en el registro global.</p>
+      <div class="flex justify-center gap-4"><button onclick="cancelarGuardado()" class="px-5 py-2.5 bg-slate-900 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase hover:bg-slate-800 transition">✕ Rechazar</button><button onclick="ejecutarGuardadoConfirmado()" class="px-6 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold text-xs uppercase transition shadow-[0_0_15px_rgba(0,240,255,0.4)]">✔ Confirmar</button></div>
     </div>
   </div>
 
-  <!-- MODAL: AGREGAR OBJETO A LA TIENDA -->
+  <!-- MODAL: AGREGAR OBJETO TIENDA -->
   <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-slate-950 border border-amber-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(245,158,11,0.2)] relative">
-      <div class="flex justify-between items-center border-b border-amber-900/80 pb-3 mb-4">
-        <h3 class="text-lg font-tech-title text-amber-400 uppercase tracking-wider">// REGISTRAR OBJETO EN LA TIENDA</h3>
-        <button onclick="cerrarModalAgregarObjeto()" class="text-amber-400 hover:text-amber-200 text-xl font-bold">✕</button>
-      </div>
-
+    <div class="bg-slate-950 border border-amber-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+      <div class="flex justify-between items-center border-b border-amber-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-amber-400 uppercase tracking-wider">// REGISTRAR OBJETO EN LA TIENDA</h3><button onclick="cerrarModalAgregarObjeto()" class="text-amber-400 hover:text-amber-200 text-xl font-bold">✕</button></div>
       <form id="formObjetoTienda" onsubmit="guardarObjetoTienda(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nombre de quién registra el objeto (Autor) *</label>
-          <input type="text" id="tiendaAutor" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Tu nombre o comerciante">
-        </div>
-
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Tipo de Objeto *</label>
-          <select id="tiendaTipo" onchange="cambiarTipoFormularioObjeto()" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm bg-slate-900 text-cyan-300">
-            <option value="Arma">Arma</option>
-            <option value="Armadura">Armadura</option>
-            <option value="Objeto">Objeto Normal</option>
-          </select>
-        </div>
-
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nombre (Autor) *</label><input type="text" id="tiendaAutor" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Tipo *</label><select id="tiendaTipo" onchange="cambiarTipoFormularioObjeto()" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm bg-slate-900 text-cyan-300"><option value="Arma">Arma</option><option value="Armadura">Armadura</option><option value="Objeto">Objeto Normal</option></select></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div>
-            <label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nombre del Objeto *</label>
-            <input type="text" id="tiendaNombre" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Ej: Espada Divina">
-          </div>
-          <div>
-            <label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Precio (Deniques) *</label>
-            <input type="text" id="tiendaPrecio" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Ej: 500 o 10k">
-          </div>
-          <div>
-            <label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nivel Requerido *</label>
-            <input type="text" id="tiendaNivelReq" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Ej: 5 o 10k">
-          </div>
+          <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Objeto *</label><input type="text" id="tiendaNombre" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Precio *</label><input type="text" id="tiendaPrecio" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nivel Req *</label><input type="text" id="tiendaNivelReq" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
         </div>
-
         <div id="campoPuntosDinamico" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div>
-            <label id="lblPuntosDinamico" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Puntos de Arma *</label>
-            <input type="text" id="tiendaPuntos" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Ej: 100 o 1k">
-          </div>
-          <div>
-            <label id="lblClaseDinamica" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Clase del Arma *</label>
-            <input type="text" id="tiendaClase" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Ej: Espada, Arco, Guanteletes">
-          </div>
+          <div><label id="lblPuntosDinamico" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Puntos *</label><input type="text" id="tiendaPuntos" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
+          <div><label id="lblClaseDinamica" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Clase *</label><input type="text" id="tiendaClase" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
         </div>
-
-        <div>
-          <label id="lblHabilidadDinamica" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Habilidad del Arma *</label>
-          <input type="text" id="tiendaHabilidad" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Efecto pasivo o activo del arma">
-        </div>
-
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Descripción / Historia *</label>
-          <textarea id="tiendaDescripcion" required rows="3" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm" placeholder="Lore, origen o notas del objeto..."></textarea>
-        </div>
-
-        <div class="flex justify-end gap-3 pt-2">
-          <button type="button" onclick="cerrarModalAgregarObjeto()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase hover:bg-slate-800">Cancelar</button>
-          <button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-black font-tech-title font-bold text-xs uppercase tracking-wider">Publicar Objeto</button>
-        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Habilidad *</label><input type="text" id="tiendaHabilidad" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Descripción *</label><textarea id="tiendaDescripcion" required rows="3" class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></textarea></div>
+        <div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalAgregarObjeto()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase hover:bg-slate-800">Cancelar</button><button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-black font-tech-title font-bold text-xs uppercase tracking-wider">Publicar</button></div>
       </form>
     </div>
   </div>
 
-  <!-- OVERLAY COMPROBANTE DE COMPRA A PANTALLA COMPLETA -->
-  <div id="comprobanteCompraOverlay" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
-    <div class="max-w-2xl w-full bg-slate-950 border-2 border-emerald-400 p-8 shadow-[0_0_50px_rgba(16,185,129,0.4)] text-center relative">
-      
-      <div class="text-emerald-400 text-6xl mb-3">⚡</div>
-      
-      <h2 class="text-2xl md:text-3xl font-tech-title text-emerald-400 font-bold uppercase tracking-widest mb-1">
-        // CONFIRMACIÓN DE TRANSACCIÓN EN RED
-      </h2>
-      <p class="text-xs text-slate-400 font-tech-title uppercase mb-6 tracking-wider">COMPROBANTE OFICIAL DE COMPRA ADQUIRIDA</p>
-
-      <div class="bg-black/80 border border-emerald-900 p-6 rounded-sm mb-6 text-left space-y-3 font-tech-body">
-        <p class="text-lg text-slate-200">
-          Se ha comprado el siguiente objeto por el usuario:
-        </p>
-        <div class="text-2xl font-tech-title text-emerald-300 font-bold border-b border-emerald-900 pb-2">
-          👤 <span id="reciboUsuario">---</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-          <div>
-            <span class="block text-xs font-tech-title text-slate-400 uppercase">Objeto Adquirido:</span>
-            <span id="reciboObjeto" class="text-lg font-tech-title text-cyan-300 font-bold">---</span>
-          </div>
-          <div>
-            <span class="block text-xs font-tech-title text-slate-400 uppercase">Unidades Adquiridas:</span>
-            <span id="reciboCantidad" class="text-lg font-tech-title text-amber-300 font-bold">---</span>
-          </div>
-          <div>
-            <span class="block text-xs font-tech-title text-slate-400 uppercase">Precio Total Estimado:</span>
-            <span id="reciboPrecioTotal" class="text-lg font-tech-title text-amber-400 font-bold">---</span>
-          </div>
-          <div>
-            <span class="block text-xs font-tech-title text-slate-400 uppercase">Vendedor / Autor:</span>
-            <span id="reciboVendedor" class="text-md text-slate-200">---</span>
-          </div>
-        </div>
+  <!-- MODAL: CREAR MISION (SOLO ADMIN) -->
+  <div id="modalMision" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-purple-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(168,85,247,0.2)] relative">
+      <div class="flex justify-between items-center border-b border-purple-900/80 pb-3 mb-4">
+        <h3 class="text-lg font-tech-title text-purple-400 uppercase tracking-wider">// ASIGNAR NUEVA MISIÓN</h3>
+        <button onclick="cerrarModalMision()" class="text-purple-400 hover:text-purple-200 text-xl font-bold">✕</button>
       </div>
+      <form id="formMision" onsubmit="guardarMision(event)" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Tipo de Misión *</label><select id="misionTipo" onchange="toggleMisionDestinatario()" class="w-full tech-input px-3 py-2 text-sm rounded-sm bg-slate-900 text-purple-200"><option value="global">Misión Global (Todos)</option><option value="personal">Misión Personal (1 Jugador)</option></select></div>
+          <div id="campoMisionDestinatario" class="hidden"><label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Jugador *</label><select id="misionDestinatario" class="w-full tech-input px-3 py-2 text-sm rounded-sm bg-slate-900 text-cyan-200 border-cyan-800"></select></div>
+        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Título de la Misión *</label><input type="text" id="misionTitulo" required class="w-full tech-input border-purple-900 px-3 py-2 text-sm rounded-sm" placeholder="Ej: Investigar las minas perdidas"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Recompensa (Opcional)</label><input type="text" id="misionRecompensa" class="w-full tech-input border-purple-900 px-3 py-2 text-sm rounded-sm" placeholder="Ej: 5000 Deniques y 1 Objeto Raro"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Descripción / Objetivos *</label><textarea id="misionDesc" required rows="4" class="w-full tech-input border-purple-900 px-3 py-2 text-sm rounded-sm" placeholder="Detalles de lo que se debe hacer..."></textarea></div>
+        <div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalMision()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase hover:bg-slate-800">Cancelar</button><button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-black font-tech-title font-bold text-xs uppercase tracking-wider">Publicar Misión</button></div>
+      </form>
+    </div>
+  </div>
 
-      <button onclick="cerrarComprobante()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase tracking-widest shadow-[0_0_20px_rgba(16,185,129,0.5)] transition duration-200">
-        ✔ Entendido y Cerrar Comprobante
-      </button>
+  <!-- OVERLAY COMPROBANTE -->
+  <div id="comprobanteCompraOverlay" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-slate-950 border-2 border-emerald-400 p-8 shadow-[0_0_50px_rgba(16,185,129,0.4)] text-center relative"><div class="text-emerald-400 text-6xl mb-3">⚡</div><h2 class="text-2xl md:text-3xl font-tech-title text-emerald-400 font-bold uppercase tracking-widest mb-1">// TRANSACCIÓN COMPLETADA</h2>
+      <div class="bg-black/80 border border-emerald-900 p-6 rounded-sm mb-6 text-left space-y-3 font-tech-body mt-4">
+        <div class="text-2xl font-tech-title text-emerald-300 font-bold border-b border-emerald-900 pb-2">👤 <span id="reciboUsuario">---</span></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div><span class="block text-xs font-tech-title text-slate-400">Objeto:</span><span id="reciboObjeto" class="text-lg font-tech-title text-cyan-300 font-bold">---</span></div>
+          <div><span class="block text-xs font-tech-title text-slate-400">Unidades:</span><span id="reciboCantidad" class="text-lg font-tech-title text-amber-300 font-bold">---</span></div>
+          <div><span class="block text-xs font-tech-title text-slate-400">Coste Total:</span><span id="reciboPrecioTotal" class="text-lg font-tech-title text-amber-400 font-bold">---</span></div>
+          <div><span class="block text-xs font-tech-title text-slate-400">Vendedor Recibió:</span><span id="reciboVendedor" class="text-md text-slate-200">---</span></div>
+        </div>
+      </div><button onclick="cerrarComprobante()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase transition">✔ Entendido</button>
+    </div>
+  </div>
 
+  <!-- OVERLAY MISION NUEVA -->
+  <div id="notificacionMisionOverlay" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-slate-950 border-2 border-purple-500 p-8 shadow-[0_0_50px_rgba(168,85,247,0.4)] text-center relative animate-pulse"><div class="text-purple-400 text-6xl mb-3">📜</div><h2 class="text-2xl md:text-3xl font-tech-title text-purple-400 font-bold uppercase tracking-widest mb-1">// NUEVA MISIÓN DETECTADA</h2><p id="alertaMisionSubtitulo" class="text-xs text-slate-400 font-tech-title uppercase mb-6 tracking-wider">SE TE HA ASIGNADO UN ENCARGO</p>
+      <div class="bg-black/80 border border-purple-900 p-6 rounded-sm mb-6 text-center space-y-3 font-tech-body"><h3 id="alertaMisionTitulo" class="text-2xl font-tech-title text-purple-300 font-bold">Título Misión</h3><p id="alertaMisionRecompensa" class="text-amber-400 font-tech-title text-sm border border-amber-900/50 bg-amber-950/20 inline-block px-4 py-1 rounded">Recompensa: ???</p></div><button onclick="cerrarNotificacionMision()" class="bg-purple-600 hover:bg-purple-500 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase transition shadow-[0_0_20px_rgba(168,85,247,0.5)]">✔ Revisar Tablón</button>
     </div>
   </div>
 
@@ -600,64 +391,58 @@
       measurementId: "G-J0LMB0FHJY"
     };
 
-    // 🛡️ LISTA DE CORREOS CON PERMISOS DE ADMINISTRADOR
-    const ADMIN_EMAILS = [
-      "kinsei30284@gmail.com"
-      // Agrega más administradores aquí si lo deseas:
-      // "otro_correo@gmail.com"
-    ];
+    const ADMIN_EMAILS = ["kinsei30284@gmail.com"];
 
-    let db;
-    let auth;
-    let currentUser = null;
-    let authMode = 'login';
-    let esModoLectura = false;
-    
-    // Variables para controlar a qué UID se guardan los cambios (evita sobrescribir al admin)
-    let targetUidToEdit = null;
-    let targetEmailToEdit = null;
+    let db, auth;
+    let currentUser = null, authMode = 'login', esModoLectura = false;
+    let targetUidToEdit = null, targetEmailToEdit = null, cacheJugadores = {};
 
     try {
       firebase.initializeApp(firebaseConfig);
-      db = firebase.database();
-      auth = firebase.auth();
-      
-      auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .catch((error) => console.error("Error al fijar persistencia:", error));
-
+      db = firebase.database(); auth = firebase.auth();
+      auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.error(e));
       document.getElementById('estadoRed').textContent = '🟢 SERVIDOR GLOBAL ACTIVO';
       document.getElementById('estadoRed').className = 'text-xs text-emerald-400 font-tech-title font-bold';
-    } catch(e) {
-      document.getElementById('estadoRed').textContent = '🔴 MODO LOCAL (CONFIGURA FIREBASE)';
+    } catch(e) { document.getElementById('estadoRed').textContent = '🔴 MODO LOCAL (CONFIGURA FIREBASE)'; }
+
+    function verificarEsAdmin(email) { return email ? ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase()) : false; }
+
+    // Función de Reglas Especiales (Protección de Patrocinador y Deniques)
+    function aplicarPermisos() {
+      const esAdmin = verificarEsAdmin(currentUser?.email);
+      const inpDeniques = document.getElementById('deniques');
+      const inpPatrocinador = document.getElementById('patrocinador');
+      
+      if (!esAdmin) {
+        if (inpDeniques) inpDeniques.disabled = true; // Bloquea Deniques siempre
+        // Bloquea Patrocinador solo si el usuario ya registró uno
+        if (inpPatrocinador && inpPatrocinador.value.trim() !== '') inpPatrocinador.disabled = true;
+        else if (inpPatrocinador) inpPatrocinador.disabled = false;
+      } else {
+        if (!esModoLectura) {
+           if (inpDeniques) inpDeniques.disabled = false;
+           if (inpPatrocinador) inpPatrocinador.disabled = false;
+        }
+      }
     }
 
-    function verificarEsAdmin(email) {
-      if (!email) return false;
-      return ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase());
-    }
-
-    // LISTENER DE ESTADO DE AUTENTICACIÓN
     if (auth) {
       auth.onAuthStateChanged((user) => {
         if (user) {
-          currentUser = user;
-          targetUidToEdit = user.uid;
-          targetEmailToEdit = user.email;
-
+          currentUser = user; targetUidToEdit = user.uid; targetEmailToEdit = user.email;
           document.getElementById('authOverlay').classList.add('hidden');
           document.getElementById('userEmailDisplay').textContent = `Usuario: ${user.email}`;
           
           if (verificarEsAdmin(user.email)) {
             document.getElementById('adminBadgeDisplay').classList.remove('hidden');
+            document.getElementById('btnNuevaMisionAdmin').classList.remove('hidden');
           } else {
             document.getElementById('adminBadgeDisplay').classList.add('hidden');
+            document.getElementById('btnNuevaMisionAdmin').classList.add('hidden');
           }
-
           cargarFichaNube(user.uid);
         } else {
-          currentUser = null;
-          targetUidToEdit = null;
-          targetEmailToEdit = null;
+          currentUser = null; targetUidToEdit = targetEmailToEdit = null;
           document.getElementById('authOverlay').classList.remove('hidden');
         }
       });
@@ -665,592 +450,303 @@
 
     function switchAuthTab(mode) {
       authMode = mode;
-      const tabLogin = document.getElementById('tabLogin');
-      const tabRegister = document.getElementById('tabRegister');
-      const btnSubmit = document.getElementById('authBtnSubmit');
+      const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit');
       document.getElementById('authError').classList.add('hidden');
-
       if (mode === 'login') {
-        tabLogin.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold";
-        tabRegister.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300";
-        btnSubmit.textContent = "Ingresar al Sistema";
+        tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold";
+        tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema";
       } else {
-        tabRegister.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold";
-        tabLogin.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300";
-        btnSubmit.textContent = "Registrar Nueva Cuenta";
+        tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold";
+        tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta";
       }
     }
 
     function handleAuthSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById('authEmail').value.trim();
-      const password = document.getElementById('authPassword').value;
-      const errBox = document.getElementById('authError');
-      errBox.classList.add('hidden');
-
-      if (!auth) {
-        alert("Por favor configura tus claves de Firebase.");
-        return;
-      }
-
-      if (authMode === 'login') {
-        auth.signInWithEmailAndPassword(email, password).catch((err) => {
-          errBox.textContent = `Error: ${err.message}`;
-          errBox.classList.remove('hidden');
-        });
-      } else {
-        auth.createUserWithEmailAndPassword(email, password).catch((err) => {
-          errBox.textContent = `Error: ${err.message}`;
-          errBox.classList.remove('hidden');
-        });
-      }
+      e.preventDefault(); const email = document.getElementById('authEmail').value.trim(), pass = document.getElementById('authPassword').value;
+      const errBox = document.getElementById('authError'); errBox.classList.add('hidden');
+      if (!auth) return;
+      if (authMode === 'login') auth.signInWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); });
+      else auth.createUserWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); });
     }
+    function cerrarSesion() { if (auth) auth.signOut().then(() => toggleMenu()); }
 
-    function cerrarSesion() {
-      if (auth) {
-        auth.signOut().then(() => {
-          toggleMenu();
-        });
-      }
-    }
-
-    const puntosExtraAsignados = {
-      pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0'
-    };
-
-    const puntosGuardadosBloqueados = {
-      pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0'
-    };
-
+    const puntosExtraAsignados = { pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0' };
+    const puntosGuardadosBloqueados = { pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0' };
     const VALOR_BASE_ESTADISTICA = 10;
-
-    const config = {
-      pv: { mult: 50, unidad: 'PV' },
-      fuerza: { mult: 10, unidad: 'Kg' },
-      destreza: { mult: 10, unidad: 'm/s' },
-      constitucion: { mult: 30, unidad: 'Df' },
-      inteligencia: { mult: 100, unidad: 'J' },
-      sentidos: { mult: 10, unidad: 'm' }
-    };
-
+    const config = { pv: { mult: 50, unidad: 'PV' }, fuerza: { mult: 10, unidad: 'Kg' }, destreza: { mult: 10, unidad: 'm/s' }, constitucion: { mult: 30, unidad: 'Df' }, inteligencia: { mult: 100, unidad: 'J' }, sentidos: { mult: 10, unidad: 'm' } };
     const unidadesEscalaBigInt = [
-      { val: 10n ** 33n, symbol: 'Dc' }, { val: 10n ** 30n, symbol: 'No' },
-      { val: 10n ** 27n, symbol: 'Oc' }, { val: 10n ** 24n, symbol: 'Sp' },
-      { val: 10n ** 21n, symbol: 'Sx' }, { val: 10n ** 18n, symbol: 'Qi' },
-      { val: 10n ** 15n, symbol: 'Qa' }, { val: 10n ** 12n, symbol: 'T' },
-      { val: 10n ** 9n, symbol: 'B' },   { val: 10n ** 6n, symbol: 'M' },
-      { val: 10n ** 3n, symbol: 'k' }
+      { val: 10n**33n, symbol: 'Dc' }, { val: 10n**30n, symbol: 'No' }, { val: 10n**27n, symbol: 'Oc' }, { val: 10n**24n, symbol: 'Sp' },
+      { val: 10n**21n, symbol: 'Sx' }, { val: 10n**18n, symbol: 'Qi' }, { val: 10n**15n, symbol: 'Qa' }, { val: 10n**12n, symbol: 'T' },
+      { val: 10n**9n, symbol: 'B' }, { val: 10n**6n, symbol: 'M' }, { val: 10n**3n, symbol: 'k' }
     ];
 
-    function toggleMenu() {
-      document.getElementById('sideDrawer').classList.toggle('open');
-    }
-
-    function mostrarSeccion(seccion) {
-      toggleMenu();
-      document.getElementById('seccionEditor').classList.add('hidden');
-      document.getElementById('seccionJugadores').classList.add('hidden');
-      document.getElementById('seccionTienda').classList.add('hidden');
-
-      if (seccion === 'editor') document.getElementById('seccionEditor').classList.remove('hidden');
-      if (seccion === 'jugadores') document.getElementById('seccionJugadores').classList.remove('hidden');
-      if (seccion === 'tienda') document.getElementById('seccionTienda').classList.remove('hidden');
+    function toggleMenu() { document.getElementById('sideDrawer').classList.toggle('open'); }
+    function mostrarSeccion(s) {
+      toggleMenu(); document.getElementById('seccionEditor').classList.add('hidden'); document.getElementById('seccionJugadores').classList.add('hidden');
+      document.getElementById('seccionTienda').classList.add('hidden'); document.getElementById('seccionMisiones').classList.add('hidden');
+      if (s === 'editor') document.getElementById('seccionEditor').classList.remove('hidden');
+      if (s === 'jugadores') document.getElementById('seccionJugadores').classList.remove('hidden');
+      if (s === 'tienda') document.getElementById('seccionTienda').classList.remove('hidden');
+      if (s === 'misiones') document.getElementById('seccionMisiones').classList.remove('hidden');
     }
 
     function parseTextoABigInt(strInput) {
-      if (!strInput) return 0n;
-      let str = strInput.toString().trim();
-      if (str === '') return 0n;
-      if (str.toLowerCase() === 'inf' || str === '∞') return Infinity;
-
-      const match = str.match(/^([\d\.]+)\s*([a-zA-Z]+)?$/);
-      if (!match) {
-        try { return BigInt(str.replace(/[^0-9]/g, '')); } catch(e) { return 0n; }
-      }
-
-      let numPart = parseFloat(match[1]);
-      let sufijo = match[2] ? match[2] : '';
-
-      if (isNaN(numPart)) return 0n;
+      if (!strInput) return 0n; let str = strInput.toString().trim();
+      if (str === '' || str.toLowerCase() === 'inf' || str === '∞') return str === '' ? 0n : Infinity;
+      const match = str.match(/^([\d\.]+)\s*([a-zA-Z]+)?$/); if (!match) { try { return BigInt(str.replace(/[^0-9]/g, '')); } catch(e) { return 0n; } }
+      let numPart = parseFloat(match[1]), sufijo = match[2] ? match[2] : ''; if (isNaN(numPart)) return 0n;
       if (!sufijo) return BigInt(Math.floor(numPart));
-
-      const sufijoUpper = sufijo.toUpperCase();
-      const sufijoNormal = sufijo.charAt(0).toUpperCase() + sufijo.slice(1).toLowerCase();
-
       let multiplicador = 1n;
-      for (let i = 0; i < unidadesEscalaBigInt.length; i++) {
-        if (unidadesEscalaBigInt[i].symbol.toUpperCase() === sufijoUpper || unidadesEscalaBigInt[i].symbol === sufijoNormal) {
-          multiplicador = unidadesEscalaBigInt[i].val;
-          break;
-        }
-      }
-
-      if (numPart % 1 !== 0) {
-        let entero = Math.floor(numPart);
-        let decimales = numPart - entero;
-        return BigInt(entero) * multiplicador + BigInt(Math.floor(decimales * Number(multiplicador)));
-      }
-
+      for (let i=0; i<unidadesEscalaBigInt.length; i++) { if (unidadesEscalaBigInt[i].symbol.toUpperCase() === sufijo.toUpperCase() || unidadesEscalaBigInt[i].symbol === (sufijo.charAt(0).toUpperCase() + sufijo.slice(1).toLowerCase())) { multiplicador = unidadesEscalaBigInt[i].val; break; } }
+      if (numPart % 1 !== 0) { let e = Math.floor(numPart), d = numPart - e; return BigInt(e) * multiplicador + BigInt(Math.floor(d * Number(multiplicador))); }
       return BigInt(Math.floor(numPart)) * multiplicador;
     }
 
     function formatearBigInt(bigNum) {
-      if (bigNum === Infinity) return '∞';
-      if (typeof bigNum === 'bigint' && bigNum < 1000n) return bigNum.toString();
-
-      for (let i = 0; i < unidadesEscalaBigInt.length; i++) {
-        const factor = unidadesEscalaBigInt[i].val;
-        if (bigNum >= factor) {
-          const entero = bigNum / factor;
-          const resto = (bigNum % factor) / (factor / 10n);
-          return resto === 0n ? `${entero}${unidadesEscalaBigInt[i].symbol}` : `${entero}.${resto}${unidadesEscalaBigInt[i].symbol}`;
-        }
-      }
-      return bigNum.toString();
+      if (bigNum === Infinity) return '∞'; if (typeof bigNum === 'bigint' && bigNum < 1000n) return bigNum.toString();
+      for (let i=0; i<unidadesEscalaBigInt.length; i++) {
+        const f = unidadesEscalaBigInt[i].val;
+        if (bigNum >= f) { const e = bigNum / f, r = (bigNum % f) / (f / 10n); return r === 0n ? `${e}${unidadesEscalaBigInt[i].symbol}` : `${e}.${r}${unidadesEscalaBigInt[i].symbol}`; }
+      } return bigNum.toString();
     }
-
-    function formatearConSeparadores(bigNum) {
-      if (bigNum === Infinity) return 'Infinito (∞)';
-      return bigNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-
-    function toggleExpand(attr) {
-      const el = document.getElementById(`${attr}_expand`);
-      if (el) el.classList.toggle('hidden');
-    }
-
+    function formatearConSeparadores(bigNum) { return bigNum === Infinity ? 'Infinito (∞)' : bigNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+    function toggleExpand(attr) { const el = document.getElementById(`${attr}_expand`); if(el) el.classList.toggle('hidden'); }
     function obtenerMontoActual() { return parseTextoABigInt(document.getElementById('montoPuntos').value); }
     function obtenerNivelBigInt() { return parseTextoABigInt(document.getElementById('nivel').value); }
-    function obtenerPuntosOtorgadosPorNivel() {
-      const n = obtenerNivelBigInt();
-      return n === Infinity ? Infinity : n * 10n;
-    }
-
-    function obtenerPuntosUsadosTotalesBigInt() {
-      return Object.values(puntosExtraAsignados).reduce((a, b) => a + BigInt(b), 0n);
-    }
-
+    function obtenerPuntosOtorgadosPorNivel() { const n = obtenerNivelBigInt(); return n === Infinity ? Infinity : n * 10n; }
+    function obtenerPuntosUsadosTotalesBigInt() { return Object.values(puntosExtraAsignados).reduce((a, b) => a + BigInt(b), 0n); }
     function modificarPunto(attr, direccion) {
-      if (esModoLectura) return;
-      const montoInput = obtenerMontoActual();
-      if (montoInput <= 0n && montoInput !== Infinity) return;
-
-      const puntosOtorgados = obtenerPuntosOtorgadosPorNivel();
-      const usados = obtenerPuntosUsadosTotalesBigInt();
-      const disponiblesActuales = puntosOtorgados === Infinity ? Infinity : (puntosOtorgados > usados ? puntosOtorgados - usados : 0n);
-
-      if (direccion > 0) {
-        const cantidadAAgregar = montoInput < disponiblesActuales ? montoInput : disponiblesActuales;
-        if (cantidadAAgregar <= 0n) return;
-        puntosExtraAsignados[attr] = (BigInt(puntosExtraAsignados[attr]) + cantidadAAgregar).toString();
-      } else {
-        const limiteInferior = BigInt(puntosGuardadosBloqueados[attr]);
-        const actual = BigInt(puntosExtraAsignados[attr]);
-        const maximoARestar = actual > limiteInferior ? actual - limiteInferior : 0n;
-        const cantidadARestar = montoInput < maximoARestar ? montoInput : maximoARestar;
-        if (cantidadARestar <= 0n) return;
-        puntosExtraAsignados[attr] = (actual - cantidadARestar).toString();
-      }
+      if (esModoLectura) return; const m = obtenerMontoActual(); if (m <= 0n && m !== Infinity) return;
+      const p = obtenerPuntosOtorgadosPorNivel(), u = obtenerPuntosUsadosTotalesBigInt(), d = p === Infinity ? Infinity : (p > u ? p - u : 0n);
+      if (direccion > 0) { const add = m < d ? m : d; if (add <= 0n) return; puntosExtraAsignados[attr] = (BigInt(puntosExtraAsignados[attr]) + add).toString();
+      } else { const lim = BigInt(puntosGuardadosBloqueados[attr]), act = BigInt(puntosExtraAsignados[attr]), maxRes = act > lim ? act - lim : 0n, res = m < maxRes ? m : maxRes; if (res <= 0n) return; puntosExtraAsignados[attr] = (act - res).toString(); }
       actualizarSistemas();
     }
 
     function actualizarSistemas() {
-      const nivelBig = obtenerNivelBigInt();
-      document.getElementById('nivelFormateado').textContent = `Nivel: ${formatearBigInt(nivelBig)} (${formatearConSeparadores(nivelBig)})`;
-
-      const deniquesVal = parseTextoABigInt(document.getElementById('deniques').value);
-      document.getElementById('deniquesFormateado').textContent = `${formatearBigInt(deniquesVal)} Deniques (${formatearConSeparadores(deniquesVal)})`;
-
-      const puntosOtorgados = obtenerPuntosOtorgadosPorNivel();
-      const usados = obtenerPuntosUsadosTotalesBigInt();
-      const disponibles = puntosOtorgados === Infinity ? Infinity : (puntosOtorgados > usados ? puntosOtorgados - usados : 0n);
-      const puntosBaseTotales = 6n * BigInt(VALOR_BASE_ESTADISTICA);
-      const sumaTotales = disponibles === Infinity ? Infinity : puntosBaseTotales + usados + disponibles;
-
-      const ptsArma = parseTextoABigInt(document.getElementById('iniciativa').value);
-      const ptsArmadura = parseTextoABigInt(document.getElementById('ca').value);
-
-      document.getElementById('puntosDisponiblesText').textContent = formatearBigInt(disponibles);
-      document.getElementById('puntosUsadosText').textContent = formatearBigInt(usados);
-      document.getElementById('puntosTotalesText').textContent = formatearBigInt(sumaTotales);
-
+      const niv = obtenerNivelBigInt(); document.getElementById('nivelFormateado').textContent = `Nivel: ${formatearBigInt(niv)} (${formatearConSeparadores(niv)})`;
+      const den = parseTextoABigInt(document.getElementById('deniques').value); document.getElementById('deniquesFormateado').textContent = `${formatearBigInt(den)} Deniques (${formatearConSeparadores(den)})`;
+      const po = obtenerPuntosOtorgadosPorNivel(), u = obtenerPuntosUsadosTotalesBigInt(), d = po === Infinity ? Infinity : (po > u ? po - u : 0n), pt = d === Infinity ? Infinity : (6n * BigInt(VALOR_BASE_ESTADISTICA)) + u + d;
+      const pa = parseTextoABigInt(document.getElementById('iniciativa').value), pdef = parseTextoABigInt(document.getElementById('ca').value);
+      document.getElementById('puntosDisponiblesText').textContent = formatearBigInt(d); document.getElementById('puntosUsadosText').textContent = formatearBigInt(u); document.getElementById('puntosTotalesText').textContent = formatearBigInt(pt);
       for (const attr in config) {
-        const extra = BigInt(puntosExtraAsignados[attr] || '0');
-        const totalPuntos = BigInt(VALOR_BASE_ESTADISTICA) + extra;
-        document.getElementById(`${attr}_pts`).textContent = formatearBigInt(totalPuntos);
-
-        let valorFisicoBig = totalPuntos * BigInt(config[attr].mult);
-        if (attr === 'fuerza') valorFisicoBig += ptsArma === Infinity ? Infinity : ptsArma * 10n;
-        if (attr === 'destreza') valorFisicoBig += ptsArma === Infinity ? Infinity : ptsArma * 10n;
-        if (attr === 'constitucion') valorFisicoBig += ptsArmadura === Infinity ? Infinity : ptsArmadura * 30n;
-
-        const valorAbreviado = formatearBigInt(valorFisicoBig);
-        document.getElementById(`${attr}_val`).textContent = `${valorAbreviado} ${config[attr].unidad}`;
-
-        const expandBox = document.getElementById(`${attr}_expand`);
-        if (expandBox) expandBox.textContent = `${valorAbreviado} = ${formatearConSeparadores(valorFisicoBig)} ${config[attr].unidad}`;
+        const e = BigInt(puntosExtraAsignados[attr] || '0'), tp = BigInt(VALOR_BASE_ESTADISTICA) + e; document.getElementById(`${attr}_pts`).textContent = formatearBigInt(tp);
+        let vf = tp * BigInt(config[attr].mult); if(attr==='fuerza' || attr==='destreza') vf += pa === Infinity ? Infinity : pa * 10n; if(attr==='constitucion') vf += pdef === Infinity ? Infinity : pdef * 30n;
+        const va = formatearBigInt(vf); document.getElementById(`${attr}_val`).textContent = `${va} ${config[attr].unidad}`;
+        const ex = document.getElementById(`${attr}_expand`); if(ex) ex.textContent = `${va} = ${formatearConSeparadores(vf)} ${config[attr].unidad}`;
       }
-
-      const totalPVCalculadosBig = (BigInt(VALOR_BASE_ESTADISTICA) + BigInt(puntosExtraAsignados.pv || '0')) * BigInt(config.pv.mult);
-      document.getElementById('pvActualesDisplay').textContent = `${formatearBigInt(totalPVCalculadosBig)} PV`;
+      const pv = (BigInt(VALOR_BASE_ESTADISTICA) + BigInt(puntosExtraAsignados.pv || '0')) * BigInt(config.pv.mult); document.getElementById('pvActualesDisplay').textContent = `${formatearBigInt(pv)} PV`;
     }
 
-            // --- PROCESO DE GUARDADO ASOCIADO A LA CUENTA / ADMIN ---
-    function solicitarGuardado() {
-      if (esModoLectura) return;
-      document.getElementById('modalConfirmarGuardado').classList.remove('hidden');
-    }
-
-    function cancelarGuardado() {
-      document.getElementById('modalConfirmarGuardado').classList.add('hidden');
-    }
-
+            function solicitarGuardado() { if (esModoLectura) return; document.getElementById('modalConfirmarGuardado').classList.remove('hidden'); }
+    function cancelarGuardado() { document.getElementById('modalConfirmarGuardado').classList.add('hidden'); }
     function ejecutarGuardadoConfirmado() {
-      cancelarGuardado();
-      if (!currentUser) return;
-
-      const uidToSave = targetUidToEdit || currentUser.uid;
-      const emailToSave = targetEmailToEdit || currentUser.email;
-
+      cancelarGuardado(); if (!currentUser) return;
+      const uidToSave = targetUidToEdit || currentUser.uid, emailToSave = targetEmailToEdit || currentUser.email;
       Object.assign(puntosGuardadosBloqueados, puntosExtraAsignados);
-
-      const nombreSujeto = document.getElementById('nombre').value.trim() || 'Desconocido';
-
+      
       const ficha = {
-        uid: uidToSave,
-        email: emailToSave,
-        nombre: nombreSujeto,
-        clase: document.getElementById('clase').value,
-        raza: document.getElementById('raza').value,
-        nivel: document.getElementById('nivel').value,
-        ca: document.getElementById('ca').value,
-        iniciativa: document.getElementById('iniciativa').value,
-        deniques: document.getElementById('deniques').value,
-        montoPuntos: document.getElementById('montoPuntos').value,
-        puntosExtraAsignados: puntosExtraAsignados,
-        puntosGuardadosBloqueados: puntosGuardadosBloqueados,
-        habClase: document.getElementById('habClase').value,
-        habRaza: document.getElementById('habRaza').value,
-        habUnicas: document.getElementById('habUnicas').value,
-        habDesastre: document.getElementById('habDesastre').value,
-        inventario: document.getElementById('inventario').value,
-        notas: document.getElementById('notas').value,
+        uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido',
+        clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, 
+        patrocinador: document.getElementById('patrocinador').value.trim(),
+        nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, 
+        deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, 
+        puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, 
+        habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value,
+        habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, 
+        notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value,
         timestamp: Date.now()
       };
-
-      if (db) {
-        db.ref('jugadores/' + uidToSave).set(ficha)
-          .then(() => {
-            alert('⚡ ¡Información guardada y sincronizada globalmente!');
-            actualizarSistemas();
-          })
-          .catch((error) => {
-            alert('❌ Error al guardar en Firebase: ' + error.message);
-          });
-      }
+      
+      if (db) db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Información guardada globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error: ' + e.message));
     }
 
     function cargarFichaNube(uid) {
-      if (!db) return;
-      db.ref('jugadores/' + uid).once('value')
-        .then((snapshot) => {
-          const ficha = snapshot.val();
-          if (ficha) {
-            cargarDatosEnInterfaz(ficha);
-          }
-        })
-        .catch((error) => {
-          console.error("Error al cargar la ficha: ", error);
-        });
+      if (db) db.ref('jugadores/' + uid).once('value').then(s => { if(s.val()) cargarDatosEnInterfaz(s.val()); });
     }
 
-    // LISTENER DE FIREBASE PARA LISTA DE JUGADORES Y TIENDA
     if (db) {
+      // LISTENER JUGADORES
       db.ref('jugadores').on('value', (snapshot) => {
-        const data = snapshot.val();
-        const contenedor = document.getElementById('contenedorListaJugadores');
-        contenedor.innerHTML = '';
+        const data = snapshot.val(); cacheJugadores = data || {}; 
+        const cont = document.getElementById('contenedorListaJugadores'); cont.innerHTML = '';
+        const selectDestinatario = document.getElementById('misionDestinatario');
+        if (selectDestinatario && data) { selectDestinatario.innerHTML = Object.keys(data).map(uid => `<option value="${uid}">${data[uid].nombre || data[uid].email}</option>`).join(''); }
 
-        if (!data) {
-          contenedor.innerHTML = `
-            <div class="col-span-full text-center py-12 border border-dashed border-cyan-900 bg-black/40 p-6">
-              <span class="text-4xl text-cyan-500/40 block mb-2">🌐</span>
-              <p class="font-tech-title text-cyan-400 text-sm">NO HAY PERSONAJES REGISTRADOS EN LA RED</p>
-            </div>`;
-          return;
-        }
-
-        const lista = Object.keys(data);
+        if (!data) return cont.innerHTML = `<div class="col-span-full text-center py-12 bg-black/40 p-6"><span class="text-4xl text-cyan-500/40 mb-2 block">🌐</span><p class="text-cyan-400 text-sm">NO HAY PERSONAJES</p></div>`;
         const esAdmin = verificarEsAdmin(currentUser?.email);
-
-        contenedor.innerHTML = lista.map((uidKey) => {
-          const pj = data[uidKey];
-          return `
-            <div class="bg-black/80 border border-cyan-900 hover:border-cyan-400 p-4 rounded-sm flex flex-col justify-between transition shadow-md">
-              <div>
-                <div class="flex items-center gap-3 mb-3">
-                  <div class="w-10 h-10 bg-slate-900 border border-cyan-500 rounded-sm flex items-center justify-center shrink-0">
-                    <span class="text-cyan-400 text-xl">👤</span>
-                  </div>
-                  <div class="overflow-hidden">
-                    <h3 class="font-tech-title text-cyan-300 font-bold text-md truncate">${pj.nombre || 'Sin Nombre'}</h3>
-                    <p class="text-xs text-slate-400 truncate">${pj.clase || 'Clase n/a'} | ${pj.raza || 'Raza n/a'}</p>
-                  </div>
-                </div>
-                <div class="text-xs font-mono text-cyan-400/80 mb-3 bg-cyan-950/30 p-2 rounded border border-cyan-900/50 flex justify-between items-center">
-                  <span>Nivel: ${pj.nivel || '1'}</span>
-                  <span class="text-amber-300 font-bold">💰 ${formatearBigInt(parseTextoABigInt(pj.deniques || '0'))}</span>
-                </div>
-              </div>
-              <div class="space-y-2">
-                <button onclick='verPersonajeObjeto(${JSON.stringify(pj)})' class="w-full bg-cyan-950 hover:bg-cyan-400 hover:text-black border border-cyan-500 text-cyan-300 font-tech-title text-xs py-2 uppercase font-bold transition">
-                  👁️ ${esAdmin ? 'Inspeccionar / Editar' : 'Ver Ficha'}
-                </button>
-                ${esAdmin ? `<button onclick="eliminarFichaAdmin('${uidKey}')" class="w-full bg-red-950 hover:bg-red-900 border border-red-600 text-red-400 font-tech-title text-xs py-1.5 uppercase font-bold transition">🗑️ Eliminar Ficha</button>` : ''}
-              </div>
-            </div>`;
+        cont.innerHTML = Object.keys(data).map(uid => {
+          const pj = data[uid];
+          return `<div class="bg-black/80 border border-cyan-900 hover:border-cyan-400 p-4 flex flex-col justify-between shadow-md">
+              <div class="mb-3"><h3 class="font-tech-title text-cyan-300 font-bold truncate">${pj.nombre || 'Sin Nombre'}</h3><p class="text-xs text-slate-400 truncate">${pj.clase} | ${pj.raza}</p><div class="mt-2 text-xs font-mono text-cyan-400/80 bg-cyan-950/30 p-2 border border-cyan-900/50 flex justify-between"><span>Nivel: ${pj.nivel||'1'}</span><span class="text-amber-300 font-bold">💰 ${formatearBigInt(parseTextoABigInt(pj.deniques||'0'))}</span></div></div>
+              <div class="space-y-2"><button onclick='verPersonajeObjeto(${JSON.stringify(pj)})' class="w-full bg-cyan-950 hover:bg-cyan-400 hover:text-black border border-cyan-500 text-cyan-300 text-xs py-2 uppercase font-bold transition">👁️ ${esAdmin ? 'Inspeccionar/Editar' : 'Ver Ficha'}</button>${esAdmin ? `<button onclick="eliminarFichaAdmin('${uid}')" class="w-full bg-red-950 hover:bg-red-900 border border-red-600 text-red-400 text-xs py-1.5 uppercase font-bold transition">🗑️ Eliminar</button>` : ''}</div></div>`;
         }).join('');
-      }, (error) => {
-         console.error("Error al leer Jugadores: ", error.message);
       });
 
-      // LISTENER DE TIENDA
+      // LISTENER TIENDA
       db.ref('tienda').on('value', (snapshot) => {
-        const data = snapshot.val();
-        const contenedor = document.getElementById('contenedorTienda');
-        contenedor.innerHTML = '';
-
-        if (!data) {
-          contenedor.innerHTML = `
-            <div class="col-span-full text-center py-12 border border-dashed border-amber-900 bg-black/40 p-6">
-              <span class="text-4xl text-amber-500/40 block mb-2">🛒</span>
-              <p class="font-tech-title text-amber-400 text-sm">LA TIENDA NO TIENE OBJETOS PUBLICADOS</p>
-            </div>`;
-          return;
-        }
-
-        const tiendaKeys = Object.keys(data);
+        const data = snapshot.val(); const cont = document.getElementById('contenedorTienda'); cont.innerHTML = '';
+        if (!data) return cont.innerHTML = `<div class="col-span-full text-center py-12 bg-black/40 p-6"><p class="text-amber-400 text-sm">TIENDA VACÍA</p></div>`;
         const esAdmin = verificarEsAdmin(currentUser?.email);
-
-        contenedor.innerHTML = tiendaKeys.map((key) => {
+        cont.innerHTML = Object.keys(data).map(key => {
           const item = data[key];
-          return `
-            <div class="bg-black/90 border border-amber-900/80 hover:border-amber-400 p-4 rounded-sm flex flex-col justify-between transition shadow-lg relative">
-              <div>
-                <div class="flex justify-between items-start mb-2 border-b border-amber-900/50 pb-2">
-                  <div>
-                    <span class="text-[10px] font-tech-title uppercase bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${item.tipo}</span>
-                    <h3 class="font-tech-title text-amber-300 font-bold text-lg mt-1">${item.nombre}</h3>
-                  </div>
-                  <div class="text-right">
-                    <span class="text-xs font-mono text-cyan-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-700 block mb-1">Req: Lv.${item.nivelReq || 1}</span>
-                    <span class="text-xs font-tech-title text-amber-400 font-bold">💰 ${formatearBigInt(parseTextoABigInt(item.precio))}</span>
-                  </div>
-                </div>
-
-                <div class="space-y-1.5 text-xs font-tech-body mb-3">
-                  ${item.tipo !== 'Objeto' ? `<p class="text-slate-300"><strong class="text-amber-400 font-tech-title">${item.tipo === 'Arma' ? 'Pts Arma' : 'Pts Armadura'}:</strong>${item.puntos}</p>` : ''}
-                  <p class="text-slate-300"><strong class="text-amber-400 font-tech-title">Efecto / Habilidad:</strong> ${item.habilidad}</p>
-                  <div class="bg-slate-950 p-2 rounded border border-slate-900 mt-2 text-slate-400 text-[11px] leading-relaxed">
-                    ${item.descripcion}
-                  </div>
-                </div>
-              </div>
-
-              <div class="border-t border-slate-900 pt-3 mt-2 flex flex-col gap-2">
-                <div class="flex justify-between items-center text-[11px] text-slate-400">
-                  <span>Vendedor: <strong class="text-slate-200">${item.autor}</strong></span>
-                  <div class="flex items-center gap-1">
-                    <label class="text-[10px] font-tech-title uppercase text-amber-400">Cant:</label>
-                    <input type="number" id="cant_buy_${key}" value="1" min="1" class="w-14 tech-input text-center text-xs py-0.5 rounded">
-                  </div>
-                </div>
-                
-                <button onclick="realizarCompraNube('${key}')" class="w-full bg-amber-600 hover:bg-amber-500 text-black font-tech-title font-bold text-xs py-2 uppercase tracking-wider transition shadow-[0_0_10px_rgba(245,158,11,0.3)]">
-                  🛒 Comprar
-                </button>
-                ${esAdmin ? `<button onclick="eliminarObjetoTiendaAdmin('${key}')" class="w-full bg-red-950 hover:bg-red-900 border border-red-600 text-red-400 text-xs py-1.5 uppercase font-bold transition">🗑️ Eliminar Objeto</button>` : ''}
-              </div>
-            </div>
-          `;
+          return `<div class="bg-black/90 border border-amber-900/80 hover:border-amber-400 p-4 shadow-lg flex flex-col justify-between">
+              <div><div class="flex justify-between items-start mb-2 border-b border-amber-900/50 pb-2"><div><span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${item.tipo}</span><h3 class="text-amber-300 font-bold mt-1">${item.nombre}</h3></div><div class="text-right"><span class="text-xs text-amber-400 font-bold">💰 ${formatearBigInt(parseTextoABigInt(item.precio))}</span></div></div><div class="text-xs font-tech-body mb-3"><p class="text-slate-300">Hab: ${item.habilidad}</p><div class="bg-slate-950 p-2 border border-slate-900 mt-2 text-slate-400">${item.descripcion}</div></div></div>
+              <div class="border-t border-slate-900 pt-3 mt-2 flex flex-col gap-2"><div class="flex justify-between text-[11px] text-slate-400"><span>Vend: <strong class="text-slate-200">${item.autor}</strong></span><input type="number" id="cant_buy_${key}" value="1" min="1" class="w-14 text-center tech-input text-xs"></div><button onclick="realizarCompraNube('${key}')" class="w-full bg-amber-600 hover:bg-amber-500 text-black py-2 uppercase font-bold text-xs">🛒 Comprar</button>${esAdmin ? `<button onclick="eliminarObjetoTiendaAdmin('${key}')" class="w-full bg-red-950 text-red-400 text-xs py-1.5 uppercase font-bold border border-red-900">🗑️ Eliminar</button>` : ''}</div></div>`;
         }).join('');
-      }, (error) => {
-         console.error("Error al leer Tienda: ", error.message);
       });
 
-      // EVENTO DE COMPRA RECIBIDO
-      db.ref('compras_eventos').limitToLast(1).on('child_added', (snapshot) => {
+      // LISTENER MISIONES
+      db.ref('misiones').on('value', (snapshot) => {
         const data = snapshot.val();
-        if (data && (Date.now() - data.timestamp < 10000)) {
-          mostrarComprobanteGlobal(data);
-        }
+        const contGlob = document.getElementById('contenedorMisionesGlobales'), contPers = document.getElementById('contenedorMisionesPersonales');
+        contGlob.innerHTML = ''; contPers.innerHTML = '';
+        if (!data) { contGlob.innerHTML = `<p class="text-xs text-slate-500">No hay misiones globales activas.</p>`; contPers.innerHTML = `<p class="text-xs text-slate-500">No tienes misiones personales asignadas.</p>`; return; }
+        const esAdmin = verificarEsAdmin(currentUser?.email);
+        Object.keys(data).forEach(key => {
+          const m = data[key];
+          let bg = m.tipo === 'global' ? 'border-purple-900 bg-purple-950/20' : 'border-cyan-900 bg-cyan-950/20', tc = m.tipo === 'global' ? 'text-purple-300' : 'text-cyan-300';
+          let rec = m.recompensa ? `<p class="mt-2 text-xs font-bold text-amber-400 bg-amber-950/40 p-1 border border-amber-900 rounded">🎁 ${m.recompensa}</p>` : '';
+          let sub = m.tipo === 'global' ? 'Misión Global' : (cacheJugadores[m.destinatario] ? `Para ${cacheJugadores[m.destinatario].nombre || cacheJugadores[m.destinatario].email}` : 'Personal');
+          let html = `<div class="border ${bg} p-4 flex flex-col justify-between relative shadow-lg"><div><span class="text-[10px] uppercase font-tech-title bg-slate-900 text-slate-300 px-2 py-0.5 rounded border border-slate-700">${sub}</span><h3 class="font-tech-title ${tc} font-bold text-lg mt-2">${m.titulo}</h3><div class="mt-2 text-xs text-slate-300 bg-black/60 p-2 rounded border border-slate-800">${m.descripcion}</div>${rec}</div><div class="mt-4 border-t border-slate-800 pt-3">${esAdmin ? `<button onclick="eliminarMisionAdmin('${key}')" class="w-full bg-red-950 text-red-400 text-xs py-1.5 uppercase font-bold">🗑️ Eliminar</button>` : ''}</div></div>`;
+          if (m.tipo === 'global') contGlob.innerHTML += html; else if (m.tipo === 'personal' && currentUser && (m.destinatario === currentUser.uid || esAdmin)) contPers.innerHTML += html;
+        });
+        if(contGlob.innerHTML === '') contGlob.innerHTML = `<p class="text-xs text-slate-500">No hay misiones globales.</p>`;
+        if(contPers.innerHTML === '') contPers.innerHTML = `<p class="text-xs text-slate-500">No tienes misiones personales.</p>`;
       });
+
+      db.ref('misiones').limitToLast(1).on('child_added', (s) => { const m = s.val(); if (m && (Date.now() - m.timestamp < 10000)) if (m.tipo === 'global' || (m.tipo === 'personal' && currentUser && m.destinatario === currentUser.uid)) mostrarNotificacionMision(m); });
     }
 
-    // ACCIONES ADMINISTRADOR Y LECTURA
-    function eliminarFichaAdmin(uid) {
-      if (confirm('⚠️ ¿Estás seguro de que deseas eliminar esta ficha permanentemente?')) {
-        db.ref('jugadores/' + uid).remove();
-      }
-    }
-
-    function eliminarObjetoTiendaAdmin(itemKey) {
-      if (confirm('⚠️ ¿Estás seguro de eliminar este objeto de la tienda?')) {
-        db.ref('tienda/' + itemKey).remove();
-      }
-    }
+    function eliminarFichaAdmin(uid) { if (confirm('⚠️ ¿Borrar ficha permanentemente?')) db.ref('jugadores/' + uid).remove(); }
+    function eliminarObjetoTiendaAdmin(key) { if (confirm('⚠️ ¿Eliminar objeto de la tienda?')) db.ref('tienda/' + key).remove(); }
+    function eliminarMisionAdmin(key) { if (confirm('⚠️ ¿Eliminar esta misión?')) db.ref('misiones/' + key).remove(); }
 
     function verPersonajeObjeto(pj) {
       const esAdmin = verificarEsAdmin(currentUser?.email);
-
       if (esAdmin) {
-        esModoLectura = false;
-        targetUidToEdit = pj.uid;
-        targetEmailToEdit = pj.email;
-        
-        cargarDatosEnInterfaz(pj);
-        bloquearDesbloquearInputs(false);
-
-        document.getElementById('readOnlyBanner').classList.add('hidden');
-        document.getElementById('saveBtn').classList.add('hidden');
-        document.getElementById('adminSaveBtn').classList.remove('hidden');
-        
-        alert(`🛡️ [MODO ADMIN]: Estás editando la ficha de: ${pj.nombre || pj.email}`);
+        esModoLectura = false; targetUidToEdit = pj.uid; targetEmailToEdit = pj.email;
+        cargarDatosEnInterfaz(pj); bloquearDesbloquearInputs(false); aplicarPermisos();
+        document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.add('hidden'); document.getElementById('adminSaveBtn').classList.remove('hidden');
       } else {
-        esModoLectura = true;
-        targetUidToEdit = currentUser.uid;
-        targetEmailToEdit = currentUser.email;
-
-        cargarDatosEnInterfaz(pj);
-        bloquearDesbloquearInputs(true);
-
-        document.getElementById('readOnlyBanner').classList.remove('hidden');
-        document.getElementById('saveBtn').classList.add('hidden');
-        document.getElementById('adminSaveBtn').classList.add('hidden');
+        esModoLectura = true; targetUidToEdit = currentUser.uid; targetEmailToEdit = currentUser.email;
+        cargarDatosEnInterfaz(pj); bloquearDesbloquearInputs(true);
+        document.getElementById('readOnlyBanner').classList.remove('hidden'); document.getElementById('saveBtn').classList.add('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden');
       }
-      
       mostrarSeccion('editor');
     }
 
     function volverAMiFicha() {
-      esModoLectura = false;
-      if (currentUser) {
-        targetUidToEdit = currentUser.uid;
-        targetEmailToEdit = currentUser.email;
-      }
+      esModoLectura = false; if (currentUser) { targetUidToEdit = currentUser.uid; targetEmailToEdit = currentUser.email; }
       bloquearDesbloquearInputs(false);
-      document.getElementById('readOnlyBanner').classList.add('hidden');
-      document.getElementById('saveBtn').classList.remove('hidden');
-      document.getElementById('adminSaveBtn').classList.add('hidden');
+      document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.remove('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden');
       if (currentUser) cargarFichaNube(currentUser.uid);
     }
+    
+    function bloquearDesbloquearInputs(b) { document.querySelectorAll('#seccionEditor input, #seccionEditor textarea').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); }
+    
+    function cargarDatosEnInterfaz(f) {
+      for (const k in f) {
+        if (k === 'puntosExtraAsignados') Object.assign(puntosExtraAsignados, f[k]);
+        else if (k === 'puntosGuardadosBloqueados') Object.assign(puntosGuardadosBloqueados, f[k]);
+        else if (document.getElementById(k)) document.getElementById(k).value = f[k];
+      }
+      actualizarSistemas();
+      aplicarPermisos(); // Ejecutar bloqueo inteligente al final
+    }
 
-    function bloquearDesbloquearInputs(bloquear) {
-      const inputs = document.querySelectorAll('#seccionEditor input, #seccionEditor textarea');
-      inputs.forEach(el => {
-        if (bloquear) el.setAttribute('disabled', 'true');
-        else el.removeAttribute('disabled');
+    // TIENDA & TRANSACCIONES
+    function abrirModalAgregarObjeto() { document.getElementById('modalTienda').classList.remove('hidden'); const n = document.getElementById('nombre').value.trim(); if(n) document.getElementById('tiendaAutor').value = n; }
+    function cerrarModalAgregarObjeto() { document.getElementById('modalTienda').classList.add('hidden'); document.getElementById('formObjetoTienda').reset(); }
+    function cambiarTipoFormularioObjeto() { document.getElementById('campoPuntosDinamico').classList.toggle('hidden', document.getElementById('tiendaTipo').value === 'Objeto'); }
+    
+    function guardarObjetoTienda(e) {
+      e.preventDefault(); const t = document.getElementById('tiendaTipo').value;
+      const o = { vendedorUid: currentUser?.uid, autor: document.getElementById('tiendaAutor').value.trim(), tipo: t, nombre: document.getElementById('tiendaNombre').value.trim(), precio: document.getElementById('tiendaPrecio').value.trim(), nivelReq: document.getElementById('tiendaNivelReq').value.trim(), puntos: t==='Objeto'?'-':document.getElementById('tiendaPuntos').value.trim(), clase: t==='Objeto'?'Objeto':document.getElementById('tiendaClase').value.trim(), habilidad: document.getElementById('tiendaHabilidad').value.trim(), descripcion: document.getElementById('tiendaDescripcion').value.trim(), timestamp: Date.now() };
+      if (db) db.ref('tienda').push(o).then(() => { cerrarModalAgregarObjeto(); alert('🛒 Objeto publicado!'); }).catch(err => alert('❌ Error: ' + err.message));
+    }
+
+    // LÓGICA DE TRANSACCIÓN BANCARIA AL COMPRAR
+    function realizarCompraNube(key) {
+      if (!currentUser) return alert("❌ Debes iniciar sesión para comprar.");
+      
+      db.ref('tienda/' + key).once('value').then(snapItem => {
+        const item = snapItem.val(); if (!item) return alert("❌ El objeto ya no existe.");
+
+        const cant = parseInt(document.getElementById(`cant_buy_${key}`)?.value) || 1;
+        const precioUnitario = parseTextoABigInt(item.precio);
+        const precioTotal = precioUnitario !== Infinity ? precioUnitario * BigInt(cant) : Infinity;
+
+        // Comprobar saldo comprador
+        db.ref('jugadores/' + currentUser.uid).once('value').then(snapBuyer => {
+          const buyer = snapBuyer.val(); if (!buyer) return alert("❌ Crea y guarda tu personaje primero.");
+          const buyerDeniques = parseTextoABigInt(buyer.deniques || '0');
+
+          if (buyerDeniques !== Infinity && (precioTotal === Infinity || buyerDeniques < precioTotal)) {
+            return alert("❌ Fondos insuficientes. No tienes suficientes Deniques.");
+          }
+
+          // Saldo final comprador
+          const newBuyerDeniques = buyerDeniques === Infinity ? Infinity : buyerDeniques - precioTotal;
+          const buyerUpdate = newBuyerDeniques === Infinity ? '∞' : newBuyerDeniques.toString();
+          const updates = {}; updates[`/jugadores/${currentUser.uid}/deniques`] = buyerUpdate;
+
+          // Encontrar vendedor y sumarle fondos
+          let sellerPromise = Promise.resolve(null);
+          if (item.vendedorUid) { sellerPromise = db.ref('jugadores/' + item.vendedorUid).once('value'); } 
+          else { sellerPromise = db.ref('jugadores').orderByChild('nombre').equalTo(item.autor).once('value').then(s => s.exists() ? db.ref('jugadores/' + Object.keys(s.val())[0]).once('value') : null); }
+
+          sellerPromise.then(snapSeller => {
+            if (snapSeller && snapSeller.exists()) {
+              const sellerUid = snapSeller.key, sellerData = snapSeller.val();
+              const sellerDeniques = parseTextoABigInt(sellerData.deniques || '0');
+              const newSellerDeniques = (sellerDeniques === Infinity || precioTotal === Infinity) ? Infinity : sellerDeniques + precioTotal;
+              
+              if (sellerUid !== currentUser.uid) { // No pagarse a sí mismo
+                updates[`/jugadores/${sellerUid}/deniques`] = newSellerDeniques === Infinity ? '∞' : newSellerDeniques.toString();
+              }
+            }
+
+            // Ejecutar transacción
+            db.ref().update(updates).then(() => {
+              const ptStr = precioTotal !== Infinity ? `${formatearBigInt(precioTotal)} Deniques` : '∞';
+              const evt = { comprador: buyer.nombre || currentUser.email, objeto: item.nombre, cantidad: cant, precioTotal: ptStr, vendedor: item.autor, timestamp: Date.now() };
+              db.ref('compras_eventos').push(evt);
+              
+              if (!esModoLectura && targetUidToEdit === currentUser.uid) cargarFichaNube(currentUser.uid);
+              else if (targetUidToEdit) cargarFichaNube(targetUidToEdit);
+              
+              alert("✅ ¡Compra realizada y fondos transferidos con éxito!");
+            }).catch(e => alert("❌ Error en transacción: " + e.message));
+          });
+        });
       });
     }
 
-    function cargarDatosEnInterfaz(ficha) {
-      for (const key in ficha) {
-        if (key === 'puntosExtraAsignados') Object.assign(puntosExtraAsignados, ficha.puntosExtraAsignados);
-        else if (key === 'puntosGuardadosBloqueados') Object.assign(puntosGuardadosBloqueados, ficha.puntosGuardadosBloqueados);
-        else if (document.getElementById(key)) document.getElementById(key).value = ficha[key];
-      }
-      actualizarSistemas();
+    function mostrarComprobanteGlobal(d) {
+      document.getElementById('reciboUsuario').textContent = d.comprador; document.getElementById('reciboObjeto').textContent = d.objeto;
+      document.getElementById('reciboCantidad').textContent = `${d.cantidad} Unidades`; document.getElementById('reciboPrecioTotal').textContent = d.precioTotal;
+      document.getElementById('reciboVendedor').textContent = d.vendedor; document.getElementById('comprobanteCompraOverlay').classList.remove('hidden');
     }
+    function cerrarComprobante() { document.getElementById('comprobanteCompraOverlay').classList.add('hidden'); }
 
-    // TIENDA ACCIONES
-    function abrirModalAgregarObjeto() {
-      document.getElementById('modalTienda').classList.remove('hidden');
-      const miNombre = document.getElementById('nombre').value.trim();
-      if (miNombre) document.getElementById('tiendaAutor').value = miNombre;
+    // MISIONES FUNCIONALIDADES
+    function abrirModalMision() { document.getElementById('modalMision').classList.remove('hidden'); }
+    function cerrarModalMision() { document.getElementById('modalMision').classList.add('hidden'); document.getElementById('formMision').reset(); toggleMisionDestinatario(); }
+    function toggleMisionDestinatario() { document.getElementById('campoMisionDestinatario').classList.toggle('hidden', document.getElementById('misionTipo').value !== 'personal'); }
+    
+    function guardarMision(e) {
+      e.preventDefault(); const t = document.getElementById('misionTipo').value;
+      const m = { tipo: t, destinatario: t === 'personal' ? document.getElementById('misionDestinatario').value : 'global', titulo: document.getElementById('misionTitulo').value.trim(), descripcion: document.getElementById('misionDesc').value.trim(), recompensa: document.getElementById('misionRecompensa').value.trim(), timestamp: Date.now(), adminResponsable: currentUser?.email };
+      if (db) db.ref('misiones').push(m).then(() => { cerrarModalMision(); alert('📜 Misión enviada a la Red.'); }).catch(e => alert('❌ Error: ' + e.message));
     }
-
-    function cerrarModalAgregarObjeto() {
-      document.getElementById('modalTienda').classList.add('hidden');
-      document.getElementById('formObjetoTienda').reset();
+    function mostrarNotificacionMision(m) {
+      document.getElementById('alertaMisionTitulo').textContent = m.titulo;
+      const r = document.getElementById('alertaMisionRecompensa'); if(m.recompensa) { r.textContent = `Recompensa: ${m.recompensa}`; r.classList.remove('hidden'); } else r.classList.add('hidden');
+      document.getElementById('alertaMisionSubtitulo').textContent = m.tipo === 'global' ? 'NUEVA MISIÓN GLOBAL' : 'SE TE HA ASIGNADO UN ENCARGO PERSONAL';
+      document.getElementById('notificacionMisionOverlay').classList.remove('hidden');
     }
-
-    function cambiarTipoFormularioObjeto() {
-      const tipo = document.getElementById('tiendaTipo').value;
-      const campoPuntos = document.getElementById('campoPuntosDinamico');
-      if (tipo === 'Objeto') campoPuntos.classList.add('hidden');
-      else campoPuntos.classList.remove('hidden');
-    }
-
-    function guardarObjetoTienda(e) {
-      e.preventDefault();
-      const tipo = document.getElementById('tiendaTipo').value;
-      const objetoNuevo = {
-        autor: document.getElementById('tiendaAutor').value.trim(),
-        tipo: tipo,
-        nombre: document.getElementById('tiendaNombre').value.trim(),
-        precio: document.getElementById('tiendaPrecio').value.trim(),
-        nivelReq: document.getElementById('tiendaNivelReq').value.trim(),
-        puntos: tipo === 'Objeto' ? '-' : document.getElementById('tiendaPuntos').value.trim(),
-        clase: tipo === 'Objeto' ? 'Objeto' : document.getElementById('tiendaClase').value.trim(),
-        habilidad: document.getElementById('tiendaHabilidad').value.trim(),
-        descripcion: document.getElementById('tiendaDescripcion').value.trim(),
-        timestamp: Date.now()
-      };
-
-      if (db) {
-        db.ref('tienda').push(objetoNuevo)
-          .then(() => {
-            cerrarModalAgregarObjeto();
-            alert('🛒 ¡Objeto publicado globalmente!');
-          })
-          .catch((error) => {
-            alert('❌ Error al publicar: ' + error.message);
-          });
-      }
-    }
-
-    function realizarCompraNube(key) {
-      db.ref('tienda/' + key).once('value')
-        .then((snapshot) => {
-          const item = snapshot.val();
-          if (!item) return;
-
-          const cantidadInput = document.getElementById(`cant_buy_${key}`);
-          const cantidad = cantidadInput ? parseInt(cantidadInput.value) || 1 : 1;
-          const precioUnitario = parseTextoABigInt(item.precio);
-
-          let precioTotalStr = '∞';
-          if (precioUnitario !== Infinity) {
-            precioTotalStr = `${formatearBigInt(precioUnitario * BigInt(cantidad))} Deniques`;
-          }
-
-          const comprador = document.getElementById('nombre').value.trim() || 'Usuario Anónimo';
-
-          const eventoCompra = {
-            comprador: comprador,
-            objeto: item.nombre,
-            cantidad: cantidad,
-            precioTotal: precioTotalStr,
-            vendedor: item.autor,
-            timestamp: Date.now()
-          };
-
-          if (db) db.ref('compras_eventos').push(eventoCompra);
-        });
-    }
-
-    function mostrarComprobanteGlobal(data) {
-      document.getElementById('reciboUsuario').textContent = data.comprador;
-      document.getElementById('reciboObjeto').textContent = data.objeto;
-      document.getElementById('reciboCantidad').textContent = `${data.cantidad} Unidades`;
-      document.getElementById('reciboPrecioTotal').textContent = data.precioTotal;
-      document.getElementById('reciboVendedor').textContent = data.vendedor;
-      document.getElementById('comprobanteCompraOverlay').classList.remove('hidden');
-    }
-
-    function cerrarComprobante() {
-      document.getElementById('comprobanteCompraOverlay').classList.add('hidden');
-    }
+    function cerrarNotificacionMision() { document.getElementById('notificacionMisionOverlay').classList.add('hidden'); mostrarSeccion('misiones'); }
   </script>
 </body>
 </html>
