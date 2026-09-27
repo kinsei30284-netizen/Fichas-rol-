@@ -85,6 +85,7 @@
       <button onclick="mostrarSeccion('tienda')" class="w-full text-left font-tech-title text-amber-300 hover:text-black hover:bg-amber-400 p-2 border border-amber-800 transition flex items-center gap-3 text-sm"><span>🛒</span> Tienda Global</button>
       <button onclick="mostrarSeccion('forja')" class="w-full text-left font-tech-title text-orange-300 hover:text-black hover:bg-orange-400 p-2 border border-orange-800 transition flex items-center gap-3 text-sm"><span>🔨</span> Forja de Creación</button>
       <button onclick="mostrarSeccion('bestiario')" class="w-full text-left font-tech-title text-red-300 hover:text-black hover:bg-red-400 p-2 border border-red-800 transition flex items-center gap-3 text-sm"><span>🐉</span> Bestiario y Amenazas</button>
+      <button onclick="mostrarSeccion('mazmorras')" class="w-full text-left font-tech-title text-rose-300 hover:text-black hover:bg-rose-400 p-2 border border-rose-800 transition flex items-center gap-3 text-sm"><span>🕳️</span> Mazmorras</button>
       <button onclick="mostrarSeccion('misiones')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-2 border border-purple-800 transition flex items-center gap-3 text-sm"><span>📜</span> Tablón de Misiones</button>
       
       <button onclick="abrirConfiguracion()" class="w-full text-left font-tech-title text-slate-300 hover:text-black hover:bg-slate-400 p-2 border border-slate-700 transition flex items-center gap-3 text-sm mt-4"><span>🔧</span> Configuración Cuenta</button>
@@ -290,6 +291,15 @@
 
       <h3 class="text-md font-tech-title text-red-400 uppercase tracking-wider mb-4 border-b border-red-900 pb-1">Registro Oficial de Amenazas</h3>
       <div id="contenedorListaBestiario" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+    </div>
+
+    <!-- SECCIÓN: MAZMORRAS -->
+    <div id="seccionMazmorras" class="hidden">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-rose-500/50 pb-3 mb-6 gap-4">
+        <h2 class="text-xl font-tech-title text-rose-400 uppercase tracking-widest">// PORTALES DE MAZMORRAS</h2>
+        <button id="btnNuevaMazmorraAdmin" onclick="abrirModalMazmorra()" class="hidden bg-rose-600 hover:bg-rose-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">➕ Crear Mazmorra (Admin)</button>
+      </div>
+      <div id="contenedorMazmorras" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
 
     <!-- SECCIÓN: LISTA DE JUGADORES -->
@@ -523,8 +533,86 @@
     </div>
   </div>
 
+  <!-- MODAL: CREAR MAZMORRA (ADMIN) -->
+  <div id="modalMazmorra" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-rose-500 max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-rose-900 pb-3 mb-4">
+        <h3 class="text-lg font-tech-title text-rose-400 uppercase tracking-wider">// CREAR NUEVA MAZMORRA</h3>
+        <button onclick="document.getElementById('modalMazmorra').classList.add('hidden')" class="text-rose-400 font-bold">✕</button>
+      </div>
+      <form id="formMazmorra" onsubmit="guardarMazmorraAdmin(event)" class="space-y-4 text-xs font-tech-body">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-rose-300 font-bold mb-1 uppercase">Nombre de la Mazmorra *</label><input type="text" id="mazNombre" required class="w-full tech-input p-2 text-sm border-rose-900"></div>
+          <div><label class="block text-rose-300 font-bold mb-1 uppercase">Nivel Mínimo Requerido *</label><input type="text" id="mazNivelReq" required class="w-full tech-input p-2 text-sm border-rose-900"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-rose-300 font-bold mb-1 uppercase">Tipo de Acceso *</label><select id="mazTipoAcceso" class="w-full tech-input p-2 text-sm bg-slate-900 border-rose-900"><option value="global">Global (Público)</option><option value="individual">Individual (1 Jugador)</option><option value="equipo">Equipo (2 a 10 jugadores)</option></select></div>
+          <div><label class="block text-rose-300 font-bold mb-1 uppercase">Duración / Cronómetro (Horas, máx 168) *</label><input type="number" id="mazDuracionHoras" min="1" max="168" value="24" required class="w-full tech-input p-2 text-sm border-rose-900"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-rose-300 font-bold mb-1 uppercase">Subir Imagen de Mazmorra</label><input type="file" id="inputArchivoMazmorra" accept="image/*" onchange="procesarArchivoMazmorra(event)" class="w-full text-slate-400 file:mr-2 file:py-1 file:px-2 file:border-0 file:bg-rose-950 file:text-rose-300 cursor-pointer"></div>
+          <div><label class="block text-rose-300 font-bold mb-1 uppercase">Recompensa (Deniques / Items) *</label><input type="text" id="mazRecompensa" required class="w-full tech-input p-2 text-sm border-rose-900" placeholder="Ej. 5000 Deniques + Espada Arcana"></div>
+        </div>
+        <div><label class="block text-rose-300 font-bold mb-1 uppercase">Descripción de la Mazmorra *</label><textarea id="mazDesc" required rows="2" class="w-full tech-input p-2 text-sm border-rose-900"></textarea></div>
+
+        <!-- 3 Monstruos Normales -->
+        <div class="border border-rose-900/60 p-3 bg-black/40 space-y-3">
+          <h4 class="font-tech-title text-rose-400 font-bold uppercase">// FASE 1: MONSTRUOS NORMALES (3 OBLIGATORIOS)</h4>
+          <div id="contenedorMonstruosNormales" class="space-y-4">
+            <!-- Se inyectarán dinámicamente o se pueden rellenar -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 border-b border-rose-900/40 pb-2">
+              <div><label class="text-[10px] text-rose-300">Nombre Monstruo 1</label><input type="text" id="m1_nombre" required class="w-full tech-input p-1 text-xs"></div>
+              <div><label class="text-[10px] text-rose-300">Cantidad</label><input type="text" id="m1_cant" required class="w-full tech-input p-1 text-xs" value="5"></div>
+              <div><label class="text-[10px] text-rose-300">Nivel</label><input type="text" id="m1_nivel" required class="w-full tech-input p-1 text-xs" value="10"></div>
+              <div><label class="text-[10px] text-rose-300">Puntos Armadura</label><input type="text" id="m1_armadura" class="w-full tech-input p-1 text-xs" value="100"></div>
+              <div><label class="text-[10px] text-rose-300">Puntos Arma</label><input type="text" id="m1_arma" class="w-full tech-input p-1 text-xs" value="50"></div>
+              <div><label class="text-[10px] text-rose-300">Estadísticas</label><input type="text" id="m1_stats" class="w-full tech-input p-1 text-xs" value="Fuerza 50, Agilidad 30"></div>
+              <div class="md:col-span-3"><label class="text-[10px] text-rose-300">Habilidades / Descripción / Imagen URL</label><input type="text" id="m1_info" class="w-full tech-input p-1 text-xs" placeholder="Hab: Garra oscura | Desc: Bestia de sombra | Img: URL"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 border-b border-rose-900/40 pb-2">
+              <div><label class="text-[10px] text-rose-300">Nombre Monstruo 2</label><input type="text" id="m2_nombre" required class="w-full tech-input p-1 text-xs"></div>
+              <div><label class="text-[10px] text-rose-300">Cantidad</label><input type="text" id="m2_cant" required class="w-full tech-input p-1 text-xs" value="4"></div>
+              <div><label class="text-[10px] text-rose-300">Nivel</label><input type="text" id="m2_nivel" required class="w-full tech-input p-1 text-xs" value="12"></div>
+              <div><label class="text-[10px] text-rose-300">Puntos Armadura</label><input type="text" id="m2_armadura" class="w-full tech-input p-1 text-xs" value="120"></div>
+              <div><label class="text-[10px] text-rose-300">Puntos Arma</label><input type="text" id="m2_arma" class="w-full tech-input p-1 text-xs" value="60"></div>
+              <div><label class="text-[10px] text-rose-300">Estadísticas</label><input type="text" id="m2_stats" class="w-full tech-input p-1 text-xs" value="Fuerza 60, Agilidad 40"></div>
+              <div class="md:col-span-3"><label class="text-[10px] text-rose-300">Habilidades / Descripción / Imagen URL</label><input type="text" id="m2_info" class="w-full tech-input p-1 text-xs" placeholder="Hab: Veneno | Desc: Gárgola | Img: URL"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <div><label class="text-[10px] text-rose-300">Nombre Monstruo 3</label><input type="text" id="m3_nombre" required class="w-full tech-input p-1 text-xs"></div>
+              <div><label class="text-[10px] text-rose-300">Cantidad</label><input type="text" id="m3_cant" required class="w-full tech-input p-1 text-xs" value="3"></div>
+              <div><label class="text-[10px] text-rose-300">Nivel</label><input type="text" id="m3_nivel" required class="w-full tech-input p-1 text-xs" value="15"></div>
+              <div><label class="text-[10px] text-rose-300">Puntos Armadura</label><input type="text" id="m3_armadura" class="w-full tech-input p-1 text-xs" value="150"></div>
+              <div><label class="text-[10px] text-rose-300">Puntos Arma</label><input type="text" id="m3_arma" class="w-full tech-input p-1 text-xs" value="80"></div>
+              <div><label class="text-[10px] text-rose-300">Estadísticas</label><input type="text" id="m3_stats" class="w-full tech-input p-1 text-xs" value="Fuerza 80, Agilidad 50"></div>
+              <div class="md:col-span-3"><label class="text-[10px] text-rose-300">Habilidades / Descripción / Imagen URL</label><input type="text" id="m3_info" class="w-full tech-input p-1 text-xs" placeholder="Hab: Fuego | Desc: Salamandra | Img: URL"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Boss Final (Color Rojo) -->
+        <div class="border border-red-600 p-3 bg-red-950/20 space-y-3">
+          <h4 class="font-tech-title text-red-500 font-bold uppercase">// FASE FINAL: BOSS DE LA MAZMORRA (COLOR ROJO)</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <div><label class="text-[10px] text-red-300">Nombre del Boss</label><input type="text" id="boss_nombre" required class="w-full tech-input p-1 text-xs border-red-900" value="Señor del Abismo"></div>
+            <div><label class="text-[10px] text-red-300">Cantidad</label><input type="text" id="boss_cant" required class="w-full tech-input p-1 text-xs border-red-900" value="1"></div>
+            <div><label class="text-[10px] text-red-300">Nivel</label><input type="text" id="boss_nivel" required class="w-full tech-input p-1 text-xs border-red-900" value="30"></div>
+            <div><label class="text-[10px] text-red-300">Puntos Armadura</label><input type="text" id="boss_armadura" class="w-full tech-input p-1 text-xs border-red-900" value="500"></div>
+            <div><label class="text-[10px] text-red-300">Puntos Arma</label><input type="text" id="boss_arma" class="w-full tech-input p-1 text-xs border-red-900" value="300"></div>
+            <div><label class="text-[10px] text-red-300">Estadísticas</label><input type="text" id="boss_stats" class="w-full tech-input p-1 text-xs border-red-900" value="Fuerza 300, Vitalidad 1000"></div>
+            <div class="md:col-span-3"><label class="text-[10px] text-red-300">Habilidades / Descripción / Imagen URL</label><input type="text" id="boss_info" class="w-full tech-input p-1 text-xs border-red-900" placeholder="Hab: Cataclismo | Desc: Titán ancestral | Img: URL"></div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="submit" class="px-6 py-2 bg-rose-600 text-black font-tech-title font-bold text-xs uppercase">Publicar Portal de Mazmorra</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4"><div class="bg-slate-950 border border-amber-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(245,158,11,0.2)]"><div class="flex justify-between items-center border-b border-amber-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-amber-400 uppercase tracking-wider">// REGISTRAR OBJETO EN LA TIENDA</h3><button onclick="cerrarModalAgregarObjeto()" class="text-amber-400 hover:text-amber-200 text-xl font-bold">✕</button></div><form id="formObjetoTienda" onsubmit="guardarObjetoTienda(event)" class="space-y-4"><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nombre (Autor) *</label><input type="text" id="tiendaAutor" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Tipo *</label><select id="tiendaTipo" onchange="cambiarTipoFormularioObjeto()" class="w-full tech-input px-3 py-1.5 text-sm bg-slate-900"><option value="Arma">Arma</option><option value="Armadura">Armadura</option><option value="Objeto">Objeto Normal</option></select></div><div class="grid grid-cols-1 md:grid-cols-3 gap-3"><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Objeto *</label><input type="text" id="tiendaNombre" required class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Precio *</label><input type="text" id="tiendaPrecio" required class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nivel Req *</label><input type="text" id="tiendaNivelReq" required class="w-full tech-input px-3 py-1.5 text-sm"></div></div><div id="campoPuntosDinamico" class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label id="lblPuntosDinamico" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Puntos *</label><input type="text" id="tiendaPuntos" class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label id="lblClaseDinamica" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Clase *</label><input type="text" id="tiendaClase" class="w-full tech-input px-3 py-1.5 text-sm"></div></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Habilidad *</label><input type="text" id="tiendaHabilidad" required class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Descripción *</label><textarea id="tiendaDescripcion" required rows="3" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div><div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalAgregarObjeto()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button><button type="submit" class="px-5 py-2 bg-amber-600 text-black font-tech-title font-bold text-xs uppercase">Publicar</button></div></form></div></div>
-  <div id="modalMision" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4"><div class="bg-slate-950 border border-purple-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(168,85,247,0.2)]"><div class="flex justify-between items-center border-b border-purple-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-purple-400 uppercase tracking-wider">// ASIGNAR NUEVA MISIÓN</h3><button onclick="cerrarModalMision()" class="text-purple-400 hover:text-purple-200 text-xl font-bold">✕</button></div><form id="formMision" onsubmit="guardarMision(event)" class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Tipo de Misión *</label><select id="misionTipo" onchange="toggleMisionDestinatario()" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 text-purple-200"><option value="global">Misión Global</option><option value="personal">Misión Personal</option></select></div><div id="campoMisionDestinatario" class="hidden"><label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Jugador *</label><select id="misionDestinatario" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 border-cyan-800"></select></div></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Título de la Misión *</label><input type="text" id="misionTitulo" required class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Recompensa (Opcional)</label><input type="text" id="misionRecompensa" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Descripción / Objetivos *</label><textarea id="misionDesc" required rows="4" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></textarea></div><div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalMision()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button><button type="submit" class="px-5 py-2 bg-purple-600 text-black font-tech-title font-bold text-xs uppercase">Publicar Misión</button></div></form></div></div>
+<div id="modalMision" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4"><div class="bg-slate-950 border border-purple-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(168,85,247,0.2)]"><div class="flex justify-between items-center border-b border-purple-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-purple-400 uppercase tracking-wider">// ASIGNAR NUEVA MISIÓN</h3><button onclick="cerrarModalMision()" class="text-purple-400 hover:text-purple-200 text-xl font-bold">✕</button></div><form id="formMision" onsubmit="guardarMision(event)" class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Tipo de Misión *</label><select id="misionTipo" onchange="toggleMisionDestinatario()" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 text-purple-200"><option value="global">Misión Global</option><option value="personal">Misión Personal</option></select></div><div id="campoMisionDestinatario" class="hidden"><label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Jugador *</label><select id="misionDestinatario" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 border-cyan-800"></select></div></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Título de la Misión *</label><input type="text" id="misionTitulo" required class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Recompensa en Deniques (Solo Admin)</label><input type="number" id="misionDeniques" value="0" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Recompensa Objeto / Texto</label><input type="text" id="misionRecompensa" class="w-full tech-input border-purple-900 px-3 py-2 text-sm" placeholder="Ej. Espada legendaria"></div></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Descripción / Objetivos *</label><textarea id="misionDesc" required rows="3" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></textarea></div><div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalMision()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button><button type="submit" class="px-5 py-2 bg-purple-600 text-black font-tech-title font-bold text-xs uppercase">Publicar Misión</button></div></form></div></div>
   <div id="comprobanteCompraOverlay" class="hidden fixed inset-0 bg-black/95 z-[150] flex items-center justify-center p-4"><div class="max-w-2xl w-full bg-slate-950 border-2 border-emerald-400 p-8 shadow-[0_0_50px_rgba(16,185,129,0.4)] text-center"><div class="text-emerald-400 text-6xl mb-3">⚡</div><h2 class="text-2xl font-tech-title text-emerald-400 font-bold uppercase mb-1">// TRANSACCIÓN COMPLETADA</h2><div class="bg-black/80 border border-emerald-900 p-6 mb-6 text-left space-y-3 font-tech-body mt-4"><div class="text-2xl font-tech-title text-emerald-300 font-bold border-b border-emerald-900 pb-2">👤 <span id="reciboUsuario">---</span></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"><div><span class="block text-xs font-tech-title text-slate-400">Objeto:</span><span id="reciboObjeto" class="text-lg font-tech-title text-cyan-300 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Unidades:</span><span id="reciboCantidad" class="text-lg font-tech-title text-amber-300 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Coste Total:</span><span id="reciboPrecioTotal" class="text-lg font-tech-title text-amber-400 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Vendedor Recibió:</span><span id="reciboVendedor" class="text-md text-slate-200">---</span></div></div></div><button onclick="cerrarComprobante()" class="bg-emerald-500 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase">✔ Entendido</button></div></div>
 
       <script>
@@ -560,6 +648,7 @@
           if (verificarEsAdmin(user.email)) {
             document.getElementById('adminBadgeDisplay').classList.remove('hidden'); document.getElementById('btnMenuAdmin').classList.remove('hidden');
             document.getElementById('btnNuevaMisionAdmin').classList.remove('hidden'); document.getElementById('btnAdminCorreo').classList.remove('hidden'); document.getElementById('btnAdminFaccion').classList.remove('hidden');
+            document.getElementById('btnNuevaMazmorraAdmin').classList.remove('hidden');
           }
           db.ref('jugadores/' + user.uid + '_2').on('value', snap => { document.getElementById('selectorPersonajes').classList.toggle('hidden', !snap.exists()); });
           cargarFichaNube(targetUidToEdit); inicializarSistemasNuevos();
@@ -576,7 +665,7 @@
     
     function mostrarSeccion(s) {
       document.getElementById('sideDrawer').classList.remove('open'); 
-      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionConfiguracion'];
+      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionMazmorras', 'seccionConfiguracion'];
       secciones.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); });
       const act = document.getElementById('seccion' + s.charAt(0).toUpperCase() + s.slice(1));
       if (act) act.classList.remove('hidden');
@@ -709,15 +798,16 @@
     }
     function volverAMiFicha() { esModoLectura = false; if (currentUser) { targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; } bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.remove('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); if (currentUser) cargarFichaNube(targetUidToEdit); }
     function cambiarFichaPropia(suffix) { if(esModoLectura) return; suffixFichaActiva = suffix; targetUidToEdit = currentUser.uid + suffix; cargarFichaNube(targetUidToEdit); mostrarSeccion('editor'); }
-                  </script>
-                    <script>
+      </script>
+        <script>
     function inicializarSistemasNuevos() {
       db.ref('jugadores').on('value', snap => {
-        cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha');
+        cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha'), selectMisionDest = document.getElementById('misionDestinatario');
         
         if (selectInv) selectInv.innerHTML = Object.keys(cacheJugadores).filter(uid => uid !== currentUser.uid).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
         if (selectMail) selectMail.innerHTML = Object.keys(cacheJugadores).filter(uid => uid !== currentUser.uid).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
         if (selectAdminFicha) selectAdminFicha.innerHTML = `<option value="">Selecciona un jugador...</option>` + Object.keys(cacheJugadores).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
+        if (selectMisionDest) selectMisionDest.innerHTML = Object.keys(cacheJugadores).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
 
         if (cont) {
           cont.innerHTML = Object.keys(cacheJugadores).map(uid => {
@@ -733,7 +823,7 @@
           const msg = mensajes[key];
           if (msg.to === currentUser.uid || msg.to === 'global') {
             unread++; let bg = msg.to === 'global' ? 'border-red-500 bg-red-950/20' : 'border-emerald-500 bg-emerald-950/20';
-            let actions = (msg.type === 'invite_equipo' || msg.type === 'invite_faccion') ? `<div class="mt-2 flex gap-2"><button onclick="aceptarInvitacion('${key}', '${msg.refId}', '${msg.type}', '${msg.rango}')" class="bg-emerald-600 text-black text-xs px-3 py-1 font-bold">Aceptar</button><button onclick="borrarCorreo('${key}')" class="bg-red-900 text-white text-xs px-3 py-1">Rechazar / Borrar</button></div>` : `<button onclick="borrarCorreo('${key}')" class="mt-2 text-xs text-slate-400 hover:text-red-400 underline">🗑️ Borrar Correo</button>`;
+            let actions = (msg.type === 'invite_equipo' || msg.type === 'invite_faccion' || msg.type === 'invite_mazmorra') ? `<div class="mt-2 flex gap-2"><button onclick="aceptarInvitacion('${key}', '${msg.refId}', '${msg.type}', '${msg.rango}')" class="bg-emerald-600 text-black text-xs px-3 py-1 font-bold">Aceptar</button><button onclick="borrarCorreo('${key}')" class="bg-red-900 text-white text-xs px-3 py-1">Rechazar / Borrar</button></div>` : `<button onclick="borrarCorreo('${key}')" class="mt-2 text-xs text-slate-400 hover:text-red-400 underline">🗑️ Borrar Correo</button>`;
             lista.innerHTML += `<div class="p-4 border ${bg} text-sm font-tech-body mb-3 shadow-md relative"><strong class="text-white block mb-1 font-tech-title">De: ${msg.from}</strong><p class="text-slate-300">${msg.content}</p> ${actions}</div>`;
           }
         });
@@ -761,7 +851,7 @@
           const uids = Object.keys(miFaccionActual.miembros);
           document.getElementById('listaIntegrantesFaccion').innerHTML = uids.map(u => `<div class="bg-indigo-950/40 p-2 border border-indigo-900/50 text-xs text-indigo-200 flex justify-between items-center"><span>${cacheJugadores[u]?.nombre || 'Desconocido'}</span><div class="flex items-center gap-2"><span class="text-[10px] text-amber-300 font-bold">${miFaccionActual.miembros[u]}</span>${esAdmin ? `<button onclick="eliminarFaccionAdmin('${idMiFac}')" class="text-red-400 hover:text-red-200 text-[10px]">🗑️</button>` : ''}</div></div>`).join('');
           document.getElementById('panelConFaccion').dataset.id = idMiFac;
-        } else { document.getElementById('panelSinFaccion').classList.remove('hidden'); document.getElementById('panelConFaccion').classList.add('hidden'); }
+        } else { document.getElementById('panelSinFaccion').classList.add('hidden'); document.getElementById('panelConFaccion').classList.add('hidden'); }
       });
 
       db.ref('tienda').on('value', snap => {
@@ -775,6 +865,7 @@
         }).join('');
       });
 
+      // MISIONES (Globales y Personales con botón de reclamar deniques)
       db.ref('misiones').on('value', snap => {
         const data = snap.val() || {}; const contGlob = document.getElementById('contenedorMisionesGlobales'); const contPers = document.getElementById('contenedorMisionesPersonales'); if(!contGlob || !contPers) return;
         const esAdmin = verificarEsAdmin(currentUser?.email);
@@ -783,10 +874,14 @@
 
         Object.keys(data).forEach(key => {
           const m = data[key];
+          const denVal = m.deniques || 0;
+          const btnReclamar = `<button onclick="reclamarMision('${key}', ${denVal})" class="mt-3 bg-emerald-600 hover:bg-emerald-500 text-black font-tech-title text-xs py-1.5 px-4 font-bold uppercase w-full">🎁 Reclamar Recompensa</button>`;
+          
           const tarjeta = `<div class="bg-black/80 border border-purple-900/60 p-4 relative shadow-md flex flex-col justify-between">
-            ${esAdmin ? `<button onclick="borrarMisionAdmin('${key}')" class="absolute top-2 right-2 text-red-400 hover:text-red-200 text-xs">🗑️</button>` : ''}
+            ${esAdmin ? `<button onclick="borrarMisionAdmin('${key}')" class="absolute top-2 right-2 text-red-400 hover:text-red-200 text-xs font-bold">🗑️</button>` : ''}
             <div><h4 class="font-tech-title text-purple-300 font-bold mb-1">${m.titulo}</h4><p class="text-xs text-slate-300 mb-3">${m.descripcion}</p></div>
-            <div class="border-t border-purple-900/50 pt-2 text-[11px] text-amber-400">Recompensa: ${m.recompensa || 'Ninguna'}</div>
+            <div class="border-t border-purple-900/50 pt-2 text-[11px] text-amber-400 font-mono mb-2">Recompensa: ${denVal > 0 ? formatearBigInt(BigInt(denVal)) + ' Deniques' : ''} ${m.recompensa ? '| ' + m.recompensa : ''}</div>
+            ${btnReclamar}
           </div>`;
 
           if (m.tipo === 'global') { hayGlob = true; contGlob.innerHTML += tarjeta; }
@@ -795,6 +890,41 @@
 
         if (!hayGlob) contGlob.innerHTML = '<p class="text-xs text-slate-500">No hay misiones globales.</p>';
         if (!hayPers) contPers.innerHTML = '<p class="text-xs text-slate-500">No hay misiones personales asignadas.</p>';
+      });
+
+      // MAZMORRAS RENDER Y CRONÓMETROS
+      db.ref('mazmorras').on('value', snap => {
+        const data = snap.val() || {}; const cont = document.getElementById('contenedorMazmorras'); if(!cont) return;
+        const esAdmin = verificarEsAdmin(currentUser?.email);
+        cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-rose-400 col-span-full text-center">No hay portales de mazmorras activos.</p>' : Object.keys(data).map(key => {
+          const m = data[key];
+          const tiempoRestante = (m.tiempoFin - Date.now());
+          const expirada = tiempoRestante <= 0;
+          const horasRestantes = expirada ? "EXPIRADA" : Math.floor(tiempoRestante / (1000 * 60 * 60)) + "h " + Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60)) + "m";
+          
+          let btnAccion = '';
+          if (m.tipoAcceso === 'global') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">⚔️ Entrar a Mazmorra</button>`;
+          else if (m.tipoAcceso === 'individual') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👤 Limpiar en Solitario</button>`;
+          else if (m.tipoAcceso === 'equipo') btnAccion = `<button onclick="convocarEquipoMazmorra('${key}')" class="bg-blue-600 hover:bg-blue-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👥 Formar Equipo (2-10)</button>`;
+
+          return `<div class="bg-black/90 border border-rose-900 p-4 shadow-xl flex flex-col justify-between relative">
+            ${esAdmin ? `<button onclick="borrarMazmorraAdmin('${key}')" class="absolute top-2 right-2 bg-red-950 text-red-400 text-xs px-2 py-0.5 border border-red-700">🗑️</button>` : ''}
+            <div>
+              <div class="h-36 overflow-hidden mb-3 border border-rose-900 relative">
+                <img src="${m.imagen || 'https://via.placeholder.com/400x200/3f0000/ff0000?text=Mazmorra'}" class="w-full h-full object-cover">
+                <span class="absolute bottom-2 left-2 bg-black/80 text-rose-300 text-[10px] px-2 py-0.5 font-bold uppercase border border-rose-700">Nivel Req: ${m.nivelReq}</span>
+                <span class="absolute bottom-2 right-2 bg-rose-950 text-rose-200 text-[10px] px-2 py-0.5 font-bold uppercase border border-rose-500">⏱️ ${horasRestantes}</span>
+              </div>
+              <h3 class="text-lg font-tech-title text-rose-400 font-bold mb-1">${m.nombre}</h3>
+              <p class="text-xs text-slate-300 mb-3">${m.descripcion}</p>
+              <div class="bg-rose-950/20 border border-rose-900/60 p-2 text-[11px] text-rose-200 mb-3">Recompensa: <strong>${m.recompensa}</strong></div>
+            </div>
+            <div class="space-y-2">
+              <button onclick="verDetallesMazmorra('${encodeURIComponent(JSON.stringify(m))}')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 py-1.5 px-3 text-xs uppercase w-full font-bold">🔍 Inspeccionar Fases y Monstruos</button>
+              ${!expirada ? btnAccion : '<p class="text-center text-xs text-red-500 font-bold">PORTAL CERRADO</p>'}
+            </div>
+          </div>`;
+        }).join('');
       });
 
       const esAdmin = verificarEsAdmin(currentUser?.email);
@@ -830,6 +960,117 @@
       });
     }
 
+    // ==========================================
+    // RECLAMAR RECOMPENSAS DE MISIONES (Deniques)
+    // ==========================================
+    function reclamarMision(key, deniquesCantidad) {
+      if (!currentUser) return;
+      const realUid = targetUidToEdit || (currentUser.uid + suffixFichaActiva);
+      db.ref('jugadores/' + realUid).once('value').then(snap => {
+        const pj = snap.val(); if (!pj) return;
+        const denActuales = parseTextoABigInt(pj.deniques || '0');
+        const nuevosDeniques = denActuales === Infinity ? '∞' : (denActuales + BigInt(deniquesCantidad)).toString();
+        
+        db.ref('jugadores/' + realUid + '/deniques').set(nuevosDeniques).then(() => {
+          alert(`🎉 ¡Recompensa reclamada con éxito! Se añadieron ${deniquesCantidad} Deniques a tu ficha.`);
+          db.ref('misiones/' + key).remove();
+          cargarFichaNube(realUid);
+        });
+      });
+    }
+
+    // ==========================================
+    // GESTIÓN DE MAZMORRAS Y COLAPSO
+    // ==========================================
+    let base64MazmorraImagen = '';
+    function procesarArchivoMazmorra(event) {
+      const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
+      lector.onload = function(e) { base64MazmorraImagen = e.target.result; };
+      lector.readAsDataURL(archivo);
+    }
+    function abrirModalMazmorra() { base64MazmorraImagen = ''; document.getElementById('formMazmorra').reset(); document.getElementById('modalMazmorra').classList.remove('hidden'); }
+
+    function guardarMazmorraAdmin(event) {
+      event.preventDefault();
+      const horas = parseInt(document.getElementById('mazDuracionHoras').value) || 24;
+      const tiempoFin = Date.now() + (horas * 60 * 60 * 1000);
+
+      const mazmorra = {
+        nombre: document.getElementById('mazNombre').value.trim(),
+        nivelReq: document.getElementById('mazNivelReq').value.trim(),
+        tipoAcceso: document.getElementById('mazTipoAcceso').value,
+        tiempoFin: tiempoFin,
+        imagen: base64MazmorraImagen || 'https://via.placeholder.com/600x300/3f0000/ff0000?text=Mazmorra',
+        recompensa: document.getElementById('mazRecompensa').value.trim(),
+        descripcion: document.getElementById('mazDesc').value.trim(),
+        monstruos: [
+          { nombre: document.getElementById('m1_nombre').value, cantidad: document.getElementById('m1_cant').value, nivel: document.getElementById('m1_nivel').value, armadura: document.getElementById('m1_armadura').value, arma: document.getElementById('m1_arma').value, stats: document.getElementById('m1_stats').value, info: document.getElementById('m1_info').value },
+          { nombre: document.getElementById('m2_nombre').value, cantidad: document.getElementById('m2_cant').value, nivel: document.getElementById('m2_nivel').value, armadura: document.getElementById('m2_armadura').value, arma: document.getElementById('m2_arma').value, stats: document.getElementById('m2_stats').value, info: document.getElementById('m2_info').value },
+          { nombre: document.getElementById('m3_nombre').value, cantidad: document.getElementById('m3_cant').value, nivel: document.getElementById('m3_nivel').value, armadura: document.getElementById('m3_armadura').value, arma: document.getElementById('m3_arma').value, stats: document.getElementById('m3_stats').value, info: document.getElementById('m3_info').value }
+        ],
+        boss: { nombre: document.getElementById('boss_nombre').value, cantidad: document.getElementById('boss_cant').value, nivel: document.getElementById('boss_nivel').value, armadura: document.getElementById('boss_armadura').value, arma: document.getElementById('boss_arma').value, stats: document.getElementById('boss_stats').value, info: document.getElementById('boss_info').value },
+        timestamp: Date.now()
+      };
+
+      db.ref('mazmorras').push(mazmorra).then(() => {
+        document.getElementById('modalMazmorra').classList.add('hidden');
+        alert("🕳️ Portal de Mazmorra abierto exitosamente.");
+      });
+    }
+
+    function borrarMazmorraAdmin(key) { if(confirm("🗑️ ¿Cerrar y eliminar esta mazmorra?")) db.ref('mazmorras/' + key).remove(); }
+
+    function verDetallesMazmorra(mJson) {
+      const m = JSON.parse(decodeURIComponent(mJson));
+      let html = `<div class="fixed inset-0 bg-black/95 z-[150] flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-rose-500 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto space-y-4">
+          <div class="flex justify-between items-center border-b border-rose-900 pb-2">
+            <h3 class="text-xl font-tech-title text-rose-400 font-bold">${m.nombre}</h3>
+            <button onclick="this.closest('.fixed').remove()" class="text-rose-400 font-bold text-xl">✕</button>
+          </div>
+          <p class="text-xs text-slate-300">${m.descripcion}</p>
+          <h4 class="text-xs font-tech-title text-rose-300 uppercase font-bold border-b border-rose-900">Fase 1: Monstruos Normales</h4>`;
+      
+      m.monstruos.forEach((mon, idx) => {
+        html += `<div class="bg-black/60 border border-rose-950 p-3 text-xs space-y-1">
+          <div class="flex justify-between font-bold text-rose-300"><span>${idx+1}. ${mon.nombre} (Cant: ${mon.cantidad})</span><span>Niv: ${mon.nivel}</span></div>
+          <div class="grid grid-cols-2 gap-2 text-slate-400 font-mono"><span>Armadura: ${mon.armadura}</span><span>Arma: ${mon.arma}</span></div>
+          <p class="text-[11px] text-slate-300">Stats: ${mon.stats} | Info: ${mon.info}</p>
+        </div>`;
+      });
+
+      html += `<h4 class="text-xs font-tech-title text-red-500 uppercase font-bold border-b border-red-900 pt-2">Fase Final: Boss</h4>
+        <div class="bg-red-950/20 border border-red-800 p-3 text-xs space-y-1">
+          <div class="flex justify-between font-bold text-red-400"><span>👑 ${m.boss.nombre} (Cant: ${m.boss.cantidad})</span><span>Niv: ${m.boss.nivel}</span></div>
+          <div class="grid grid-cols-2 gap-2 text-slate-300 font-mono"><span>Armadura: ${m.boss.armadura}</span><span>Arma: ${m.boss.arma}</span></div>
+          <p class="text-[11px] text-red-200">Stats: ${m.boss.stats} | Info: ${m.boss.info}</p>
+        </div>
+        <button onclick="this.closest('.fixed').remove()" class="w-full bg-rose-600 text-black py-2 font-bold uppercase text-xs">Cerrar Inspección</button>
+      </div></div>`;
+      document.body.insertAdjacentHTML('beforeend', html);
+    }
+
+    function entrarMazmorra(key, colapsoActivo) {
+      const textoColapso = colapsoActivo ? "⚠️ ¡COLAPSO DE MAZMORRA! Los monstruos tienen sus estadísticas multiplicadas x10." : "⚔️ Entrando a la mazmorra con éxito.";
+      alert(textoColapso + "\n¡Has derrotado a los monstruos y al Boss obteniendo la recompensa!");
+    }
+
+    function convocarEquipoMazmorra(mazId) {
+      const liderEquipo = miEquipoActual;
+      if (!liderEquipo) return alert("❌ Debes pertenecer a un equipo (Squad) para entrar en modo equipo a una mazmorra.");
+      const uids = Object.keys(liderEquipo.miembros).filter(u => u !== currentUser.uid);
+      if (uids.length < 1) return alert("❌ Tu equipo necesita al menos otro miembro para cumplir el mínimo de 2 jugadores.");
+      
+      uids.forEach(u => {
+        db.ref('mensajes').push({
+          to: u, from: cacheJugadores[currentUser.uid]?.nombre || 'Líder de Squad',
+          type: 'invite_mazmorra', refId: mazId,
+          content: `Te invita a participar en la incursión a la mazmorra del equipo.`
+        });
+      });
+      alert("📨 Solicitudes enviadas a los miembros del equipo a través del buzón de correo.");
+    }
+
     function crearEquipo() { const nom = prompt("Nombre del equipo:"); if (nom) { db.ref('equipos').push({ nombre: nom.trim(), lider: currentUser.uid, miembros: { [currentUser.uid]: true } }).then(() => alert("✅ Equipo creado.")); } }
     function salirOAbandonarEquipo() { const eqId = document.getElementById('panelConEquipo').dataset.id; if (miEquipoActual.lider === currentUser.uid) { if(confirm("¿Disolver equipo?")) db.ref(`equipos/${eqId}`).remove(); } else { db.ref(`equipos/${eqId}/miembros/${currentUser.uid}`).remove(); } }
     function eliminarEquipoAdmin(id) { if(confirm("🗑️ ¿Eliminar este equipo por completo?")) db.ref(`equipos/${id}`).remove(); }
@@ -841,7 +1082,15 @@
     
     function abrirModalInvitar(tipo) { tipoInvitacionPendiente = tipo; document.getElementById('tituloInvitar').textContent = `// INVITAR A ${tipo.toUpperCase()}`; document.getElementById('cajaRangoFaccion').classList.toggle('hidden', tipo !== 'faccion'); document.getElementById('modalInvitar').classList.remove('hidden'); }
     function procesarInvitacion() { const target = document.getElementById('selectUsuarioInvitar').value, refId = tipoInvitacionPendiente === 'equipo' ? document.getElementById('panelConEquipo').dataset.id : document.getElementById('panelConFaccion').dataset.id, nom = tipoInvitacionPendiente === 'equipo' ? miEquipoActual.nombre : miFaccionActual.nombre, rango = document.getElementById('inputRangoFaccion').value; db.ref('mensajes').push({ to: target, from: cacheJugadores[currentUser.uid]?.nombre || 'Sistema', type: `invite_${tipoInvitacionPendiente}`, refId: refId, rango: rango, content: `Te invitó a su ${tipoInvitacionPendiente}: ${nom}.` }).then(() => { alert("✅ Invitación enviada."); document.getElementById('modalInvitar').classList.add('hidden'); }); }
-    function aceptarInvitacion(idMsg, refId, tipo, rango) { const node = tipo === 'invite_equipo' ? `equipos/${refId}/miembros` : `facciones/${refId}/miembros`, val = tipo === 'invite_equipo' ? true : (rango || 'Miembro'); db.ref(`${node}/${currentUser.uid}`).set(val).then(() => { db.ref(`mensajes/${idMsg}`).remove(); alert("✅ Te has unido."); }).catch(e => alert(e.message)); }
+    function aceptarInvitacion(idMsg, refId, tipo, rango) { 
+      if (tipo === 'invite_mazmorra') {
+        db.ref(`mensajes/${idMsg}`).remove();
+        alert("✅ Te has unido a la mazmorra del equipo. ¡Colapso de mazmorra evitado o preparado!");
+        entrarMazmorra(refId, Math.random() < 0.3); // 30% de probabilidad de ruptura/colapso x10
+        return;
+      }
+      const node = tipo === 'invite_equipo' ? `equipos/${refId}/miembros` : `facciones/${refId}/miembros`, val = tipo === 'invite_equipo' ? true : (rango || 'Miembro'); db.ref(`${node}/${currentUser.uid}`).set(val).then(() => { db.ref(`mensajes/${idMsg}`).remove(); alert("✅ Te has unido."); }).catch(e => alert(e.message)); 
+    }
     
     function abrirModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.remove('hidden'); }
     function cerrarModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.add('hidden'); document.getElementById('formCorreoAdmin').reset(); }
@@ -964,7 +1213,7 @@
               if (!esModoLectura && targetUidToEdit === realCurrentUid) cargarFichaNube(realCurrentUid);
             });
           });
-        });
+                  });
       });
     }
     function mostrarComprobanteGlobal(d) { document.getElementById('reciboUsuario').textContent = d.comprador; document.getElementById('reciboObjeto').textContent = d.objeto; document.getElementById('reciboCantidad').textContent = `${d.cantidad} Unidades`; document.getElementById('reciboPrecioTotal').textContent = d.precioTotal; document.getElementById('reciboVendedor').textContent = d.vendedor; document.getElementById('comprobanteCompraOverlay').classList.remove('hidden'); }
@@ -973,7 +1222,22 @@
     function abrirModalMision() { document.getElementById('modalMision').classList.remove('hidden'); }
     function cerrarModalMision() { document.getElementById('modalMision').classList.add('hidden'); document.getElementById('formMision').reset(); }
     function toggleMisionDestinatario() { document.getElementById('campoMisionDestinatario').classList.toggle('hidden', document.getElementById('misionTipo').value !== 'personal'); }
-    function guardarMision(e) { e.preventDefault(); const t = document.getElementById('misionTipo').value; const m = { tipo: t, destinatario: t === 'personal' ? document.getElementById('misionDestinatario').value : 'global', titulo: document.getElementById('misionTitulo').value.trim(), descripcion: document.getElementById('misionDesc').value.trim(), recompensa: document.getElementById('misionRecompensa').value.trim(), timestamp: Date.now() }; db.ref('misiones').push(m).then(() => { cerrarModalMision(); alert('📜 Misión enviada.'); }); }
+    
+    function guardarMision(e) {
+      e.preventDefault();
+      const t = document.getElementById('misionTipo').value;
+      const m = {
+        tipo: t,
+        destinatario: t === 'personal' ? document.getElementById('misionDestinatario').value : 'global',
+        titulo: document.getElementById('misionTitulo').value.trim(),
+        descripcion: document.getElementById('misionDesc').value.trim(),
+        deniques: parseInt(document.getElementById('misionDeniques').value) || 0,
+        recompensa: document.getElementById('misionRecompensa').value.trim(),
+        timestamp: Date.now()
+      };
+      db.ref('misiones').push(m).then(() => { cerrarModalMision(); alert('📜 Misión con recompensa publicada.'); });
+    }
+
     function otorgarSegundaFichaDesdeAdmin() { const uid = document.getElementById('adminSelectJugadorFicha').value; if(uid && cacheJugadores[uid]) db.ref('jugadores/' + uid + '_2').set({ uid: uid+'_2', ownerUid: uid, email: cacheJugadores[uid].email, nombre: (cacheJugadores[uid].nombre || "Personaje") + " [2]", clase: "-", raza: "-", isSecondChar: true, nivel: "1", deniques: "0", timestamp: Date.now() }).then(()=>alert("✅ Ficha 2 asignada.")); }
     function agregarPatrocinadorAdmin() { const p = prompt("Nombre del Patrocinador:"); if (p) db.ref('patrocinadores').push({ nombre: p.trim() }); }
   </script>
