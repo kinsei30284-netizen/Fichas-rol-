@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terminal de Personaje - Servidor Global RP</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Web App - Forja y Mazmorras</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  <style>
-    .font-tech-title { font-family: 'Orbitron', sans-serif; }
-    .font-tech-body { font-family: 'Rajdhani', sans-serif; }
-    body {
-      background-color: #080b10;
-      background-image: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08) 0%, rgba(0, 0, 0, 0.95) 100%), linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 100% 100%, 30px 30px, 30px 30px;
-    }
-    .tech-card { background: linear-gradient(135deg, rgba(13, 20, 31, 0.95) 0%, rgba(8, 12, 20, 0.98) 100%); border: 1px solid #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05); clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); }
-    .tech-input { background-color: #05080e; border: 1px solid #1e3a5f; color: #00f0ff; transition: all 0.3s ease; }
-    .tech-input:focus:not(:disabled) { border-color: #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); outline: none; }
-    .tech-input:disabled { background-color: #030508; border-color: #0f1c2e; color: #476b91; cursor: not-allowed; }
-    input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-    input[type=number] { -moz-appearance: textfield; }
-    .shield-badge { background: linear-gradient(180deg, #0b1522 0%, #04080e 100%); border: 1px solid #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
-    .avatar-preview { width: 90px; height: 90px; object-fit: cover; border: 1px solid #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
-    .ficha-ilustracion-container { width: 100%; max-height: 400px; background-color: #030508; border: 1px solid #00f0ff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .ficha-ilustracion { max-width: 100%; max-height: 380px; object-fit: contain; }
-    .btn-point { background: linear-gradient(180deg, #102a45 0%, #071524 100%); border: 1px solid #00f0ff; color: #00f0ff; transition: all 0.2s ease; }
-    .btn-point:hover:not(:disabled) { background: #00f0ff; color: #000; box-shadow: 0 0 12px #00f0ff; transform: scale(1.05); }
-    .hazard-border { border-left: 4px solid #ef4444; }
-    .menu-drawer { transition: transform 0.3s ease-in-out; transform: translateX(-100%); }
-    .menu-drawer.open { transform: translateX(0); }
-  </style>
+    <style>
+        .font-tech-title { font-family: 'Orbitron', sans-serif; }
+        .font-tech-body { font-family: 'Rajdhani', sans-serif; }
+        body {
+            background-color: #080b10;
+            background-image: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08) 0%, rgba(0, 0, 0, 0.95) 100%), linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+        }
+        .tech-card { background: linear-gradient(135deg, rgba(13, 20, 31, 0.95) 0%, rgba(8, 12, 20, 0.98) 100%); border: 1px solid #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05); clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); }
+        .tech-input { background-color: #05080e; border: 1px solid #1e3a5f; color: #00f0ff; transition: all 0.3s ease; }
+        .tech-input:focus:not(:disabled) { border-color: #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); outline: none; }
+        .tech-input:disabled { background-color: #030508; border-color: #0f1c2e; color: #476b91; cursor: not-allowed; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+        .shield-badge { background: linear-gradient(180deg, #0b1522 0%, #04080e 100%); border: 1px solid #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+        .avatar-preview { width: 90px; height: 90px; object-fit: cover; border: 1px solid #00f0ff; box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
+        .ficha-ilustracion-container { width: 100%; max-height: 400px; background-color: #030508; border: 1px solid #00f0ff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .ficha-ilustracion { max-width: 100%; max-height: 380px; object-fit: contain; }
+        .btn-point { background: linear-gradient(180deg, #102a45 0%, #071524 100%); border: 1px solid #00f0ff; color: #00f0ff; transition: all 0.2s ease; }
+        .btn-point:hover:not(:disabled) { background: #00f0ff; color: #000; box-shadow: 0 0 12px #00f0ff; transform: scale(1.05); }
+        .hazard-border { border-left: 4px solid #ef4444; }
+        .menu-drawer { transition: transform 0.3s ease-in-out; transform: translateX(-100%); }
+        .menu-drawer.open { transform: translateX(0); }
+    </style>
 </head>
 
   <body class="text-slate-200 min-h-screen p-4 md:p-8 font-tech-body tracking-wide relative">
@@ -74,7 +76,7 @@
       <button onclick="cambiarFichaPropia('_2')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-2 border border-purple-800 transition text-xs">Ficha Secundaria [2]</button>
     </div>
 
-    <nav class="space-y-3">
+        <nav class="space-y-3">
       <button onclick="mostrarSeccion('editor')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-2 border border-cyan-800 transition flex items-center gap-3 text-sm"><span>⚙️</span> Mi Personaje</button>
       <button onclick="mostrarSeccion('correo')" class="w-full text-left font-tech-title text-emerald-300 hover:text-black hover:bg-emerald-400 p-2 border border-emerald-800 transition flex items-center gap-3 text-sm relative"><span>✉️</span> Buzón y Avisos <span id="badgeCorreo" class="hidden absolute right-2 bg-red-500 text-white text-[10px] px-1.5 rounded-full">!</span></button>
       <button onclick="mostrarSeccion('jugadores')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-2 border border-cyan-800 transition flex items-center gap-3 text-sm"><span>🌐</span> Lista de Jugadores</button>
@@ -144,14 +146,14 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre</label><input type="text" id="nombre" class="w-full tech-input p-2 font-tech-body text-lg"></div>
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Clase</label><input type="text" id="clase" class="w-full tech-input p-2 font-tech-body text-lg"></div>
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Raza</label><input type="text" id="raza" class="w-full tech-input p-2 font-tech-body text-lg"></div>
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel</label><input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input p-2 font-tech-body text-lg"><span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span></div>
       </div>
 
-            <div class="mb-8">
+      <div class="mb-8">
         <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por:</label>
         <select id="patrocinador" class="w-full tech-input border-purple-900 p-2 font-tech-body text-lg">
           <option value="">Sin Patrocinador</option>
@@ -175,7 +177,7 @@
         </div>
       </div>
 
-      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Parámetros Físicos y Moduladores</h2>
+            <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Parámetros Físicos y Moduladores</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <div class="bg-black/50 border border-emerald-800 p-3 text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-emerald-400 mb-1">VIDA (PV)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="pv_pts" class="font-tech-title font-bold text-emerald-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('pv', -1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('pv', 1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">+</button></div><div class="bg-emerald-950/40 border border-emerald-800/60 p-2"><span class="block text-[10px] text-emerald-400 uppercase font-bold">Total PV</span><span id="pv_val" class="text-lg font-tech-title font-bold text-emerald-300">500 PV</span><button onclick="toggleExpand('pv')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="pv_expand" class="hidden mt-2 p-1 bg-black/80 border border-emerald-500/40 text-[11px] font-mono text-emerald-200 break-all"></div></div></div>
         <div class="bg-black/50 border border-cyan-900 p-3 text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">FUERZA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="fuerza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('fuerza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('fuerza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Carga Real</span><span id="fuerza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 Kg</span><button onclick="toggleExpand('fuerza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="fuerza_expand" class="hidden mt-2 p-1 bg-black/80 border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
@@ -185,7 +187,7 @@
         <div class="bg-black/50 border border-cyan-900 p-3 text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">SENTIDOS (ST)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="sentidos_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('sentidos', -1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('sentidos', 1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Alcance / Percepción</span><span id="sentidos_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m</span><button onclick="toggleExpand('sentidos')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="sentidos_expand" class="hidden mt-2 p-1 bg-black/80 border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
       </div>
 
-      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Módulos de Habilidades</h2>
+            <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Módulos de Habilidades</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">1. Habilidades de Clase</label><textarea id="habClase" rows="4" class="w-full tech-input p-3 font-tech-body leading-relaxed"></textarea></div>
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">2. Habilidades de Raza</label><textarea id="habRaza" rows="4" class="w-full tech-input p-3 font-tech-body leading-relaxed"></textarea></div>
@@ -201,7 +203,7 @@
       <div class="mt-6"><label class="block text-xs font-tech-title uppercase text-emerald-400 mb-2">// Apariencia e Historia</label><textarea id="apariencia" rows="5" class="w-full tech-input border-emerald-900 focus:border-emerald-500 p-3 font-tech-body"></textarea></div>
     </div>
 
-            <!-- SECCIÓN: CORREO Y AVISOS -->
+    <!-- SECCIÓN: CORREO Y AVISOS -->
     <div id="seccionCorreo" class="hidden">
       <div class="flex justify-between items-center border-b border-emerald-500/50 pb-3 mb-6">
         <h2 class="text-xl font-tech-title text-emerald-400 uppercase tracking-widest">// BANDEJA DE ENTRADA</h2>
@@ -210,7 +212,7 @@
       <div id="listaCorreos" class="space-y-3"></div>
     </div>
 
-    <!-- SECCIÓN: EQUIPOS (SQUADS) -->
+            <!-- SECCIÓN: EQUIPOS (SQUADS) -->
     <div id="seccionEquipos" class="hidden">
       <div class="border-b border-blue-500/50 pb-3 mb-6 flex justify-between items-center">
         <h2 class="text-xl font-tech-title text-blue-400 uppercase tracking-widest">// RED DE EQUIPOS (MÁX. 10)</h2>
@@ -231,7 +233,7 @@
       </div>
     </div>
 
-            <!-- SECCIÓN: FACCIONES Y REINOS -->
+    <!-- SECCIÓN: FACCIONES Y REINOS -->
     <div id="seccionFacciones" class="hidden">
       <div class="border-b border-indigo-500/50 pb-3 mb-6 flex justify-between items-center">
         <h2 class="text-xl font-tech-title text-indigo-400 uppercase tracking-widest">// FACCIONES Y REINOS</h2>
@@ -293,7 +295,7 @@
       <div id="contenedorListaBestiario" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
     </div>
 
-    <!-- SECCIÓN: MAZMORRAS -->
+            <!-- SECCIÓN: MAZMORRAS -->
     <div id="seccionMazmorras" class="hidden">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-rose-500/50 pb-3 mb-6 gap-4">
         <h2 class="text-xl font-tech-title text-rose-400 uppercase tracking-widest">// PORTALES DE MAZMORRAS</h2>
@@ -302,7 +304,7 @@
       <div id="contenedorMazmorras" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
 
-            <!-- SECCIÓN: LISTA DE JUGADORES -->
+    <!-- SECCIÓN: LISTA DE JUGADORES -->
     <div id="seccionJugadores" class="hidden">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-cyan-900 pb-3 mb-6 gap-4">
         <h2 class="text-xl font-tech-title text-cyan-400 uppercase tracking-widest">// RED DE PERSONAJES</h2>
@@ -385,7 +387,7 @@
 
   </div> <!-- Cierre del Max-W-6xl Principal -->
 
-      <!-- MODALES FLOTANTES -->
+  <!-- MODALES FLOTANTES -->
   <div id="modalConfirmarGuardado" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border-2 border-cyan-400 max-w-md w-full p-6 text-center shadow-[0_0_30px_rgba(0,240,255,0.3)]">
       <div class="text-cyan-400 text-5xl mb-3">⚠️</div><h3 class="text-lg font-tech-title text-cyan-400 uppercase tracking-wider mb-2">// ¿GUARDAR INFORMACIÓN?</h3><p class="text-xs text-slate-400 mb-6 font-tech-body">Al confirmar, los datos se actualizarán en el registro global.</p>
@@ -393,7 +395,7 @@
     </div>
   </div>
 
-  <div id="modalInvitar" class="hidden fixed inset-0 bg-black/80 z-[110] flex items-center justify-center p-4">
+      <div id="modalInvitar" class="hidden fixed inset-0 bg-black/80 z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-cyan-500 w-full max-w-md p-6">
       <h3 id="tituloInvitar" class="text-lg font-tech-title text-cyan-400 mb-4">// ENVIAR INVITACIÓN</h3>
       <select id="selectUsuarioInvitar" class="w-full tech-input p-2 mb-4"></select>
@@ -438,7 +440,7 @@
     </div>
   </div>
 
-  <div id="modalProponerForja" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+      <div id="modalProponerForja" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-orange-500 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-orange-900/80 pb-3 mb-4">
         <h3 class="text-lg font-tech-title text-orange-400 uppercase tracking-wider">// PROPONER / CREAR EN LA FORJA</h3>
@@ -475,62 +477,9 @@
         </div>
       </form>
     </div>
-  </div>
-
-      <!-- MODALES FLOTANTES -->
-  <div id="modalConfirmarGuardado" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
-    <div class="bg-slate-950 border-2 border-cyan-400 max-w-md w-full p-6 text-center shadow-[0_0_30px_rgba(0,240,255,0.3)]">
-      <div class="text-cyan-400 text-5xl mb-3">⚠️</div><h3 class="text-lg font-tech-title text-cyan-400 uppercase tracking-wider mb-2">// ¿GUARDAR INFORMACIÓN?</h3><p class="text-xs text-slate-400 mb-6 font-tech-body">Al confirmar, los datos se actualizarán en el registro global.</p>
-      <div class="flex justify-center gap-4"><button onclick="cancelarGuardado()" class="px-5 py-2.5 bg-slate-900 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase hover:bg-slate-800 transition">✕ Rechazar</button><button onclick="ejecutarGuardadoConfirmado()" class="px-6 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold text-xs uppercase transition">✔ Confirmar</button></div>
-    </div>
-  </div>
-
-  <div id="modalInvitar" class="hidden fixed inset-0 bg-black/80 z-[110] flex items-center justify-center p-4">
-    <div class="bg-slate-950 border border-cyan-500 w-full max-w-md p-6">
-      <h3 id="tituloInvitar" class="text-lg font-tech-title text-cyan-400 mb-4">// ENVIAR INVITACIÓN</h3>
-      <select id="selectUsuarioInvitar" class="w-full tech-input p-2 mb-4"></select>
-      <div id="cajaRangoFaccion" class="hidden mb-4">
-        <label class="block text-xs text-indigo-300 mb-1">Rango del Miembro (Ej. Caballero, Duque, Aldeano)</label>
-        <input type="text" id="inputRangoFaccion" value="Miembro" class="w-full tech-input p-2">
       </div>
-      <div class="flex justify-end gap-2">
-        <button onclick="document.getElementById('modalInvitar').classList.add('hidden')" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button>
-        <button onclick="procesarInvitacion()" class="px-4 py-2 bg-cyan-600 text-black font-tech-title font-bold text-xs uppercase">Enviar</button>
-      </div>
-    </div>
-  </div>
 
-  <div id="modalCorreoAdmin" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
-    <div class="bg-slate-950 border border-emerald-500 max-w-md w-full p-6">
-      <div class="flex justify-between items-center border-b border-emerald-900 pb-3 mb-4">
-        <h3 class="text-lg font-tech-title text-emerald-400 uppercase tracking-wider">// ENVIAR NOTIFICACIÓN</h3>
-        <button onclick="cerrarModalCorreoAdmin()" class="text-emerald-400 font-bold">✕</button>
-      </div>
-      <form id="formCorreoAdmin" onsubmit="enviarCorreoAdminSubmit(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-emerald-300 mb-1">Tipo de Envío *</label>
-          <select id="correoTipo" onchange="toggleCorreoDestinatario()" class="w-full tech-input p-2 text-sm bg-slate-900">
-            <option value="global">Global (Todos los usuarios)</option>
-            <option value="personal">Personal (Usuario Específico)</option>
-          </select>
-        </div>
-        <div id="campoDestinatarioEspecifico" class="hidden">
-          <label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Usuario *</label>
-          <select id="selectDestinatarioCorreo" class="w-full tech-input p-2 text-sm bg-slate-900 border-cyan-800"></select>
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-emerald-300 mb-1">Contenido del Mensaje *</label>
-          <textarea id="contenidoMensajeCorreo" required rows="4" class="w-full tech-input p-2 text-sm" placeholder="Escribe el aviso..."></textarea>
-        </div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="cerrarModalCorreoAdmin()" class="px-4 py-2 border border-slate-700 text-slate-300 text-xs uppercase">Cancelar</button>
-          <button type="submit" class="px-5 py-2 bg-emerald-600 text-black font-bold text-xs uppercase">Enviar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div id="modalProponerForja" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+      <div id="modalProponerForja" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-orange-500 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-orange-900/80 pb-3 mb-4">
         <h3 class="text-lg font-tech-title text-orange-400 uppercase tracking-wider">// PROPONER / CREAR EN LA FORJA</h3>
@@ -567,7 +516,7 @@
         </div>
       </form>
     </div>
-  </div>
+      </div>
 
       <div id="modalProponerBestiario" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-red-500 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
@@ -585,7 +534,6 @@
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Locación / Hábitat *</label><input type="text" id="bestiarioLocacion" required class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
         </div>
 
-        <!-- Estadísticas completas en Bestiario -->
         <div class="border border-red-900/60 p-3 bg-red-950/10 space-y-2">
           <label class="block text-xs font-tech-title uppercase text-red-400 font-bold">// Estadísticas Base del Monstruo</label>
           <div class="grid grid-cols-2 md:grid-cols-6 gap-2">
@@ -620,9 +568,9 @@
         </div>
       </form>
     </div>
-  </div>
+      </div>
 
-  <div id="modalVerMonstruo" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-[120] flex items-center justify-center p-4">
+      <div id="modalVerMonstruo" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md z-[120] flex items-center justify-center p-4">
     <div class="bg-black border border-red-600 max-w-3xl w-full flex flex-col md:flex-row shadow-[0_0_40px_rgba(220,38,38,0.3)] relative">
       <button onclick="document.getElementById('modalVerMonstruo').classList.add('hidden')" class="absolute top-2 right-4 text-red-500 hover:text-white text-2xl font-bold bg-black/50 w-8 h-8 rounded-full flex items-center justify-center z-10">✕</button>
       <div class="w-full md:w-1/2 h-64 md:h-auto bg-slate-900 border-r border-red-900 relative">
@@ -637,7 +585,6 @@
           <div><span class="block text-[10px] text-red-500 font-bold uppercase">Nivel</span><span id="verMonstruoNivel" class="text-red-200">??</span></div>
           <div><span class="block text-[10px] text-red-500 font-bold uppercase">Locación</span><span id="verMonstruoLocacion" class="text-red-200">??</span></div>
         </div>
-        <!-- Estadísticas visibles del monstruo -->
         <div class="bg-red-950/25 border border-red-900 p-3">
           <h4 class="text-[11px] text-red-400 font-bold uppercase mb-2">Estadísticas de Combate</h4>
           <div id="verMonstruoStats" class="grid grid-cols-3 gap-2 text-xs font-mono text-red-200"></div>
@@ -686,13 +633,10 @@
           <div><label class="block text-rose-300 font-bold mb-1 uppercase">Recompensa (Deniques / Items) *</label><input type="text" id="mazRecompensa" required class="w-full tech-input p-2 text-sm border-rose-900" placeholder="Ej. 5000 Deniques + Espada Arcana"></div>
         </div>
         <div><label class="block text-rose-300 font-bold mb-1 uppercase">Descripción de la Mazmorra *</label><textarea id="mazDesc" required rows="2" class="w-full tech-input p-2 text-sm border-rose-900"></textarea></div>
-
-        <!-- 3 Monstruos Normales con textareas expandibles para habilidades y descripción -->
-        <div class="border border-rose-900/60 p-3 bg-black/40 space-y-4">
+                <div class="border border-rose-900/60 p-3 bg-black/40 space-y-4">
           <h4 class="font-tech-title text-rose-400 font-bold uppercase">// FASE 1: MONSTRUOS NORMALES (3 OBLIGATORIOS)</h4>
           <div id="contenedorMonstruosNormales" class="space-y-4">
             
-            <!-- Monstruo 1 -->
             <div class="border border-rose-900/40 p-3 bg-slate-950/40 space-y-2">
               <span class="text-rose-300 font-bold">Monstruo 1</span>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -717,7 +661,6 @@
               </div>
             </div>
 
-            <!-- Monstruo 2 -->
             <div class="border border-rose-900/40 p-3 bg-slate-950/40 space-y-2">
               <span class="text-rose-300 font-bold">Monstruo 2</span>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -742,7 +685,6 @@
               </div>
             </div>
 
-            <!-- Monstruo 3 -->
             <div class="border border-rose-900/40 p-3 bg-slate-950/40 space-y-2">
               <span class="text-rose-300 font-bold">Monstruo 3</span>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
@@ -753,13 +695,12 @@
                 <div><label class="text-[10px] text-rose-300">Puntos Arma (Iniciativa)</label><input type="text" id="m3_arma" class="w-full tech-input p-1 text-xs" value="80"></div>
                 <div><label class="text-[10px] text-rose-300">Imagen (Archivo)</label><input type="file" id="m3_file" accept="image/*" onchange="procesarArchivoMonstruo(event, 3)" class="w-full text-[10px] text-slate-400 file:py-0.5 file:px-1 file:bg-rose-950 file:text-rose-300"></div>
               </div>
-                 </div>
+            </div>
 
           </div>
-        </div>
+                </div>
 
-        <!-- Boss Final con textareas expandibles -->
-        <div class="border border-red-600 p-3 bg-red-950/20 space-y-3">
+                <div class="border border-red-600 p-3 bg-red-950/20 space-y-3">
           <h4 class="font-tech-title text-red-500 font-bold uppercase">// FASE FINAL: BOSS DE LA MAZMORRA (COLOR ROJO)</h4>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div><label class="text-[10px] text-red-300">Nombre del Boss</label><input type="text" id="boss_nombre" required class="w-full tech-input p-1 text-xs border-red-900" value="Señor del Abismo"></div>
@@ -790,9 +731,63 @@
     </div>
   </div>
 
-      <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4"><div class="bg-slate-950 border border-amber-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(245,158,11,0.2)]"><div class="flex justify-between items-center border-b border-amber-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-amber-400 uppercase tracking-wider">// REGISTRAR OBJETO EN LA TIENDA</h3><button onclick="cerrarModalAgregarObjeto()" class="text-amber-400 hover:text-amber-200 text-xl font-bold">✕</button></div><form id="formObjetoTienda" onsubmit="guardarObjetoTienda(event)" class="space-y-4"><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nombre (Autor) *</label><input type="text" id="tiendaAutor" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Tipo *</label><select id="tiendaTipo" onchange="cambiarTipoFormularioObjeto()" class="w-full tech-input px-3 py-1.5 text-sm bg-slate-900"><option value="Arma">Arma</option><option value="Armadura">Armadura</option><option value="Objeto">Objeto Normal</option></select></div><div class="grid grid-cols-1 md:grid-cols-3 gap-3"><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Objeto *</label><input type="text" id="tiendaNombre" required class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Precio *</label><input type="text" id="tiendaPrecio" required class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nivel Req *</label><input type="text" id="tiendaNivelReq" required class="w-full tech-input px-3 py-1.5 text-sm"></div></div><div id="campoPuntosDinamico" class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label id="lblPuntosDinamico" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Puntos *</label><input type="text" id="tiendaPuntos" class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label id="lblClaseDinamica" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Clase *</label><input type="text" id="tiendaClase" class="w-full tech-input px-3 py-1.5 text-sm"></div></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Habilidad *</label><input type="text" id="tiendaHabilidad" required class="w-full tech-input px-3 py-1.5 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Descripción *</label><textarea id="tiendaDescripcion" required rows="3" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div><div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalAgregarObjeto()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button><button type="submit" class="px-5 py-2 bg-amber-600 text-black font-tech-title font-bold text-xs uppercase">Publicar</button></div></form></div></div>
-  <div id="modalMision" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4"><div class="bg-slate-950 border border-purple-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(168,85,247,0.2)]"><div class="flex justify-between items-center border-b border-purple-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-purple-400 uppercase tracking-wider">// ASIGNAR NUEVA MISIÓN</h3><button onclick="cerrarModalMision()" class="text-purple-400 hover:text-purple-200 text-xl font-bold">✕</button></div><form id="formMision" onsubmit="guardarMision(event)" class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Tipo de Misión *</label><select id="misionTipo" onchange="toggleMisionDestinatario()" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 text-purple-200"><option value="global">Misión Global</option><option value="personal">Misión Personal</option></select></div><div id="campoMisionDestinatario" class="hidden"><label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Jugador *</label><select id="misionDestinatario" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 border-cyan-800"></select></div></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Título de la Misión *</label><input type="text" id="misionTitulo" required class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Recompensa en Deniques (Solo Admin)</label><input type="number" id="misionDeniques" value="0" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Recompensa Objeto / Texto</label><input type="text" id="misionRecompensa" class="w-full tech-input border-purple-900 px-3 py-2 text-sm" placeholder="Ej. Espada legendaria"></div></div><div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Descripción / Objetivos *</label><textarea id="misionDesc" required rows="3" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></textarea></div><div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalMision()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button><button type="submit" class="px-5 py-2 bg-purple-600 text-black font-tech-title font-bold text-xs uppercase">Publicar Misión</button></div></form></div></div>
-  <div id="comprobanteCompraOverlay" class="hidden fixed inset-0 bg-black/95 z-[150] flex items-center justify-center p-4"><div class="max-w-2xl w-full bg-slate-950 border-2 border-emerald-400 p-8 shadow-[0_0_50px_rgba(16,185,129,0.4)] text-center"><div class="text-emerald-400 text-6xl mb-3">⚡</div><h2 class="text-2xl font-tech-title text-emerald-400 font-bold uppercase mb-1">// TRANSACCIÓN COMPLETADA</h2><div class="bg-black/80 border border-emerald-900 p-6 mb-6 text-left space-y-3 font-tech-body mt-4"><div class="text-2xl font-tech-title text-emerald-300 font-bold border-b border-emerald-900 pb-2">👤 <span id="reciboUsuario">---</span></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"><div><span class="block text-xs font-tech-title text-slate-400">Objeto:</span><span id="reciboObjeto" class="text-lg font-tech-title text-cyan-300 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Unidades:</span><span id="reciboCantidad" class="text-lg font-tech-title text-amber-300 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Coste Total:</span><span id="reciboPrecioTotal" class="text-lg font-tech-title text-amber-400 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Vendedor Recibió:</span><span id="reciboVendedor" class="text-md text-slate-200">---</span></div></div></div><button onclick="cerrarComprobante()" class="bg-emerald-500 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase">✔ Entendido</button></div></div>
+  <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-amber-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+      <div class="flex justify-between items-center border-b border-amber-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-amber-400 uppercase tracking-wider">// REGISTRAR OBJETO EN LA TIENDA</h3><button onclick="cerrarModalAgregarObjeto()" class="text-amber-400 hover:text-amber-200 text-xl font-bold">✕</button></div>
+      <form id="formObjetoTienda" onsubmit="guardarObjetoTienda(event)" class="space-y-4">
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nombre (Autor) *</label><input type="text" id="tiendaAutor" required class="w-full tech-input px-3 py-1.5 text-sm rounded-sm"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Tipo *</label><select id="tiendaTipo" onchange="cambiarTipoFormularioObjeto()" class="w-full tech-input px-3 py-1.5 text-sm bg-slate-900"><option value="Arma">Arma</option><option value="Armadura">Armadura</option><option value="Objeto">Objeto Normal</option></select></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Objeto *</label><input type="text" id="tiendaNombre" required class="w-full tech-input px-3 py-1.5 text-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Precio *</label><input type="text" id="tiendaPrecio" required class="w-full tech-input px-3 py-1.5 text-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Nivel Req *</label><input type="text" id="tiendaNivelReq" required class="w-full tech-input px-3 py-1.5 text-sm"></div>
+        </div>
+        <div id="campoPuntosDinamico" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label id="lblPuntosDinamico" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Puntos *</label><input type="text" id="tiendaPuntos" class="w-full tech-input px-3 py-1.5 text-sm"></div>
+          <div><label id="lblClaseDinamica" class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Clase *</label><input type="text" id="tiendaClase" class="w-full tech-input px-3 py-1.5 text-sm"></div>
+        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Habilidad *</label><input type="text" id="tiendaHabilidad" required class="w-full tech-input px-3 py-1.5 text-sm"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Descripción *</label><textarea id="tiendaDescripcion" required rows="3" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div>
+        <div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalAgregarObjeto()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button><button type="submit" class="px-5 py-2 bg-amber-600 text-black font-tech-title font-bold text-xs uppercase">Publicar</button></div>
+      </form>
+    </div>
+  </div>
+
+      <div id="modalMision" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-purple-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(168,85,247,0.2)]">
+      <div class="flex justify-between items-center border-b border-purple-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-purple-400 uppercase tracking-wider">// ASIGNAR NUEVA MISIÓN</h3><button onclick="cerrarModalMision()" class="text-purple-400 hover:text-purple-200 text-xl font-bold">✕</button></div>
+      <form id="formMision" onsubmit="guardarMision(event)" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Tipo de Misión *</label><select id="misionTipo" onchange="toggleMisionDestinatario()" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 text-purple-200"><option value="global">Misión Global</option><option value="personal">Misión Personal</option></select></div>
+          <div id="campoMisionDestinatario" class="hidden"><label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Jugador *</label><select id="misionDestinatario" class="w-full tech-input px-3 py-2 text-sm bg-slate-900 border-cyan-800"></select></div>
+        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Título de la Misión *</label><input type="text" id="misionTitulo" required class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-xs font-tech-title uppercase text-amber-300 mb-1">Recompensa en Deniques (Solo Admin)</label><input type="number" id="misionDeniques" value="0" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Recompensa Objeto / Texto</label><input type="text" id="misionRecompensa" class="w-full tech-input border-purple-900 px-3 py-2 text-sm" placeholder="Ej. Espada legendaria"></div>
+        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Descripción / Objetivos *</label><textarea id="misionDesc" required rows="3" class="w-full tech-input border-purple-900 px-3 py-2 text-sm"></textarea></div>
+        <div class="flex justify-end gap-3 pt-2"><button type="button" onclick="cerrarModalMision()" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button><button type="submit" class="px-5 py-2 bg-purple-600 text-black font-tech-title font-bold text-xs uppercase">Publicar Misión</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="comprobanteCompraOverlay" class="hidden fixed inset-0 bg-black/95 z-[150] flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-slate-950 border-2 border-emerald-400 p-8 shadow-[0_0_50px_rgba(16,185,129,0.4)] text-center">
+      <div class="text-emerald-400 text-6xl mb-3">⚡</div>
+      <h2 class="text-2xl font-tech-title text-emerald-400 font-bold uppercase mb-1">// TRANSACCIÓN COMPLETADA</h2>
+      <div class="bg-black/80 border border-emerald-900 p-6 mb-6 text-left space-y-3 font-tech-body mt-4">
+        <div class="text-2xl font-tech-title text-emerald-300 font-bold border-b border-emerald-900 pb-2">👤 <span id="reciboUsuario">---</span></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div><span class="block text-xs font-tech-title text-slate-400">Objeto:</span><span id="reciboObjeto" class="text-lg font-tech-title text-cyan-300 font-bold">---</span></div>
+          <div><span class="block text-xs font-tech-title text-slate-400">Unidades:</span><span id="reciboCantidad" class="text-lg font-tech-title text-amber-300 font-bold">---</span></div>
+          <div><span class="block text-xs font-tech-title text-slate-400">Coste Total:</span><span id="reciboPrecioTotal" class="text-lg font-tech-title text-amber-400 font-bold">---</span></div>
+          <div><span class="block text-xs font-tech-title text-slate-400">Vendedor Recibió:</span><span id="reciboVendedor" class="text-md text-slate-200">---</span></div>
+        </div>
+      </div>
+      <button onclick="cerrarComprobante()" class="bg-emerald-500 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase">✔ Entendido</button>
+    </div>
+  </div>
 
       <script>
     const firebaseConfig = {
@@ -815,7 +810,7 @@
     const config = { pv: { mult: 50, unidad: 'PV' }, fuerza: { mult: 10, unidad: 'Kg' }, destreza: { mult: 10, unidad: 'm/s' }, constitucion: { mult: 30, unidad: 'Df' }, inteligencia: { mult: 100, unidad: 'J' }, sentidos: { mult: 10, unidad: 'm' } };
     const unidadesEscalaBigInt = [{ val: 10n**33n, symbol: 'Dc' }, { val: 10n**30n, symbol: 'No' }, { val: 10n**27n, symbol: 'Oc' }, { val: 10n**24n, symbol: 'Sp' }, { val: 10n**21n, symbol: 'Sx' }, { val: 10n**18n, symbol: 'Qi' }, { val: 10n**15n, symbol: 'Qa' }, { val: 10n**12n, symbol: 'T' }, { val: 10n**9n, symbol: 'B' }, { val: 10n**6n, symbol: 'M' }, { val: 10n**3n, symbol: 'k' }];
 
-    try { firebase.initializeApp(firebaseConfig); db = firebase.database(); auth = firebase.auth(); document.getElementById('estadoRed').textContent = '🟢 SERVIDOR ACTIVO'; document.getElementById('estadoRed').className = 'text-xs text-emerald-400 font-tech-title font-bold'; } catch(e) { }
+    try { firebase.initializeApp(firebaseConfig); db = firebase.database(); auth = firebase.auth(); } catch(e) { }
 
     function verificarEsAdmin(email) { return email ? ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase()) : false; }
 
@@ -838,7 +833,7 @@
       });
     }
 
-    function switchAuthTab(mode) { authMode = mode; const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit'); document.getElementById('authError').classList.add('hidden'); if (mode === 'login') { tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema"; } else { tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta"; } }
+            function switchAuthTab(mode) { authMode = mode; const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit'); document.getElementById('authError').classList.add('hidden'); if (mode === 'login') { tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema"; } else { tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta"; } }
     function handleAuthSubmit(e) { e.preventDefault(); const email = document.getElementById('authEmail').value.trim(), pass = document.getElementById('authPassword').value; const errBox = document.getElementById('authError'); errBox.classList.add('hidden'); if (authMode === 'login') auth.signInWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); else auth.createUserWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); }
     function cerrarSesion() { if (auth) auth.signOut().then(() => location.reload()); }
     function toggleMenu() { document.getElementById('sideDrawer').classList.toggle('open'); }
@@ -884,7 +879,53 @@
       }).catch(() => { errorBox.textContent = "❌ La contraseña actual es incorrecta."; errorBox.classList.remove('hidden'); });
     }
 
-    function parseTextoABigInt(strInput) {
+            function switchAuthTab(mode) { authMode = mode; const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit'); document.getElementById('authError').classList.add('hidden'); if (mode === 'login') { tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema"; } else { tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta"; } }
+    function handleAuthSubmit(e) { e.preventDefault(); const email = document.getElementById('authEmail').value.trim(), pass = document.getElementById('authPassword').value; const errBox = document.getElementById('authError'); errBox.classList.add('hidden'); if (authMode === 'login') auth.signInWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); else auth.createUserWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); }
+    function cerrarSesion() { if (auth) auth.signOut().then(() => location.reload()); }
+    function toggleMenu() { document.getElementById('sideDrawer').classList.toggle('open'); }
+    
+    function mostrarSeccion(s) {
+      document.getElementById('sideDrawer').classList.remove('open'); 
+      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionMazmorras', 'seccionConfiguracion'];
+      secciones.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); });
+      const act = document.getElementById('seccion' + s.charAt(0).toUpperCase() + s.slice(1));
+      if (act) act.classList.remove('hidden');
+    }
+
+    function filtrarLista(tipo) {
+      let idBuscador = 'buscadorJugadores'; let idContenedor = 'contenedorListaJugadores';
+      if(tipo === 'tienda') { idBuscador = 'buscadorTienda'; idContenedor = 'contenedorTienda'; }
+      else if(tipo === 'bestiario') { idBuscador = 'buscadorBestiario'; idContenedor = 'contenedorListaBestiario'; }
+      const texto = document.getElementById(idBuscador).value.toLowerCase();
+      const contenedor = document.getElementById(idContenedor);
+      if(!contenedor) return;
+      Array.from(contenedor.children).forEach(el => { el.style.display = el.textContent.toLowerCase().includes(texto) ? '' : 'none'; });
+    }
+
+    function abrirConfiguracion() { mostrarSeccion('configuracion'); }
+
+    function cambiarPasswordCuenta(e) {
+      e.preventDefault();
+      const actual = document.getElementById('passActual').value;
+      const nueva = document.getElementById('passNueva').value;
+      const confirmacion = document.getElementById('passConfirmar').value;
+      const errorBox = document.getElementById('configError');
+      errorBox.classList.add('hidden');
+
+      if (nueva !== confirmacion) { errorBox.textContent = "❌ Las nuevas contraseñas no coinciden."; errorBox.classList.remove('hidden'); return; }
+      if (!currentUser || !currentUser.email) return;
+
+      const credencial = firebase.auth.EmailAuthProvider.credential(currentUser.email, actual);
+      currentUser.reauthenticateWithCredential(credencial).then(() => {
+        currentUser.updatePassword(nueva).then(() => {
+          alert("✅ Contraseña actualizada correctamente.");
+          document.getElementById('formConfiguracion').reset();
+          mostrarSeccion('editor');
+        }).catch(err => { errorBox.textContent = "❌ Error al actualizar: " + err.message; errorBox.classList.remove('hidden'); });
+      }).catch(() => { errorBox.textContent = "❌ La contraseña actual es incorrecta."; errorBox.classList.remove('hidden'); });
+    }
+
+            function parseTextoABigInt(strInput) {
       if (!strInput) return 0n; let str = strInput.toString().trim(); if (str === '' || str.toLowerCase() === 'inf' || str === '∞') return str === '' ? 0n : Infinity;
       const match = str.match(/^([\d\.]+)\s*([a-zA-Z]+)?$/); if (!match) { try { return BigInt(str.replace(/[^0-9]/g, '')); } catch(e) { return 0n; } }
       let numPart = parseFloat(match[1]), sufijo = match[2] ? match[2] : ''; if (isNaN(numPart)) return 0n; if (!sufijo) return BigInt(Math.floor(numPart));
@@ -926,7 +967,7 @@
       const pv = (BigInt(VALOR_BASE_ESTADISTICA) + BigInt(puntosExtraAsignados.pv || '0')) * BigInt(config.pv.mult); document.getElementById('pvActualesDisplay').textContent = `${formatearBigInt(pv)} PV`;
     }
 
-    function procesarArchivoImagen(event, tipo) {
+            function procesarArchivoImagen(event, tipo) {
       const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
       lector.onload = function(e) { if (tipo === 'avatar') { base64AvatarLista = e.target.result; document.getElementById('avatarListaPreview').src = e.target.result; } else { base64FichaIlustracion = e.target.result; document.getElementById('fichaIlustracionPreview').src = e.target.result; } };
       lector.readAsDataURL(archivo);
@@ -978,197 +1019,8 @@
     }
     function volverAMiFicha() { esModoLectura = false; if (currentUser) { targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; } bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.remove('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); if (currentUser) cargarFichaNube(targetUidToEdit); }
     function cambiarFichaPropia(suffix) { if(esModoLectura) return; suffixFichaActiva = suffix; targetUidToEdit = currentUser.uid + suffix; cargarFichaNube(targetUidToEdit); mostrarSeccion('editor'); }
-      </script>
 
-      <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCKuQO4HbvOSjDtg02kuzRteawZbKs7MGQ", authDomain: "fichas-593a4.firebaseapp.com",
-      databaseURL: "https://fichas-593a4-default-rtdb.firebaseio.com", projectId: "fichas-593a4",
-      storageBucket: "fichas-593a4.firebasestorage.app", messagingSenderId: "312612537611",
-      appId: "1:123456789:web:038579e38ed98d2e6e4e0e"
-    };
-
-    const ADMIN_EMAILS = ["kinsei30284@gmail.com", "clamorventus.7.7.7@gmail.com"];
-
-    let db, auth, currentUser = null, authMode = 'login', esModoLectura = false;
-    let targetUidToEdit = null, targetEmailToEdit = null, cacheJugadores = {}, fichaActualCargada = {}, suffixFichaActiva = '';
-    let base64AvatarLista = '', base64FichaIlustracion = '';
-    let miEquipoActual = null, miFaccionActual = null, tipoInvitacionPendiente = '';
-
-    const puntosExtraAsignados = { pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0' };
-    const puntosGuardadosBloqueados = { pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0' };
-    const VALOR_BASE_ESTADISTICA = 10;
-    const config = { pv: { mult: 50, unidad: 'PV' }, fuerza: { mult: 10, unidad: 'Kg' }, destreza: { mult: 10, unidad: 'm/s' }, constitucion: { mult: 30, unidad: 'Df' }, inteligencia: { mult: 100, unidad: 'J' }, sentidos: { mult: 10, unidad: 'm' } };
-    const unidadesEscalaBigInt = [{ val: 10n**33n, symbol: 'Dc' }, { val: 10n**30n, symbol: 'No' }, { val: 10n**27n, symbol: 'Oc' }, { val: 10n**24n, symbol: 'Sp' }, { val: 10n**21n, symbol: 'Sx' }, { val: 10n**18n, symbol: 'Qi' }, { val: 10n**15n, symbol: 'Qa' }, { val: 10n**12n, symbol: 'T' }, { val: 10n**9n, symbol: 'B' }, { val: 10n**6n, symbol: 'M' }, { val: 10n**3n, symbol: 'k' }];
-
-    try { firebase.initializeApp(firebaseConfig); db = firebase.database(); auth = firebase.auth(); document.getElementById('estadoRed').textContent = '🟢 SERVIDOR ACTIVO'; document.getElementById('estadoRed').className = 'text-xs text-emerald-400 font-tech-title font-bold'; } catch(e) { }
-
-    function verificarEsAdmin(email) { return email ? ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase()) : false; }
-
-    if (auth) {
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          currentUser = user; targetUidToEdit = user.uid + suffixFichaActiva; targetEmailToEdit = user.email;
-          document.getElementById('authOverlay').classList.add('hidden'); document.getElementById('userEmailDisplay').textContent = `Usuario: ${user.email}`;
-          document.getElementById('configUidDisplay').value = user.uid;
-          if (verificarEsAdmin(user.email)) {
-            document.getElementById('adminBadgeDisplay').classList.remove('hidden'); document.getElementById('btnMenuAdmin').classList.remove('hidden');
-            document.getElementById('btnNuevaMisionAdmin').classList.remove('hidden'); document.getElementById('btnAdminCorreo').classList.remove('hidden'); document.getElementById('btnAdminFaccion').classList.remove('hidden');
-            document.getElementById('btnNuevaMazmorraAdmin').classList.remove('hidden');
-          }
-          db.ref('jugadores/' + user.uid + '_2').on('value', snap => { document.getElementById('selectorPersonajes').classList.toggle('hidden', !snap.exists()); });
-          cargarFichaNube(targetUidToEdit); inicializarSistemasNuevos();
-        } else {
-          currentUser = null; document.getElementById('authOverlay').classList.remove('hidden');
-        }
-      });
-    }
-
-    function switchAuthTab(mode) { authMode = mode; const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit'); document.getElementById('authError').classList.add('hidden'); if (mode === 'login') { tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema"; } else { tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta"; } }
-    function handleAuthSubmit(e) { e.preventDefault(); const email = document.getElementById('authEmail').value.trim(), pass = document.getElementById('authPassword').value; const errBox = document.getElementById('authError'); errBox.classList.add('hidden'); if (authMode === 'login') auth.signInWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); else auth.createUserWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); }
-    function cerrarSesion() { if (auth) auth.signOut().then(() => location.reload()); }
-    function toggleMenu() { document.getElementById('sideDrawer').classList.toggle('open'); }
-    
-    function mostrarSeccion(s) {
-      document.getElementById('sideDrawer').classList.remove('open'); 
-      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionMazmorras', 'seccionConfiguracion'];
-      secciones.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); });
-      const act = document.getElementById('seccion' + s.charAt(0).toUpperCase() + s.slice(1));
-      if (act) act.classList.remove('hidden');
-    }
-
-    function filtrarLista(tipo) {
-      let idBuscador = 'buscadorJugadores'; let idContenedor = 'contenedorListaJugadores';
-      if(tipo === 'tienda') { idBuscador = 'buscadorTienda'; idContenedor = 'contenedorTienda'; }
-      else if(tipo === 'bestiario') { idBuscador = 'buscadorBestiario'; idContenedor = 'contenedorListaBestiario'; }
-      const texto = document.getElementById(idBuscador).value.toLowerCase();
-      const contenedor = document.getElementById(idContenedor);
-      if(!contenedor) return;
-      Array.from(contenedor.children).forEach(el => { el.style.display = el.textContent.toLowerCase().includes(texto) ? '' : 'none'; });
-    }
-
-    function abrirConfiguracion() { mostrarSeccion('configuracion'); }
-
-    function cambiarPasswordCuenta(e) {
-      e.preventDefault();
-      const actual = document.getElementById('passActual').value;
-      const nueva = document.getElementById('passNueva').value;
-      const confirmacion = document.getElementById('passConfirmar').value;
-      const errorBox = document.getElementById('configError');
-      errorBox.classList.add('hidden');
-
-      if (nueva !== confirmacion) { errorBox.textContent = "❌ Las nuevas contraseñas no coinciden."; errorBox.classList.remove('hidden'); return; }
-      if (!currentUser || !currentUser.email) return;
-
-      const credencial = firebase.auth.EmailAuthProvider.credential(currentUser.email, actual);
-      currentUser.reauthenticateWithCredential(credencial).then(() => {
-        currentUser.updatePassword(nueva).then(() => {
-          alert("✅ Contraseña actualizada correctamente.");
-          document.getElementById('formConfiguracion').reset();
-          mostrarSeccion('editor');
-        }).catch(err => { errorBox.textContent = "❌ Error al actualizar: " + err.message; errorBox.classList.remove('hidden'); });
-      }).catch(() => { errorBox.textContent = "❌ La contraseña actual es incorrecta."; errorBox.classList.remove('hidden'); });
-    }
-
-    function parseTextoABigInt(strInput) {
-      if (!strInput) return 0n; let str = strInput.toString().trim(); if (str === '' || str.toLowerCase() === 'inf' || str === '∞') return str === '' ? 0n : Infinity;
-      const match = str.match(/^([\d\.]+)\s*([a-zA-Z]+)?$/); if (!match) { try { return BigInt(str.replace(/[^0-9]/g, '')); } catch(e) { return 0n; } }
-      let numPart = parseFloat(match[1]), sufijo = match[2] ? match[2] : ''; if (isNaN(numPart)) return 0n; if (!sufijo) return BigInt(Math.floor(numPart));
-      let multiplicador = 1n; for (let i=0; i<unidadesEscalaBigInt.length; i++) { if (unidadesEscalaBigInt[i].symbol.toUpperCase() === sufijo.toUpperCase() || unidadesEscalaBigInt[i].symbol === (sufijo.charAt(0).toUpperCase() + sufijo.slice(1).toLowerCase())) { multiplicador = unidadesEscalaBigInt[i].val; break; } }
-      if (numPart % 1 !== 0) { let e = Math.floor(numPart), d = numPart - e; return BigInt(e) * multiplicador + BigInt(Math.floor(d * Number(multiplicador))); }
-      return BigInt(Math.floor(numPart)) * multiplicador;
-    }
-    function formatearBigInt(bigNum) {
-      if (bigNum === Infinity) return '∞'; if (typeof bigNum === 'bigint' && bigNum < 1000n) return bigNum.toString();
-      for (let i=0; i<unidadesEscalaBigInt.length; i++) { const f = unidadesEscalaBigInt[i].val; if (bigNum >= f) { const e = bigNum / f, r = (bigNum % f) / (f / 10n); return r === 0n ? `${e}${unidadesEscalaBigInt[i].symbol}` : `${e}.${r}${unidadesEscalaBigInt[i].symbol}`; } } return bigNum.toString();
-    }
-    function formatearConSeparadores(bigNum) { return bigNum === Infinity ? 'Infinito (∞)' : bigNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
-    function toggleExpand(attr) { const el = document.getElementById(`${attr}_expand`); if(el) el.classList.toggle('hidden'); }
-    function obtenerMontoActual() { return parseTextoABigInt(document.getElementById('montoPuntos').value); }
-    function obtenerNivelBigInt() { return parseTextoABigInt(document.getElementById('nivel').value); }
-    function obtenerPuntosOtorgadosPorNivel() { const n = obtenerNivelBigInt(); return n === Infinity ? Infinity : n * 10n; }
-    function obtenerPuntosUsadosTotalesBigInt() { return Object.values(puntosExtraAsignados).reduce((a, b) => a + BigInt(b), 0n); }
-    
-    function modificarPunto(attr, direccion) {
-      if (esModoLectura) return; const m = obtenerMontoActual(); if (m <= 0n && m !== Infinity) return;
-      const p = obtenerPuntosOtorgadosPorNivel(), u = obtenerPuntosUsadosTotalesBigInt(), d = p === Infinity ? Infinity : (p > u ? p - u : 0n);
-      if (direccion > 0) { const add = m < d ? m : d; if (add <= 0n) return; puntosExtraAsignados[attr] = (BigInt(puntosExtraAsignados[attr]) + add).toString(); } 
-      else { const lim = BigInt(puntosGuardadosBloqueados[attr]), act = BigInt(puntosExtraAsignados[attr]), maxRes = act > lim ? act - lim : 0n, res = m < maxRes ? m : maxRes; if (res <= 0n) return; puntosExtraAsignados[attr] = (act - res).toString(); }
-      actualizarSistemas();
-    }
-    
-    function actualizarSistemas() {
-      const niv = obtenerNivelBigInt(); document.getElementById('nivelFormateado').textContent = `Nivel: ${formatearBigInt(niv)}`;
-      const den = parseTextoABigInt(document.getElementById('deniques').value); document.getElementById('deniquesFormateado').textContent = `${formatearBigInt(den)} Deniques`;
-      const po = obtenerPuntosOtorgadosPorNivel(), u = obtenerPuntosUsadosTotalesBigInt(), d = po === Infinity ? Infinity : (po > u ? po - u : 0n), pt = d === Infinity ? Infinity : (6n * BigInt(VALOR_BASE_ESTADISTICA)) + u + d;
-      const pa = parseTextoABigInt(document.getElementById('iniciativa').value), pdef = parseTextoABigInt(document.getElementById('ca').value);
-      document.getElementById('puntosDisponiblesText').textContent = formatearBigInt(d); document.getElementById('puntosUsadosText').textContent = formatearBigInt(u); document.getElementById('puntosTotalesText').textContent = formatearBigInt(pt);
-      for (const attr in config) {
-        const e = BigInt(puntosExtraAsignados[attr] || '0'), tp = BigInt(VALOR_BASE_ESTADISTICA) + e; document.getElementById(`${attr}_pts`).textContent = formatearBigInt(tp);
-        let vf = tp * BigInt(config[attr].mult); if(attr==='fuerza' || attr==='destreza') vf += pa === Infinity ? Infinity : pa * 10n; if(attr==='constitucion') vf += pdef === Infinity ? Infinity : pdef * 30n;
-        const va = formatearBigInt(vf); document.getElementById(`${attr}_val`).textContent = `${va} ${config[attr].unidad}`;
-        const ex = document.getElementById(`${attr}_expand`); if(ex) ex.textContent = `${va} = ${formatearConSeparadores(vf)} ${config[attr].unidad}`;
-      }
-      const pv = (BigInt(VALOR_BASE_ESTADISTICA) + BigInt(puntosExtraAsignados.pv || '0')) * BigInt(config.pv.mult); document.getElementById('pvActualesDisplay').textContent = `${formatearBigInt(pv)} PV`;
-    }
-                                                                    </script>
-                         <script>
-    function procesarArchivoImagen(event, tipo) {
-      const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
-      lector.onload = function(e) { if (tipo === 'avatar') { base64AvatarLista = e.target.result; document.getElementById('avatarListaPreview').src = e.target.result; } else { base64FichaIlustracion = e.target.result; document.getElementById('fichaIlustracionPreview').src = e.target.result; } };
-      lector.readAsDataURL(archivo);
-    }
-    
-    function solicitarGuardado() { if (esModoLectura) return; document.getElementById('modalConfirmarGuardado').classList.remove('hidden'); }
-    function cancelarGuardado() { document.getElementById('modalConfirmarGuardado').classList.add('hidden'); }
-    function ejecutarGuardadoConfirmado() {
-      cancelarGuardado(); if (!currentUser) return;
-      const uidToSave = targetUidToEdit || currentUser.uid, emailToSave = targetEmailToEdit || currentUser.email;
-      Object.assign(puntosGuardadosBloqueados, puntosExtraAsignados);
-      const ficha = {
-        uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido', clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, patrocinador: document.getElementById('patrocinador').value, avatarListaUrl: base64AvatarLista, fichaIlustracionUrl: base64FichaIlustracion, nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value, habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value, isSecondChar: fichaActualCargada.isSecondChar || false, mainCharName: fichaActualCargada.mainCharName || '', ownerUid: fichaActualCargada.ownerUid || currentUser.uid, timestamp: Date.now()
-      };
-      db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Datos guardados globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error al guardar: ' + e.message));
-    }
-
-    function cargarFichaNube(uid) { db.ref('jugadores/' + uid).once('value').then(s => { cargarDatosEnInterfaz(s.exists() ? s.val() : {}); }); }
-    function cargarDatosEnInterfaz(f) {
-      fichaActualCargada = f || {}; 
-      if(!f || Object.keys(f).length === 0) {
-          document.querySelectorAll('#seccionEditor input[type="text"], #seccionEditor textarea, #seccionEditor input[type="number"]').forEach(el => el.value = '');
-          puntosExtraAsignados.pv='0';puntosExtraAsignados.fuerza='0';puntosExtraAsignados.destreza='0';puntosExtraAsignados.constitucion='0';puntosExtraAsignados.inteligencia='0';puntosExtraAsignados.sentidos='0';
-          document.getElementById('nivel').value = '1'; document.getElementById('montoPuntos').value = '1'; document.getElementById('deniques').value = '0'; document.getElementById('iniciativa').value = '0'; document.getElementById('ca').value = '0';
-          base64AvatarLista = ''; base64FichaIlustracion = ''; document.getElementById('avatarListaPreview').src = "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar"; document.getElementById('fichaIlustracionPreview').src = "https://via.placeholder.com/600x300/05080e/00f0ff?text=Ilustracion+Amplia";
-      } else {
-        for (const k in f) {
-          if (k === 'puntosExtraAsignados') Object.assign(puntosExtraAsignados, f[k]);
-          else if (k === 'puntosGuardadosBloqueados') Object.assign(puntosGuardadosBloqueados, f[k]);
-          else if (document.getElementById(k)) { const el = document.getElementById(k); if (k === 'patrocinador' && f[k] && !Array.from(el.options).some(o => o.value === f[k])) el.add(new Option(f[k], f[k])); el.value = f[k]; }
-        }
-        base64AvatarLista = f.avatarListaUrl || ''; base64FichaIlustracion = f.fichaIlustracionUrl || '';
-        document.getElementById('avatarListaPreview').src = base64AvatarLista !== '' ? base64AvatarLista : "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar";
-        document.getElementById('fichaIlustracionPreview').src = base64FichaIlustracion !== '' ? base64FichaIlustracion : "https://via.placeholder.com/600x300/05080e/00f0ff?text=Ilustracion+Amplia";
-      }
-      actualizarSistemas(); aplicarPermisos();
-    }
-
-    function aplicarPermisos() {
-      const esAdmin = verificarEsAdmin(currentUser?.email); const inpDeniques = document.getElementById('deniques'), selPat = document.getElementById('patrocinador'), inpNotas = document.getElementById('notas');
-      if (!esAdmin) { if (inpDeniques) inpDeniques.disabled = true; if (inpNotas) inpNotas.disabled = true; if (selPat) selPat.disabled = selPat.value !== ''; } 
-      else { if (!esModoLectura) { if(inpDeniques) inpDeniques.disabled = false; if(selPat) selPat.disabled = false; if(inpNotas) inpNotas.disabled = false; } else { if(inpNotas) inpNotas.disabled = true; } }
-    }
-    function bloquearDesbloquearInputs(b) { document.querySelectorAll('#seccionEditor input, #seccionEditor textarea, #seccionEditor select').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); }
-    function verPersonajeObjeto(pj) {
-      if (verificarEsAdmin(currentUser?.email)) { esModoLectura = false; targetUidToEdit = pj.uid; targetEmailToEdit = pj.email; cargarDatosEnInterfaz(pj); bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.add('hidden'); document.getElementById('adminSaveBtn').classList.remove('hidden'); } 
-      else { esModoLectura = true; targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; cargarDatosEnInterfaz(pj); bloquearDesbloquearInputs(true); document.getElementById('readOnlyBanner').classList.remove('hidden'); document.getElementById('saveBtn').classList.add('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); }
-      mostrarSeccion('editor');
-    }
-    function volverAMiFicha() { esModoLectura = false; if (currentUser) { targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; } bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.remove('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); if (currentUser) cargarFichaNube(targetUidToEdit); }
-    function cambiarFichaPropia(suffix) { if(esModoLectura) return; suffixFichaActiva = suffix; targetUidToEdit = currentUser.uid + suffix; cargarFichaNube(targetUidToEdit); mostrarSeccion('editor'); }
-                         </script>
-
-      <script>
-    function inicializarSistemasNuevos() {
+            function inicializarSistemasNuevos() {
       db.ref('jugadores').on('value', snap => {
         cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha'), selectMisionDest = document.getElementById('misionDestinatario');
         
@@ -1210,7 +1062,7 @@
         } else { document.getElementById('panelSinEquipo').classList.remove('hidden'); document.getElementById('panelConEquipo').classList.add('hidden'); }
       });
 
-      db.ref('facciones').on('value', snap => {
+              db.ref('facciones').on('value', snap => {
         const facciones = snap.val() || {}; miFaccionActual = null; let idMiFac = null; const esAdmin = verificarEsAdmin(currentUser?.email);
         for (const fId in facciones) { if (facciones[fId].miembros && facciones[fId].miembros[currentUser.uid]) { miFaccionActual = facciones[fId]; idMiFac = fId; break; } }
         if (miFaccionActual) {
@@ -1259,12 +1111,8 @@
         if (!hayPers) contPers.innerHTML = '<p class="text-xs text-slate-500">No hay misiones personales asignadas.</p>';
       });
     }
-      </script>
 
-      <script>
-    // Continuación de inicializarSistemasNuevos para Mazmorras y Bestiario
     document.addEventListener("DOMContentLoaded", () => {
-      // Listener para Mazmorras
       if(db) {
         db.ref('mazmorras').on('value', snap => {
           const data = snap.val() || {}; const cont = document.getElementById('contenedorMazmorras'); if(!cont) return;
@@ -1278,7 +1126,7 @@
             let btnAccion = '';
             if (m.tipoAcceso === 'Global') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">⚔️ Entrar a Mazmorra</button>`;
             else if (m.tipoAcceso === 'De una persona') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👤 Limpiar en Solitario</button>`;
-            else btnAccion = `<button onclick="convocarEquipoMazmorra('${key}')" class="bg-blue-600 hover:bg-blue-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👥 Conocar para (${m.tipoAcceso})</button>`;
+            else btnAccion = `<button onclick="convocarEquipoMazmorra('${key}')" class="bg-blue-600 hover:bg-blue-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👥 Convocar para (${m.tipoAcceso})</button>`;
 
             let botonRupturaAdmin = esAdmin ? `<button onclick="entrarMazmorra('${key}', true)" class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 text-[10px] font-bold uppercase w-full border border-red-400">⚡ [ADMIN] Provocar Ruptura</button>` : '';
 
@@ -1303,7 +1151,6 @@
           }).join('');
         });
 
-        // Bestiario Listener
         db.ref('bestiario').on('value', snap => {
           const data = snap.val() || {}; const cont = document.getElementById('contenedorListaBestiario'); if(!cont) return;
           cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-red-500">El bestiario está vacío.</p>' : Object.keys(data).map(key => {
