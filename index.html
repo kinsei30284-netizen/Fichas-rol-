@@ -72,11 +72,19 @@
     }
 
     .avatar-preview {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       object-fit: cover;
       border: 1px solid #00f0ff;
       box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    }
+
+    .ficha-ilustracion {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border: 1px solid #00f0ff;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
     }
 
     .btn-point {
@@ -132,7 +140,6 @@
       <button onclick="toggleMenu()" class="text-cyan-400 text-2xl hover:text-cyan-200">✕</button>
     </div>
     
-    <!-- SELECTOR DE FICHAS -->
     <div id="selectorPersonajes" class="hidden border-b border-purple-900/50 pb-4 mb-4">
       <p class="text-[10px] font-tech-title text-purple-400 mb-2 uppercase">// Selector de Fichas</p>
       <button onclick="cambiarFichaPropia('')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-2 border border-cyan-800 transition text-xs mb-2">Ficha Principal [1]</button>
@@ -145,7 +152,6 @@
       <button onclick="mostrarSeccion('tienda')" class="w-full text-left font-tech-title text-amber-300 hover:text-black hover:bg-amber-400 p-3 border border-amber-800 transition flex items-center gap-3"><span>🛒</span> Tienda de Objetos</button>
       <button onclick="mostrarSeccion('misiones')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-3 border border-purple-800 transition flex items-center gap-3"><span>📜</span> Tablón de Misiones</button>
       
-      <!-- BOTÓN EXCLUSIVO ADMIN -->
       <button id="btnMenuAdmin" onclick="mostrarSeccion('admin')" class="hidden w-full text-left font-tech-title text-red-400 hover:text-black hover:bg-red-400 p-3 border border-red-900 transition flex items-center gap-3 mt-4"><span>🛡️</span> Panel de Admin</button>
 
       <div class="border-t border-cyan-900 pt-4 mt-6">
@@ -183,33 +189,41 @@
         <button id="adminSaveBtn" onclick="solicitarGuardado()" class="hidden bg-amber-600 hover:bg-amber-500 text-black font-tech-title font-bold py-2.5 px-6 rounded-none border border-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.4)] transition uppercase tracking-wider">🛡️ Guardar Ficha (Admin)</button>
       </div>
 
-      <!-- Fila de Avatar y Datos Básicos -->
-      <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-4 items-center">
-        <div class="flex flex-col items-center justify-center">
-          <img id="avatarPreviewImg" src="https://via.placeholder.com/150/05080e/00f0ff?text=Avatar" alt="Avatar" class="avatar-preview mb-2 rounded-sm">
-          <span class="text-[10px] font-mono text-cyan-400 uppercase">Vista previa</span>
+      <!-- APARTADOS VISUALES SEPARADOS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 bg-black/40 p-4 border border-cyan-900/60 rounded-sm">
+        <!-- 1. Avatar para la Lista de Jugadores / Perfil de Red -->
+        <div class="flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-cyan-900/60 pb-4 md:pb-0 md:pr-4">
+          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2 text-center">📸 Avatar (Lista de Jugadores)</label>
+          <img id="avatarListaPreview" src="https://via.placeholder.com/150/05080e/00f0ff?text=Avatar" alt="Avatar" class="avatar-preview mb-3 rounded-full">
+          <input type="file" id="inputArchivoAvatar" accept="image/*" onchange="procesarArchivoImagen(event, 'avatar')" class="w-full text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-sm file:border-0 file:text-xs file:font-tech-title file:bg-cyan-950 file:text-cyan-300 hover:file:bg-cyan-900 cursor-pointer">
         </div>
-        <div class="md:col-span-5 grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre</label><input type="text" id="nombre" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nombre"></div>
-          <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Clase</label><input type="text" id="clase" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Clase"></div>
-          <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Raza</label><input type="text" id="raza" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Raza"></div>
-          <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel / Rango</label><input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nivel"><span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span></div>
+
+        <!-- 2. Ilustración Oficial del Personaje (Dentro de la Ficha) -->
+        <div class="md:col-span-2 flex flex-col justify-center">
+          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">🖼️ Ilustración Oficial (Arte de Ficha)</label>
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+            <img id="fichaIlustracionPreview" src="https://via.placeholder.com/300x120/05080e/00f0ff?text=Ilustracion" alt="Ilustracion" class="ficha-ilustracion h-24 w-40 object-cover rounded-sm">
+            <div class="w-full">
+              <input type="file" id="inputArchivoFicha" accept="image/*" onchange="procesarArchivoImagen(event, 'ficha')" class="w-full text-xs text-slate-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-sm file:border-0 file:text-xs file:font-tech-title file:bg-cyan-950 file:text-cyan-300 hover:file:bg-cyan-900 cursor-pointer">
+              <p class="text-[10px] text-slate-500 mt-1 font-mono">Sube una imagen desde tu equipo. Se procesa instantáneamente.</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- URL de Foto de Personaje y Patrocinador -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// URL de Imagen / Foto de Personaje</label>
-          <input type="text" id="fotoUrl" oninput="actualizarAvatarPreview(this.value)" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-sm" placeholder="https://ejemplo.com/imagen.jpg">
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por:</label>
-          <select id="patrocinador" class="w-full tech-input border-purple-900 rounded-sm px-4 py-2 font-tech-body text-lg">
-            <option value="">Sin Patrocinador</option>
-            <option value="El que le ganó al guión">El que le ganó al guión</option>
-          </select>
-        </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre</label><input type="text" id="nombre" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nombre"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Clase</label><input type="text" id="clase" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Clase"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Raza</label><input type="text" id="raza" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Raza"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel / Rango</label><input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nivel"><span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span></div>
+      </div>
+
+      <div class="mb-8">
+        <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por:</label>
+        <select id="patrocinador" class="w-full tech-input border-purple-900 rounded-sm px-4 py-2 font-tech-body text-lg">
+          <option value="">Sin Patrocinador</option>
+          <option value="El que le ganó al guión">El que le ganó al guión</option>
+        </select>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -235,7 +249,6 @@
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">FUERZA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="fuerza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('fuerza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('fuerza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Carga Real</span><span id="fuerza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 Kg</span><button onclick="toggleExpand('fuerza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="fuerza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">DESTREZA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="destreza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('destreza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('destreza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Velocidad</span><span id="destreza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m/s</span><button onclick="toggleExpand('destreza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="destreza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">CONSTITUCIÓN</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="constitucion_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('constitucion', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('constitucion', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Defensa</span><span id="constitucion_val" class="text-lg font-tech-title font-bold text-cyan-300">300 Df</span><button onclick="toggleExpand('constitucion')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="constitucion_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
-        <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">INTELIGENCIA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="inteligencia_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('inteligencia', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('inteligencia', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Energía Arcana</span><span id="inteligencia_val" class="text-lg font-tech-title font-bold text-cyan-300">1k J</span><button onclick="toggleExpand('inteligencia')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="inteligencia_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">SENTIDOS (ST)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="sentidos_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('sentidos', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('sentidos', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Alcance / Percepción</span><span id="sentidos_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m</span><button onclick="toggleExpand('sentidos')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="sentidos_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
       </div>
 
@@ -294,7 +307,7 @@
       <div class="flex justify-between items-center border-b border-red-500/50 pb-3 mb-6">
         <div><h2 class="text-xl font-tech-title text-red-400 uppercase tracking-widest">// PANEL DE ADMINISTRACIÓN</h2><p class="text-xs text-slate-400">Control maestro de parámetros globales de la red.</p></div>
       </div>
-      
+
       <div class="bg-black/50 border border-red-900 p-6 rounded-sm shadow-lg mb-8">
         <h3 class="text-md font-tech-title text-red-300 uppercase tracking-wider mb-4 border-l-2 border-red-500 pl-2">Gestión de Patrocinadores</h3>
         <button onclick="agregarPatrocinadorAdmin()" class="bg-red-600 hover:bg-red-500 text-black font-tech-title font-bold py-2 px-6 text-xs uppercase tracking-wider transition shadow-[0_0_15px_rgba(220,38,38,0.4)]">
@@ -306,7 +319,7 @@
 
   </div>
 
-  <!-- MODALES (Guardado, Tienda, Misiones) -->
+  <!-- MODALES -->
   <div id="modalConfirmarGuardado" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border-2 border-cyan-400 max-w-md w-full p-6 text-center shadow-[0_0_30px_rgba(0,240,255,0.3)]">
       <div class="text-cyan-400 text-5xl mb-3">⚠️</div><h3 class="text-lg font-tech-title text-cyan-400 uppercase tracking-wider mb-2">// ¿GUARDAR INFORMACIÓN?</h3><p class="text-xs text-slate-400 mb-6 font-tech-body">Al confirmar, los datos se actualizarán en el registro global.</p>
@@ -314,7 +327,7 @@
     </div>
   </div>
 
-    <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-amber-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
       <div class="flex justify-between items-center border-b border-amber-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-amber-400 uppercase tracking-wider">// REGISTRAR OBJETO EN LA TIENDA</h3><button onclick="cerrarModalAgregarObjeto()" class="text-amber-400 hover:text-amber-200 text-xl font-bold">✕</button></div>
       <form id="formObjetoTienda" onsubmit="guardarObjetoTienda(event)" class="space-y-4">
@@ -361,12 +374,6 @@
     </div>
   </div>
 
-  <div id="notificacionMisionOverlay" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
-    <div class="max-w-2xl w-full bg-slate-950 border-2 border-purple-500 p-8 shadow-[0_0_50px_rgba(168,85,247,0.4)] text-center relative animate-pulse"><div class="text-purple-400 text-6xl mb-3">📜</div><h2 class="text-2xl md:text-3xl font-tech-title text-purple-400 font-bold uppercase tracking-widest mb-1">// NUEVA MISIÓN DETECTADA</h2><p id="alertaMisionSubtitulo" class="text-xs text-slate-400 font-tech-title uppercase mb-6 tracking-wider">SE TE HA ASIGNADO UN ENCARGO</p>
-      <div class="bg-black/80 border border-purple-900 p-6 rounded-sm mb-6 text-center space-y-3 font-tech-body"><h3 id="alertaMisionTitulo" class="text-2xl font-tech-title text-purple-300 font-bold">Título Misión</h3><p id="alertaMisionRecompensa" class="text-amber-400 font-tech-title text-sm border border-amber-900/50 bg-amber-950/20 inline-block px-4 py-1 rounded">Recompensa: ???</p></div><button onclick="cerrarNotificacionMision()" class="bg-purple-600 hover:bg-purple-500 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase transition shadow-[0_0_20px_rgba(168,85,247,0.5)]">✔ Revisar Tablón</button>
-    </div>
-  </div>
-
       <script>
     // CONFIGURACIÓN DE FIREBASE
     const firebaseConfig = {
@@ -388,6 +395,10 @@
     let fichaActualCargada = {};
     let suffixFichaActiva = '';
 
+    // Variables en memoria para almacenar los Base64 de las dos imágenes distintas
+    let base64AvatarLista = '';
+    let base64FichaIlustracion = '';
+
     try {
       firebase.initializeApp(firebaseConfig); db = firebase.database(); auth = firebase.auth();
       auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.error(e));
@@ -396,13 +407,23 @@
 
     function verificarEsAdmin(email) { return email ? ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase()) : false; }
 
-    function actualizarAvatarPreview(url) {
-      const img = document.getElementById('avatarPreviewImg');
-      if (url && url.trim() !== '') {
-        img.src = url.trim();
-      } else {
-        img.src = "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar";
-      }
+    // Procesador de archivos locales a Base64
+    function procesarArchivoImagen(event, tipo) {
+      const archivo = event.target.files[0];
+      if (!archivo) return;
+
+      const lector = new FileReader();
+      lector.onload = function(e) {
+        const resultadoBase64 = e.target.result;
+        if (tipo === 'avatar') {
+          base64AvatarLista = resultadoBase64;
+          document.getElementById('avatarListaPreview').src = resultadoBase64;
+        } else if (tipo === 'ficha') {
+          base64FichaIlustracion = resultadoBase64;
+          document.getElementById('fichaIlustracionPreview').src = resultadoBase64;
+        }
+      };
+      lector.readAsDataURL(archivo);
     }
 
     function aplicarPermisos() {
@@ -552,7 +573,11 @@
         uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido',
         clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, 
         patrocinador: document.getElementById('patrocinador').value,
-        fotoUrl: document.getElementById('fotoUrl').value.trim(), // Foto de perfil del personaje
+        
+        // Almacenamos ambas imágenes por separado en la base de datos
+        avatarListaUrl: base64AvatarLista,
+        fichaIlustracionUrl: base64FichaIlustracion,
+
         nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, 
         deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, 
         puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, 
@@ -566,7 +591,7 @@
         timestamp: Date.now()
       };
       
-      if (db) db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Información guardada globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error: ' + e.message));
+      if (db) db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Información y archivos guardados globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error: ' + e.message));
     }
 
     function cargarFichaNube(uid) { 
@@ -581,7 +606,6 @@
 
     if (db) {
       
-      // PATROCINADORES
       db.ref('patrocinadores').on('value', (snapshot) => {
         const data = snapshot.val();
         const selectObj = document.getElementById('patrocinador');
@@ -604,7 +628,7 @@
         selectObj.value = valorActual;
       });
 
-      // LISTENER JUGADORES (Con soporte de Avatares en Tarjetas)
+      // LISTENER JUGADORES (Renderiza el avatar diferenciado en las tarjetas)
       db.ref('jugadores').on('value', (snapshot) => {
         const data = snapshot.val(); cacheJugadores = data || {}; 
         const cont = document.getElementById('contenedorListaJugadores'), selectDest = document.getElementById('misionDestinatario');
@@ -617,7 +641,9 @@
         cont.innerHTML = Object.keys(data).map(uid => {
           const pj = data[uid];
           const isSecond = pj.isSecondChar;
-          const avatarSrc = pj.fotoUrl && pj.fotoUrl.trim() !== '' ? pj.fotoUrl : 'https://via.placeholder.com/150/05080e/00f0ff?text=Avatar';
+          
+          // Imagen exclusiva para la lista de usuarios (Avatar de Red)
+          const avatarSrc = pj.avatarListaUrl && pj.avatarListaUrl.trim() !== '' ? pj.avatarListaUrl : 'https://via.placeholder.com/150/05080e/00f0ff?text=Avatar';
           
           const secondCharBadge = isSecond ? `<div class="bg-purple-900/50 border border-purple-500 text-purple-200 text-[10px] uppercase font-bold px-2 py-1 mb-3 rounded-sm">Segundo personaje de: ${pj.mainCharName || 'Desconocido'}</div>` : '';
           
@@ -634,7 +660,7 @@
               <div class="mb-3">
                 ${secondCharBadge}
                 <div class="flex items-center gap-3 mb-3">
-                  <img src="${avatarSrc}" alt="Avatar" class="w-12 h-12 object-cover border border-cyan-500 rounded-sm shadow-[0_0_8px_rgba(0,240,255,0.3)]">
+                  <img src="${avatarSrc}" alt="Avatar" class="w-12 h-12 object-cover border border-cyan-500 rounded-full shadow-[0_0_8px_rgba(0,240,255,0.3)]">
                   <div class="overflow-hidden">
                     <h3 class="font-tech-title text-cyan-300 font-bold truncate">${pj.nombre || 'Sin Nombre'}</h3>
                     <p class="text-xs text-slate-400 truncate">${pj.clase || 'Sin Clase'} | ${pj.raza || 'Sin Raza'}</p>
@@ -653,7 +679,6 @@
         }).join('');
       });
 
-      // LISTENER TIENDA & MISIONES
       db.ref('tienda').on('value', (snapshot) => {
         const data = snapshot.val(); const cont = document.getElementById('contenedorTienda'); cont.innerHTML = '';
         if (!data) return cont.innerHTML = `<div class="col-span-full text-center py-12 bg-black/40 p-6"><p class="text-amber-400 text-sm">TIENDA VACÍA</p></div>`;
@@ -683,7 +708,6 @@
       db.ref('misiones').limitToLast(1).on('child_added', (s) => { const m = s.val(); if (m && (Date.now() - m.timestamp < 10000)) if (m.tipo === 'global' || (m.tipo === 'personal' && currentUser && m.destinatario === currentUser.uid)) mostrarNotificacionMision(m); });
     }
 
-    // ACCIONES ADMINISTRATIVAS 
     function eliminarFichaAdmin(uid) { if (confirm('⚠️ ¿Borrar ficha permanentemente?')) db.ref('jugadores/' + uid).remove(); }
     function eliminarObjetoTiendaAdmin(key) { if (confirm('⚠️ ¿Eliminar objeto de la tienda?')) db.ref('tienda/' + key).remove(); }
     function eliminarMisionAdmin(key) { if (confirm('⚠️ ¿Eliminar esta misión?')) db.ref('misiones/' + key).remove(); }
@@ -695,9 +719,9 @@
           else {
             db.ref('jugadores/' + baseUid + '_2').set({
               uid: baseUid + '_2', ownerUid: baseUid, email: baseEmail,
-              nombre: "Nuevo Personaje Secundario", clase: "-", raza: "-", fotoUrl: "",
+              nombre: "Nuevo Personaje Secundario", clase: "-", raza: "-", avatarListaUrl: "", fichaIlustracionUrl: "",
               isSecondChar: true, mainCharName: mainName, nivel: "1", deniques: "0", timestamp: Date.now()
-            }).then(() => alert("✅ ¡Ficha secundaria habilitada! El usuario ahora podrá alternar desde su menú."));
+            }).then(() => alert("✅ ¡Ficha secundaria habilitada!"));
           }
         });
       }
@@ -733,7 +757,13 @@
       if (currentUser) cargarFichaNube(targetUidToEdit);
     }
     
-    function bloquearDesbloquearInputs(b) { document.querySelectorAll('#seccionEditor input, #seccionEditor textarea, #seccionEditor select').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); }
+    function bloquearDesbloquearInputs(b) { 
+      document.querySelectorAll('#seccionEditor input, #seccionEditor textarea, #seccionEditor select').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); 
+      const inpAvatar = document.getElementById('inputArchivoAvatar');
+      const inpFicha = document.getElementById('inputArchivoFicha');
+      if(inpAvatar) inpAvatar.disabled = b;
+      if(inpFicha) inpFicha.disabled = b;
+    }
     
     function cargarDatosEnInterfaz(f) {
       fichaActualCargada = f || {}; 
@@ -741,7 +771,9 @@
           document.querySelectorAll('#seccionEditor input[type="text"], #seccionEditor textarea').forEach(el => el.value = '');
           puntosExtraAsignados.pv='0';puntosExtraAsignados.fuerza='0';puntosExtraAsignados.destreza='0';puntosExtraAsignados.constitucion='0';puntosExtraAsignados.inteligencia='0';puntosExtraAsignados.sentidos='0';
           document.getElementById('nivel').value = '1'; document.getElementById('montoPuntos').value = '1';
-          actualizarAvatarPreview('');
+          base64AvatarLista = ''; base64FichaIlustracion = '';
+          document.getElementById('avatarListaPreview').src = "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar";
+          document.getElementById('fichaIlustracionPreview').src = "https://via.placeholder.com/300x120/05080e/00f0ff?text=Ilustracion";
       }
 
       for (const k in f) {
@@ -753,11 +785,16 @@
           el.value = f[k];
         }
       }
-      actualizarAvatarPreview(f.fotoUrl || '');
+
+      // Cargar imágenes guardadas
+      base64AvatarLista = f.avatarListaUrl || '';
+      base64FichaIlustracion = f.fichaIlustracionUrl || '';
+      document.getElementById('avatarListaPreview').src = base64AvatarLista !== '' ? base64AvatarLista : "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar";
+      document.getElementById('fichaIlustracionPreview').src = base64FichaIlustracion !== '' ? base64FichaIlustracion : "https://via.placeholder.com/300x120/05080e/00f0ff?text=Ilustracion";
+
       actualizarSistemas(); aplicarPermisos();
     }
 
-    // TIENDA & ECONOMÍA
     function abrirModalAgregarObjeto() { document.getElementById('modalTienda').classList.remove('hidden'); const n = document.getElementById('nombre').value.trim(); if(n) document.getElementById('tiendaAutor').value = n; }
     function cerrarModalAgregarObjeto() { document.getElementById('modalTienda').classList.add('hidden'); document.getElementById('formObjetoTienda').reset(); }
     function cambiarTipoFormularioObjeto() { document.getElementById('campoPuntosDinamico').classList.toggle('hidden', document.getElementById('tiendaTipo').value === 'Objeto'); }
@@ -804,7 +841,6 @@
     function mostrarComprobanteGlobal(d) { document.getElementById('reciboUsuario').textContent = d.comprador; document.getElementById('reciboObjeto').textContent = d.objeto; document.getElementById('reciboCantidad').textContent = `${d.cantidad} Unidades`; document.getElementById('reciboPrecioTotal').textContent = d.precioTotal; document.getElementById('reciboVendedor').textContent = d.vendedor; document.getElementById('comprobanteCompraOverlay').classList.remove('hidden'); }
     function cerrarComprobante() { document.getElementById('comprobanteCompraOverlay').classList.add('hidden'); }
 
-    // MODALES Y MISIONES
     function abrirModalMision() { document.getElementById('modalMision').classList.remove('hidden'); }
     function cerrarModalMision() { document.getElementById('modalMision').classList.add('hidden'); document.getElementById('formMision').reset(); toggleMisionDestinatario(); }
     function toggleMisionDestinatario() { document.getElementById('campoMisionDestinatario').classList.toggle('hidden', document.getElementById('misionTipo').value !== 'personal'); }
@@ -814,13 +850,6 @@
       const m = { tipo: t, destinatario: t === 'personal' ? document.getElementById('misionDestinatario').value : 'global', titulo: document.getElementById('misionTitulo').value.trim(), descripcion: document.getElementById('misionDesc').value.trim(), recompensa: document.getElementById('misionRecompensa').value.trim(), timestamp: Date.now(), adminResponsable: currentUser?.email };
       if (db) db.ref('misiones').push(m).then(() => { cerrarModalMision(); alert('📜 Misión enviada a la Red.'); });
     }
-    function mostrarNotificacionMision(m) {
-      document.getElementById('alertaMisionTitulo').textContent = m.titulo;
-      const r = document.getElementById('alertaMisionRecompensa'); if(m.recompensa) { r.textContent = `Recompensa: ${m.recompensa}`; r.classList.remove('hidden'); } else r.classList.add('hidden');
-      document.getElementById('alertaMisionSubtitulo').textContent = m.tipo === 'global' ? 'NUEVA MISIÓN GLOBAL' : 'SE TE HA ASIGNADO UN ENCARGO PERSONAL';
-      document.getElementById('notificacionMisionOverlay').classList.remove('hidden');
-    }
-    function cerrarNotificacionMision() { document.getElementById('notificacionMisionOverlay').classList.add('hidden'); mostrarSeccion('misiones'); }
   </script>
 </body>
 </html>
