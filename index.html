@@ -1073,6 +1073,146 @@
     }
 
     function verPersonajeObjeto(pj) {
+      const esAdmin = currentUser && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+      // Si es admin, permitimos editar (no activamos modo lectura estricto)
+      if (esAdmin) {
+        esModoLectura = false;
+        cargarDatosEnInterfaz(pj);
+        bloquearDesbloquearInputs(false);
+        document.getElementById('readOnlyBanner').classList.add('hidden');
+        document.getElementById('saveBtn').classList.remove('hidden');
+        alert('🛡️ [MODO ADMIN]: Estás viendo y puedes editar la ficha de este usuario.');
+      } else {
+        // Si es usuario normal, se mantiene estrictamente en modo lectura
+        esModoLectura = true;
+        cargarDatosEnInterfaz(pj);
+        bloquearDesbloquearInputs(true);
+        document.getElementById('readOnlyBanner').classList.remove('hidden');
+        document.getElementById('saveBtn').classList.add('hidden');
+      }
+      
+      mostrarSeccion('editor');
+    }
+
+    function volverAMiFicha() {
+      esModoLectura = false;
+      bloquearDesbloquearInputs(false);
+      document.getElementById('readOnlyBanner').classList.add('hidden');
+      document.getElementById('saveBtn').classList.remove('hidden');
+      if (currentUser) cargarFichaNube(currentUser.uid);
+    }
+
+    function bloquearDesbloquearInputs(bloquear) {
+      const inputs = document.querySelectorAll('#seccionEditor input, #seccionEditor textarea');
+      inputs.forEach(el => {
+        if (bloquear) el.setAttribute('disabled', 'true');
+        else el.removeAttribute('disabled');
+      });
+    }
+
+    function cargarDatosEnInterfaz(ficha) {
+      for (const key in ficha) {
+        if (key === 'puntosExtraAsignados') Object.assign(puntosExtraAsignados, ficha.puntosExtraAsignados);
+        else if (key === 'puntosGuardadosBloqueados') Object.assign(puntosGuardadosBloqueados, ficha.puntosGuardadosBloqueados);
+        else if (document.getElementById(key)) document.getElementById(key).value = ficha[key];
+      }
+      actualizarSistemas();
+    }
+
+    // TIENDA ACCIONES
+    function abrirModalAgregarObjeto() {
+      document.getElementById('modalTienda').classList.remove('hidden');
+      const miNombre = document.getElementById('nombre').value.trim();
+      if (miNombre) document.getElementById('tiendaAutor').value = miNombre;
+    }
+
+    function cerrarModalAgregarObjeto() {
+      document.getElementById('modalTienda').classList.add('hidden');
+      document.getElementById('formObjetoTienda').reset();
+    }
+
+    function cambiarTipoFormularioObjeto() {
+      const tipo = document.getElementById('tiendaTipo').value;
+      const campoPuntos = document.getElementById('campoPuntosDinamico');
+      if (tipo === 'Objeto') campoPuntos.classList.add('hidden');
+      else campoPuntos.classList.remove('hidden');
+    }
+
+    function guardarObjetoTienda(e) {
+      e.preventDefault();
+      const tipo = document.getElementById('tiendaTipo').value;
+      const objetoNuevo = {
+        autor: document.getElementById('tiendaAutor').value.trim(),
+        tipo: tipo,
+        nombre: document.getElementById('tiendaNombre').value.trim(),
+        precio: document.getElementById('tiendaPrecio').value.trim(),
+        nivelReq: document.getElementById('tiendaNivelReq').value.trim(),
+        puntos: tipo === 'Objeto' ? '-' : document.getElementById('tiendaPuntos').value.trim(),
+        clase: tipo === 'Objeto' ? 'Objeto' : document.getElementById('tiendaClase').value.trim(),
+        habilidad: document.getElementById('tiendaHabilidad').value.trim(),
+        descripcion: document.getElementById('tiendaDescripcion').value.trim(),
+        timestamp: Date.now()
+      };
+
+      if (db) {
+        db.ref('tienda').push(objetoNuevo)
+          .then(() => {
+            cerrarModalAgregarObjeto();
+            alert('🛒 ¡Objeto publicado globalmente!');
+          })
+          .catch((error) => {
+            alert('❌ Error al publicar: ' + error.message);
+          });
+      }
+    }
+
+    function realizarCompraNube(key) {
+      db.ref('tienda/' + key).once('value')
+        .then((snapshot) => {
+          const item = snapshot.val();
+          if (!item) return;
+
+          const cantidadInput = document.getElementById(`cant_buy_${key}`);
+          const cantidad = cantidadInput ? parseInt(cantidadInput.value) || 1 : 1;
+          const precioUnitario = parseTextoABigInt(item.precio);
+
+          let precioTotalStr = '∞';
+          if (precioUnitario !== Infinity) {
+            precioTotalStr = `${formatearBigInt(precioUnitario * BigInt(cantidad))} Deniques`;
+          }
+
+          const comprador = document.getElementById('nombre').value.trim() || 'Usuario Anónimo';
+
+          const eventoCompra = {
+            comprador: comprador,
+            objeto: item.nombre,
+            cantidad: cantidad,
+            precioTotal: precioTotalStr,
+            vendedor: item.autor,
+            timestamp: Date.now()
+          };
+
+          if (db) db.ref('compras_eventos').push(eventoCompra);
+        });
+    }
+
+    function mostrarComprobanteGlobal(data) {
+      document.getElementById('reciboUsuario').textContent = data.comprador;
+      document.getElementById('reciboObjeto').textContent = data.objeto;
+      document.getElementById('reciboCantidad').textContent = `${data.cantidad} Unidades`;
+      document.getElementById('reciboPrecioTotal').textContent = data.precioTotal;
+      document.getElementById('reciboVendedor').textContent = data.vendedor;
+      document.getElementById('comprobanteCompraOverlay').classList.remove('hidden');
+    }
+
+    function cerrarComprobante() {
+      document.getElementById('comprobanteCompraOverlay').classList.add('hidden');
+    }
+ 
+    }
+
+    function verPersonajeObjeto(pj) {
       esModoLectura = true;
       cargarDatosEnInterfaz(pj);
       bloquearDesbloquearInputs(true);
