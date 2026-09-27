@@ -154,7 +154,8 @@
       </div>
     </nav>
   </div>
-    <div class="max-w-6xl mx-auto tech-card p-6 md:p-8 relative">
+
+  <div class="max-w-6xl mx-auto tech-card p-6 md:p-8 relative">
     
     <!-- Encabezado Sci-Fi -->
     <header class="border-b border-cyan-500/40 pb-6 mb-8 flex justify-between items-center gap-4">
@@ -413,7 +414,8 @@
       </div>
 
     </div>
-        <!-- SECCIÓN: LISTA DE JUGADORES -->
+
+    <!-- SECCIÓN: LISTA DE JUGADORES -->
     <div id="seccionJugadores" class="hidden">
       <div class="flex justify-between items-center border-b border-cyan-900 pb-3 mb-6">
         <div>
@@ -444,7 +446,7 @@
       </div>
     </div>
 
-  </div> <!-- Cierre del contenedor principal -->
+  </div>
 
   <!-- MODAL: CONFIRMACIÓN DE GUARDADO -->
   <div id="modalConfirmarGuardado" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
@@ -578,7 +580,8 @@
 
     </div>
   </div>
-    <script>
+
+  <script>
     // CONFIGURACIÓN DE FIREBASE
     const firebaseConfig = {
       apiKey: "AIzaSyCKuQO4HbvOSjDtg02kuzRteawZbKs7MGQ",
@@ -587,12 +590,16 @@
       projectId: "fichas-593a4",
       storageBucket: "fichas-593a4.firebasestorage.app",
       messagingSenderId: "312612537611",
-      appId: "1:312612537611:web:038579e38ed98d2e6e4e0e",
+      appId: "1:123456789:web:038579e38ed98d2e6e4e0e",
       measurementId: "G-J0LMB0FHJY"
     };
 
-    // CORREO DE ADMINISTRADOR CONFIGURADO
-    const ADMIN_EMAIL = "kinsei30284@gmail.com";
+    // 🛡️ LISTA DE CORREOS CON PERMISOS DE ADMINISTRADOR
+    const ADMIN_EMAILS = [
+      "kinsei30284@gmail.com"
+      // Agrega más administradores aquí si lo deseas:
+      // "otro_correo@gmail.com"
+    ];
 
     let db;
     let auth;
@@ -605,7 +612,7 @@
       db = firebase.database();
       auth = firebase.auth();
       
-      // SOLUCIÓN: FORZAR PERSISTENCIA DE SESIÓN LOCAL
+      // Forzar persistencia local para mantener la sesión activa al recargar
       auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .catch((error) => console.error("Error al fijar persistencia:", error));
 
@@ -615,6 +622,12 @@
       document.getElementById('estadoRed').textContent = '🔴 MODO LOCAL (CONFIGURA FIREBASE)';
     }
 
+    // Función segura para verificar administrador
+    function verificarEsAdmin(email) {
+      if (!email) return false;
+      return ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase());
+    }
+    
     // LISTENER DE ESTADO DE AUTENTICACIÓN
     if (auth) {
       auth.onAuthStateChanged((user) => {
@@ -623,7 +636,7 @@
           document.getElementById('authOverlay').classList.add('hidden');
           document.getElementById('userEmailDisplay').textContent = `Usuario: ${user.email}`;
           
-          if (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+          if (verificarEsAdmin(user.email)) {
             document.getElementById('adminBadgeDisplay').classList.remove('hidden');
           } else {
             document.getElementById('adminBadgeDisplay').classList.add('hidden');
@@ -887,7 +900,7 @@
 
       const nombreSujeto = document.getElementById('nombre').value.trim() || 'Desconocido';
 
-      const ficha = {
+         const ficha = {
         uid: currentUser.uid,
         email: currentUser.email,
         nombre: nombreSujeto,
@@ -909,7 +922,6 @@
         timestamp: Date.now()
       };
 
-      // SOLUCIÓN: MANEJO DE ERRORES AL GUARDAR
       if (db) {
         db.ref('jugadores/' + currentUser.uid).set(ficha)
           .then(() => {
@@ -917,7 +929,7 @@
             actualizarSistemas();
           })
           .catch((error) => {
-            alert('❌ Error al guardar en Firebase: ' + error.message + '\n\nRevisa las "Reglas" de tu Base de Datos como se indicó en el Paso 1.');
+            alert('❌ Error al guardar en Firebase: ' + error.message);
           });
       }
     }
@@ -932,7 +944,7 @@
           }
         })
         .catch((error) => {
-          console.error("Error al cargar la ficha (Reglas bloqueadas): ", error);
+          console.error("Error al cargar la ficha: ", error);
         });
     }
 
@@ -953,7 +965,7 @@
         }
 
         const lista = Object.keys(data);
-        const esAdmin = currentUser && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+        const esAdmin = verificarEsAdmin(currentUser?.email);
 
         contenedor.innerHTML = lista.map((uidKey) => {
           const pj = data[uidKey];
@@ -976,7 +988,7 @@
               </div>
               <div class="space-y-2">
                 <button onclick='verPersonajeObjeto(${JSON.stringify(pj)})' class="w-full bg-cyan-950 hover:bg-cyan-400 hover:text-black border border-cyan-500 text-cyan-300 font-tech-title text-xs py-2 uppercase font-bold transition">
-                  👁️ Ver Ficha (Solo Lectura)
+                  👁️ Ver Ficha
                 </button>
                 ${esAdmin ? `<button onclick="eliminarFichaAdmin('${uidKey}')" class="w-full bg-red-950 hover:bg-red-900 border border-red-600 text-red-400 font-tech-title text-xs py-1.5 uppercase font-bold transition">🗑️ Eliminar Ficha</button>` : ''}
               </div>
@@ -986,7 +998,7 @@
          console.error("Error al leer Jugadores: ", error.message);
       });
 
-       // LISTENER DE TIENDA
+      // LISTENER DE TIENDA
       db.ref('tienda').on('value', (snapshot) => {
         const data = snapshot.val();
         const contenedor = document.getElementById('contenedorTienda');
@@ -1002,7 +1014,7 @@
         }
 
         const tiendaKeys = Object.keys(data);
-        const esAdmin = currentUser && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+        const esAdmin = verificarEsAdmin(currentUser?.email);
 
         contenedor.innerHTML = tiendaKeys.map((key) => {
           const item = data[key];
@@ -1059,7 +1071,7 @@
       });
     }
 
-    // ACCIONES ADMINISTRADOR
+    // ACCIONES ADMINISTRADOR Y LECTURA
     function eliminarFichaAdmin(uid) {
       if (confirm('⚠️ ¿Estás seguro de que deseas eliminar esta ficha permanentemente?')) {
         db.ref('jugadores/' + uid).remove();
@@ -1073,9 +1085,8 @@
     }
 
     function verPersonajeObjeto(pj) {
-      const esAdmin = currentUser && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+      const esAdmin = verificarEsAdmin(currentUser?.email);
 
-      // Si es admin, permitimos editar (no activamos modo lectura estricto)
       if (esAdmin) {
         esModoLectura = false;
         cargarDatosEnInterfaz(pj);
@@ -1084,7 +1095,6 @@
         document.getElementById('saveBtn').classList.remove('hidden');
         alert('🛡️ [MODO ADMIN]: Estás viendo y puedes editar la ficha de este usuario.');
       } else {
-        // Si es usuario normal, se mantiene estrictamente en modo lectura
         esModoLectura = true;
         cargarDatosEnInterfaz(pj);
         bloquearDesbloquearInputs(true);
@@ -1163,134 +1173,6 @@
           })
           .catch((error) => {
             alert('❌ Error al publicar: ' + error.message);
-          });
-      }
-    }
-
-    function realizarCompraNube(key) {
-      db.ref('tienda/' + key).once('value')
-        .then((snapshot) => {
-          const item = snapshot.val();
-          if (!item) return;
-
-          const cantidadInput = document.getElementById(`cant_buy_${key}`);
-          const cantidad = cantidadInput ? parseInt(cantidadInput.value) || 1 : 1;
-          const precioUnitario = parseTextoABigInt(item.precio);
-
-          let precioTotalStr = '∞';
-          if (precioUnitario !== Infinity) {
-            precioTotalStr = `${formatearBigInt(precioUnitario * BigInt(cantidad))} Deniques`;
-          }
-
-          const comprador = document.getElementById('nombre').value.trim() || 'Usuario Anónimo';
-
-          const eventoCompra = {
-            comprador: comprador,
-            objeto: item.nombre,
-            cantidad: cantidad,
-            precioTotal: precioTotalStr,
-            vendedor: item.autor,
-            timestamp: Date.now()
-          };
-
-          if (db) db.ref('compras_eventos').push(eventoCompra);
-        });
-    }
-
-    function mostrarComprobanteGlobal(data) {
-      document.getElementById('reciboUsuario').textContent = data.comprador;
-      document.getElementById('reciboObjeto').textContent = data.objeto;
-      document.getElementById('reciboCantidad').textContent = `${data.cantidad} Unidades`;
-      document.getElementById('reciboPrecioTotal').textContent = data.precioTotal;
-      document.getElementById('reciboVendedor').textContent = data.vendedor;
-      document.getElementById('comprobanteCompraOverlay').classList.remove('hidden');
-    }
-
-    function cerrarComprobante() {
-      document.getElementById('comprobanteCompraOverlay').classList.add('hidden');
-    }
- 
-    }
-
-    function verPersonajeObjeto(pj) {
-      esModoLectura = true;
-      cargarDatosEnInterfaz(pj);
-      bloquearDesbloquearInputs(true);
-
-      document.getElementById('readOnlyBanner').classList.remove('hidden');
-      document.getElementById('saveBtn').classList.add('hidden');
-      mostrarSeccion('editor');
-    }
-
-    function volverAMiFicha() {
-      esModoLectura = false;
-      bloquearDesbloquearInputs(false);
-      document.getElementById('readOnlyBanner').classList.add('hidden');
-      document.getElementById('saveBtn').classList.remove('hidden');
-      if (currentUser) cargarFichaNube(currentUser.uid);
-    }
-
-    function bloquearDesbloquearInputs(bloquear) {
-      const inputs = document.querySelectorAll('#seccionEditor input, #seccionEditor textarea');
-      inputs.forEach(el => {
-        if (bloquear) el.setAttribute('disabled', 'true');
-        else el.removeAttribute('disabled');
-      });
-    }
-
-    function cargarDatosEnInterfaz(ficha) {
-      for (const key in ficha) {
-        if (key === 'puntosExtraAsignados') Object.assign(puntosExtraAsignados, ficha.puntosExtraAsignados);
-        else if (key === 'puntosGuardadosBloqueados') Object.assign(puntosGuardadosBloqueados, ficha.puntosGuardadosBloqueados);
-        else if (document.getElementById(key)) document.getElementById(key).value = ficha[key];
-      }
-      actualizarSistemas();
-    }
-
-    // TIENDA ACCIONES
-    function abrirModalAgregarObjeto() {
-      document.getElementById('modalTienda').classList.remove('hidden');
-      const miNombre = document.getElementById('nombre').value.trim();
-      if (miNombre) document.getElementById('tiendaAutor').value = miNombre;
-    }
-
-    function cerrarModalAgregarObjeto() {
-      document.getElementById('modalTienda').classList.add('hidden');
-      document.getElementById('formObjetoTienda').reset();
-    }
-
-    function cambiarTipoFormularioObjeto() {
-      const tipo = document.getElementById('tiendaTipo').value;
-      const campoPuntos = document.getElementById('campoPuntosDinamico');
-      if (tipo === 'Objeto') campoPuntos.classList.add('hidden');
-      else campoPuntos.classList.remove('hidden');
-    }
-
-    function guardarObjetoTienda(e) {
-      e.preventDefault();
-      const tipo = document.getElementById('tiendaTipo').value;
-      const objetoNuevo = {
-        autor: document.getElementById('tiendaAutor').value.trim(),
-        tipo: tipo,
-        nombre: document.getElementById('tiendaNombre').value.trim(),
-        precio: document.getElementById('tiendaPrecio').value.trim(),
-        nivelReq: document.getElementById('tiendaNivelReq').value.trim(),
-        puntos: tipo === 'Objeto' ? '-' : document.getElementById('tiendaPuntos').value.trim(),
-        clase: tipo === 'Objeto' ? 'Objeto' : document.getElementById('tiendaClase').value.trim(),
-        habilidad: document.getElementById('tiendaHabilidad').value.trim(),
-        descripcion: document.getElementById('tiendaDescripcion').value.trim(),
-        timestamp: Date.now()
-      };
-
-      // SOLUCIÓN: MANEJO DE ERRORES AL PUBLICAR
-      if (db) {
-        db.ref('tienda').push(objetoNuevo)
-          .then(() => {
-            cerrarModalAgregarObjeto();
-            alert('🛒 ¡Objeto publicado globalmente!');
-          })
-          .catch((error) => {
-            alert('❌ Error al publicar: ' + error.message + '\n\nRevisa las "Reglas" de tu Base de Datos.');
           });
       }
     }
