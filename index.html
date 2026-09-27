@@ -150,6 +150,13 @@
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel</label><input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input p-2 font-tech-body text-lg"><span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span></div>
       </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre</label><input type="text" id="nombre" class="w-full tech-input p-2 font-tech-body text-lg"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Clase</label><input type="text" id="clase" class="w-full tech-input p-2 font-tech-body text-lg"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Raza</label><input type="text" id="raza" class="w-full tech-input p-2 font-tech-body text-lg"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel</label><input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input p-2 font-tech-body text-lg"><span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span></div>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Seguir vía:</label>
@@ -176,7 +183,10 @@
         </div>
         <div>
           <label class="block text-xs font-tech-title uppercase text-red-400 mb-2">// Emanador:</label>
-          <input type="text" id="emanadorDisplay" value="no" readonly class="w-full tech-input p-2 font-tech-body text-md bg-slate-950 font-bold text-red-400">
+          <select id="emanadorDisplay" onchange="actualizarSistemas();" class="w-full tech-input p-2 font-tech-body text-md bg-slate-950 font-bold text-red-400">
+            <option value="no">no</option>
+            <option value="si">sí</option>
+          </select>
         </div>
       </div>
 
@@ -203,6 +213,7 @@
           <div class="bg-black/60 px-3 py-1.5 border border-cyan-800 text-center min-w-[90px]"><span class="block text-[10px] text-slate-400 font-tech-title uppercase">Usados</span><span id="puntosUsadosText" class="text-xl font-tech-title font-bold text-amber-400">0</span></div>
         </div>
 	  </div>
+		
 	        <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Parámetros Físicos y Moduladores</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <div class="bg-black/50 border border-emerald-800 p-3 text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-emerald-400 mb-1">VIDA (PV)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="pv_pts" class="font-tech-title font-bold text-emerald-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('pv', -1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('pv', 1)" class="btn-point font-tech-title font-bold w-8 h-8 flex items-center justify-center text-lg">+</button></div><div class="bg-emerald-950/40 border border-emerald-800/60 p-2"><span class="block text-[10px] text-emerald-400 uppercase font-bold">Total PV</span><span id="pv_val" class="text-lg font-tech-title font-bold text-emerald-300">500 PV</span><button onclick="toggleExpand('pv')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="pv_expand" class="hidden mt-2 p-1 bg-black/80 border border-emerald-500/40 text-[11px] font-mono text-emerald-200 break-all"></div></div></div>
@@ -1006,17 +1017,18 @@
       actualizarSistemas(); aplicarPermisos();
     }
 
-    function aplicarPermisos() {
+        function aplicarPermisos() {
       const esAdmin = verificarEsAdmin(currentUser?.email); 
       const inpDeniques = document.getElementById('deniques'), selPat = document.getElementById('patrocinador'), inpNotas = document.getElementById('notas');
       const selSeguirVia = document.getElementById('seguirVia');
+      const selEmanador = document.getElementById('emanadorDisplay');
       
       if (!esAdmin) { 
         if (inpDeniques) inpDeniques.disabled = true; 
         if (inpNotas) inpNotas.disabled = true; 
         if (selPat) selPat.disabled = selPat.value !== ''; 
+        if (selEmanador) selEmanador.disabled = true; // Bloqueado para usuarios normales
         if (selSeguirVia) {
-          // Solo se puede modificar una vez si ya tiene valor seleccionado y no es admin
           if (fichaActualCargada.seguirVia && fichaActualCargada.seguirVia !== '') {
             selSeguirVia.disabled = true;
           } else {
@@ -1025,6 +1037,7 @@
         }
       } else { 
         if (selSeguirVia) selSeguirVia.disabled = false;
+        if (selEmanador) selEmanador.disabled = false; // Totalmente editable por administradores
         if (!esModoLectura) { 
           if(inpDeniques) inpDeniques.disabled = false; 
           if(selPat) selPat.disabled = false; 
@@ -1042,7 +1055,7 @@
     }
     function volverAMiFicha() { esModoLectura = false; if (currentUser) { targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; } bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.remove('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); if (currentUser) cargarFichaNube(targetUidToEdit); }
     function cambiarFichaPropia(suffix) { if(esModoLectura) return; suffixFichaActiva = suffix; targetUidToEdit = currentUser.uid + suffix; cargarFichaNube(targetUidToEdit); mostrarSeccion('editor'); }
-		    function inicializarSistemasNuevos() {
+                function inicializarSistemasNuevos() {
       db.ref('jugadores').on('value', snap => {
         cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha'), selectAdminEmanador = document.getElementById('adminSelectJugadorEmanador'), selectMisionDest = document.getElementById('misionDestinatario');
         
