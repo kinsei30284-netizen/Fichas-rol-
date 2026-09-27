@@ -98,7 +98,7 @@
     </nav>
   </div>
 
-  <div class="max-w-6xl mx-auto tech-card p-6 md:p-8 relative">
+      <div class="max-w-6xl mx-auto tech-card p-6 md:p-8 relative">
     <header class="border-b border-cyan-500/40 pb-6 mb-8 flex justify-between items-center gap-4">
       <div class="flex items-center gap-4">
         <button onclick="toggleMenu()" class="bg-cyan-950 border border-cyan-400 text-cyan-300 p-2.5 rounded-none hover:bg-cyan-400 hover:text-black transition shadow-[0_0_10px_rgba(0,240,255,0.3)]">
@@ -117,7 +117,7 @@
       <button onclick="volverAMiFicha()" class="bg-amber-500 hover:bg-amber-400 text-black font-tech-title text-xs px-3 py-1 font-bold">Volver a Mi Personaje</button>
     </div>
 
-        <!-- SECCIÓN: EDITOR / FICHA PRINCIPAL -->
+    <!-- SECCIÓN: EDITOR / FICHA PRINCIPAL -->
     <div id="seccionEditor">
       <div class="flex justify-end gap-3 mb-6">
         <button id="saveBtn" onclick="solicitarGuardado()" class="bg-cyan-600 hover:bg-cyan-500 text-black font-tech-title font-bold py-2.5 px-6 border border-cyan-300 shadow-[0_0_15px_rgba(0,240,255,0.4)] transition uppercase">💾 Sincronizar Datos</button>
@@ -200,11 +200,11 @@
       <div class="mt-6"><label class="block text-xs font-tech-title uppercase text-emerald-400 mb-2">// Apariencia e Historia</label><textarea id="apariencia" rows="5" class="w-full tech-input border-emerald-900 focus:border-emerald-500 p-3 font-tech-body"></textarea></div>
     </div>
 
-        <!-- SECCIÓN: CORREO Y AVISOS -->
+            <!-- SECCIÓN: CORREO Y AVISOS -->
     <div id="seccionCorreo" class="hidden">
       <div class="flex justify-between items-center border-b border-emerald-500/50 pb-3 mb-6">
         <h2 class="text-xl font-tech-title text-emerald-400 uppercase tracking-widest">// BANDEJA DE ENTRADA</h2>
-        <button id="btnAdminCorreo" onclick="abrirModalCorreoAdmin()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">➕ Enviar Notificación (Admin)</button>
+        <button id="btnAdminCorreo" onclick="abrirModalCorreoAdmin()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">✉️ Enviar Notificación</button>
       </div>
       <div id="listaCorreos" class="space-y-3"></div>
     </div>
@@ -234,10 +234,14 @@
     <div id="seccionFacciones" class="hidden">
       <div class="border-b border-indigo-500/50 pb-3 mb-6 flex justify-between items-center">
         <h2 class="text-xl font-tech-title text-indigo-400 uppercase tracking-widest">// FACCIONES Y REINOS</h2>
-        <button id="btnAdminFaccion" onclick="abrirModalFaccionAdmin()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">➕ Crear Facción (Admin)</button>
+        <div class="flex gap-2">
+          <button onclick="crearFaccionUsuario()" class="bg-indigo-600 hover:bg-indigo-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">⚔️ Fundar Facción / Reino</button>
+          <button id="btnAdminFaccion" onclick="abrirModalFaccionAdmin()" class="hidden bg-indigo-900 text-indigo-200 border border-indigo-500 font-tech-title text-xs px-3 py-2 font-bold uppercase transition">👑 Admin</button>
+        </div>
       </div>
       <div id="panelSinFaccion" class="bg-black/60 border border-indigo-900 p-8 text-center hidden">
-        <p class="text-indigo-300 font-tech-title text-sm">No perteneces a ninguna facción. Solicita a un administrador o recibe una invitación.</p>
+        <p class="text-indigo-300 font-tech-title text-sm mb-4">No perteneces a ninguna facción actualmente.</p>
+        <button onclick="crearFaccionUsuario()" class="bg-indigo-600 hover:bg-indigo-500 text-black font-bold px-6 py-2 uppercase text-xs transition">Fundar Tu Propia Facción</button>
       </div>
       <div id="panelConFaccion" class="bg-black/80 border border-indigo-500 p-6 hidden relative shadow-[0_0_20px_rgba(79,70,229,0.2)]">
         <h3 id="faccionNombreUI" class="text-3xl font-tech-title text-indigo-400 font-bold mb-2">Reino Ficción</h3>
@@ -251,7 +255,7 @@
       </div>
     </div>
 
-        <!-- SECCIÓN: FORJA DE CREACIÓN -->
+            <!-- SECCIÓN: FORJA DE CREACIÓN -->
     <div id="seccionForja" class="hidden">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-orange-500/50 pb-3 mb-6 gap-4">
         <h2 class="text-xl font-tech-title text-orange-400 uppercase tracking-widest">// FORJA DEL MUNDO</h2>
@@ -309,7 +313,7 @@
       <div id="contenedorTienda" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
-    <!-- SECCIÓN: MISIONES -->
+            <!-- SECCIÓN: MISIONES -->
     <div id="seccionMisiones" class="hidden">
       <div class="flex justify-between items-center border-b border-purple-500/50 pb-3 mb-6">
         <h2 class="text-xl font-tech-title text-purple-400 uppercase tracking-widest">// TABLÓN DE MISIONES</h2>
@@ -317,6 +321,32 @@
       </div>
       <h3 class="text-md font-tech-title text-purple-300 uppercase tracking-wider mb-4 border-l-2 border-purple-500 pl-2">Misiones Globales (Públicas)</h3><div id="contenedorMisionesGlobales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
       <h3 class="text-md font-tech-title text-cyan-300 uppercase tracking-wider mb-4 border-l-2 border-cyan-500 pl-2">Mis Misiones Personales</h3><div id="contenedorMisionesPersonales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- SECCIÓN: CONFIGURACIÓN DE CUENTA -->
+    <div id="seccionConfiguracion" class="hidden max-w-xl mx-auto">
+      <div class="border-b border-slate-700 pb-3 mb-6">
+        <h2 class="text-xl font-tech-title text-slate-300 uppercase tracking-widest">// CONFIGURACIÓN DE SEGURIDAD</h2>
+      </div>
+      <form id="formConfiguracion" onsubmit="cambiarPasswordCuenta(event)" class="space-y-4 bg-black/60 border border-slate-800 p-6 shadow-lg">
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-1">Contraseña Actual *</label>
+          <input type="password" id="passActual" required class="w-full tech-input p-2.5 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-1">Nueva Contraseña (Mínimo 6 caracteres) *</label>
+          <input type="password" id="passNueva" required minlength="6" class="w-full tech-input p-2.5 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-1">Confirmar Nueva Contraseña *</label>
+          <input type="password" id="passConfirmar" required minlength="6" class="w-full tech-input p-2.5 text-sm">
+        </div>
+        <p id="configError" class="text-xs text-red-400 font-mono hidden text-center"></p>
+        <div class="flex justify-end gap-3 pt-4">
+          <button type="button" onclick="mostrarSeccion('editor')" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button>
+          <button type="submit" class="px-6 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold text-xs uppercase">Actualizar Contraseña</button>
+        </div>
+      </form>
     </div>
 
     <!-- SECCIÓN: PANEL DE ADMINISTRADOR -->
@@ -362,10 +392,40 @@
     </div>
   </div>
 
+  <div id="modalCorreoAdmin" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-emerald-500 max-w-md w-full p-6">
+      <div class="flex justify-between items-center border-b border-emerald-900 pb-3 mb-4">
+        <h3 class="text-lg font-tech-title text-emerald-400 uppercase tracking-wider">// ENVIAR NOTIFICACIÓN</h3>
+        <button onclick="cerrarModalCorreoAdmin()" class="text-emerald-400 font-bold">✕</button>
+      </div>
+      <form id="formCorreoAdmin" onsubmit="enviarCorreoAdminSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-emerald-300 mb-1">Tipo de Envío *</label>
+          <select id="correoTipo" onchange="toggleCorreoDestinatario()" class="w-full tech-input p-2 text-sm bg-slate-900">
+            <option value="global">Global (Todos los usuarios)</option>
+            <option value="personal">Personal (Usuario Específico)</option>
+          </select>
+        </div>
+        <div id="campoDestinatarioEspecifico" class="hidden">
+          <label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Usuario *</label>
+          <select id="selectDestinatarioCorreo" class="w-full tech-input p-2 text-sm bg-slate-900 border-cyan-800"></select>
+        </div>
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-emerald-300 mb-1">Contenido del Mensaje *</label>
+          <textarea id="contenidoMensajeCorreo" required rows="4" class="w-full tech-input p-2 text-sm" placeholder="Escribe el aviso..."></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="cerrarModalCorreoAdmin()" class="px-4 py-2 border border-slate-700 text-slate-300 text-xs uppercase">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 text-black font-bold text-xs uppercase">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="modalProponerForja" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-orange-500 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-orange-900/80 pb-3 mb-4">
-        <h3 class="text-lg font-tech-title text-orange-400 uppercase tracking-wider">// PROPONER PLANO EN LA FORJA</h3>
+        <h3 class="text-lg font-tech-title text-orange-400 uppercase tracking-wider">// PROPONER / CREAR EN LA FORJA</h3>
         <button onclick="document.getElementById('modalProponerForja').classList.add('hidden')" class="text-orange-400 hover:text-orange-200 font-bold">✕</button>
       </div>
       <form id="formForja" onsubmit="guardarForjaPendiente(event)" class="space-y-4">
@@ -378,11 +438,24 @@
           <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Clase Perteneciente</label><input type="text" id="forjaClase" class="w-full tech-input px-3 py-1.5 text-sm"></div>
           <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Puntos Arma/Def</label><input type="text" id="forjaPuntos" class="w-full tech-input px-3 py-1.5 text-sm"></div>
         </div>
-        <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">URL de Imagen (Opcional)</label><input type="url" id="forjaImagen" placeholder="https://..." class="w-full tech-input px-3 py-1.5 text-sm"></div>
-        <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Habilidades (Extensible) *</label><textarea id="forjaHabilidades" required rows="3" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div>
-        <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Descripción y Lore *</label><textarea id="forjaDescripcion" required rows="3" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Precio en Tienda (Deniques)</label>
+            <input type="text" id="forjaPrecio" value="1000" class="w-full tech-input px-3 py-1.5 text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Subir Imagen Local</label>
+            <input type="file" id="inputArchivoForja" accept="image/*" onchange="procesarArchivoForja(event)" class="w-full text-xs text-slate-400 file:mr-2 file:py-1 file:px-2 file:border-0 file:bg-orange-950 file:text-orange-300 cursor-pointer">
+          </div>
+        </div>
+        <div class="flex items-center gap-4 bg-black/40 p-2 border border-orange-900/40">
+          <img id="forjaImgPreview" src="https://via.placeholder.com/150/05080e/00f0ff?text=Previa" class="w-12 h-12 object-cover border border-orange-500">
+          <span class="text-[11px] text-slate-400">O ingresa URL alternativa: <input type="url" id="forjaImagenUrl" placeholder="https://..." class="tech-input p-1 text-xs w-full mt-1"></span>
+        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Habilidades (Extensible) *</label><textarea id="forjaHabilidades" required rows="2" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div>
+        <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Descripción y Lore *</label><textarea id="forjaDescripcion" required rows="2" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div>
         <div class="flex justify-end gap-3 pt-2">
-          <button type="submit" class="px-5 py-2 bg-orange-600 text-black font-tech-title font-bold text-xs uppercase">Enviar a Aprobación</button>
+          <button type="submit" class="px-5 py-2 bg-orange-600 text-black font-tech-title font-bold text-xs uppercase">Guardar / Proponer</button>
         </div>
       </form>
     </div>
@@ -403,7 +476,20 @@
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Nivel Estimado</label><input type="text" id="bestiarioNivel" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Locación / Hábitat *</label><input type="text" id="bestiarioLocacion" required class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
         </div>
-        <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">URL de Imagen del Monstruo *</label><input type="url" id="bestiarioImagen" required placeholder="https://..." class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Subir Imagen Local</label>
+            <input type="file" id="inputArchivoBestiario" accept="image/*" onchange="procesarArchivoBestiario(event)" class="w-full text-xs text-slate-400 file:mr-2 file:py-1 file:px-2 file:border-0 file:bg-red-950 file:text-red-300 cursor-pointer">
+          </div>
+          <div>
+            <label class="block text-xs font-tech-title uppercase text-red-300 mb-1">O URL de Imagen</label>
+            <input type="url" id="bestiarioImagenUrl" placeholder="https://..." class="w-full tech-input px-3 py-1.5 text-sm border-red-900">
+          </div>
+        </div>
+        <div class="flex items-center gap-3 bg-black/40 p-2 border border-red-900/40">
+          <img id="bestiarioImgPreview" src="https://via.placeholder.com/150/3f0000/ff0000?text=Previa" class="w-12 h-12 object-cover border border-red-500">
+          <span class="text-[11px] text-slate-400">Previa del monstruo cargada para el reporte.</span>
+        </div>
         <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Descripción de la Criatura *</label><textarea id="bestiarioDesc" required rows="2" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></textarea></div>
         <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Habilidades y Ataques *</label><textarea id="bestiarioHabilidades" required rows="2" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></textarea></div>
         <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Debilidades Notables</label><textarea id="bestiarioDebilidades" rows="2" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></textarea></div>
@@ -490,7 +576,7 @@
     
     function mostrarSeccion(s) {
       document.getElementById('sideDrawer').classList.remove('open'); 
-      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario'];
+      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionConfiguracion'];
       secciones.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); });
       const act = document.getElementById('seccion' + s.charAt(0).toUpperCase() + s.slice(1));
       if (act) act.classList.remove('hidden');
@@ -506,14 +592,29 @@
       Array.from(contenedor.children).forEach(el => { el.style.display = el.textContent.toLowerCase().includes(texto) ? '' : 'none'; });
     }
 
-    function abrirConfiguracion() {
-      const nuevaPass = prompt("🔧 CONFIGURACIÓN DE CUENTA\nIngresa tu nueva contraseña (mínimo 6 caracteres):");
-      if (nuevaPass && nuevaPass.length >= 6 && currentUser) {
-        currentUser.updatePassword(nuevaPass).then(() => alert("✅ Contraseña actualizada.")).catch(e => alert("❌ Error: " + e.message));
-      }
+    function abrirConfiguracion() { mostrarSeccion('configuracion'); }
+
+    function cambiarPasswordCuenta(e) {
+      e.preventDefault();
+      const actual = document.getElementById('passActual').value;
+      const nueva = document.getElementById('passNueva').value;
+      const confirmacion = document.getElementById('passConfirmar').value;
+      const errorBox = document.getElementById('configError');
+      errorBox.classList.add('hidden');
+
+      if (nueva !== confirmacion) { errorBox.textContent = "❌ Las nuevas contraseñas no coinciden."; errorBox.classList.remove('hidden'); return; }
+      if (!currentUser || !currentUser.email) return;
+
+      const credencial = firebase.auth.EmailAuthProvider.credential(currentUser.email, actual);
+      currentUser.reauthenticateWithCredential(credencial).then(() => {
+        currentUser.updatePassword(nueva).then(() => {
+          alert("✅ Contraseña actualizada correctamente.");
+          document.getElementById('formConfiguracion').reset();
+          mostrarSeccion('editor');
+        }).catch(err => { errorBox.textContent = "❌ Error al actualizar: " + err.message; errorBox.classList.remove('hidden'); });
+      }).catch(() => { errorBox.textContent = "❌ La contraseña actual es incorrecta."; errorBox.classList.remove('hidden'); });
     }
 
-    // MATEMÁTICAS (BIGINT) Y FICHA
     function parseTextoABigInt(strInput) {
       if (!strInput) return 0n; let str = strInput.toString().trim(); if (str === '' || str.toLowerCase() === 'inf' || str === '∞') return str === '' ? 0n : Infinity;
       const match = str.match(/^([\d\.]+)\s*([a-zA-Z]+)?$/); if (!match) { try { return BigInt(str.replace(/[^0-9]/g, '')); } catch(e) { return 0n; } }
@@ -556,7 +657,6 @@
       const pv = (BigInt(VALOR_BASE_ESTADISTICA) + BigInt(puntosExtraAsignados.pv || '0')) * BigInt(config.pv.mult); document.getElementById('pvActualesDisplay').textContent = `${formatearBigInt(pv)} PV`;
     }
 
-    // GUARDADO Y CARGA (NUBE)
     function procesarArchivoImagen(event, tipo) {
       const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
       lector.onload = function(e) { if (tipo === 'avatar') { base64AvatarLista = e.target.result; document.getElementById('avatarListaPreview').src = e.target.result; } else { base64FichaIlustracion = e.target.result; document.getElementById('fichaIlustracionPreview').src = e.target.result; } };
@@ -609,12 +709,16 @@
     }
     function volverAMiFicha() { esModoLectura = false; if (currentUser) { targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; } bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.remove('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); if (currentUser) cargarFichaNube(targetUidToEdit); }
     function cambiarFichaPropia(suffix) { if(esModoLectura) return; suffixFichaActiva = suffix; targetUidToEdit = currentUser.uid + suffix; cargarFichaNube(targetUidToEdit); mostrarSeccion('editor'); }
-
-            // SISTEMAS DE JUEGO Y ACTUALIZADORES
+                  </script>
+                    <script>
     function inicializarSistemasNuevos() {
       db.ref('jugadores').on('value', snap => {
-        cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar');
+        cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha');
+        
         if (selectInv) selectInv.innerHTML = Object.keys(cacheJugadores).filter(uid => uid !== currentUser.uid).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
+        if (selectMail) selectMail.innerHTML = Object.keys(cacheJugadores).filter(uid => uid !== currentUser.uid).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
+        if (selectAdminFicha) selectAdminFicha.innerHTML = `<option value="">Selecciona un jugador...</option>` + Object.keys(cacheJugadores).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
+
         if (cont) {
           cont.innerHTML = Object.keys(cacheJugadores).map(uid => {
             const pj = cacheJugadores[uid]; const isSecond = pj.isSecondChar; const av = pj.avatarListaUrl || 'https://via.placeholder.com/150/05080e/00f0ff?text=Avatar';
@@ -629,42 +733,68 @@
           const msg = mensajes[key];
           if (msg.to === currentUser.uid || msg.to === 'global') {
             unread++; let bg = msg.to === 'global' ? 'border-red-500 bg-red-950/20' : 'border-emerald-500 bg-emerald-950/20';
-            let actions = (msg.type === 'invite_equipo' || msg.type === 'invite_faccion') ? `<div class="mt-2 flex gap-2"><button onclick="aceptarInvitacion('${key}', '${msg.refId}', '${msg.type}', '${msg.rango}')" class="bg-emerald-600 text-black text-xs px-3 py-1 font-bold">Aceptar</button><button onclick="db.ref('mensajes/${key}').remove()" class="bg-red-900 text-white text-xs px-3 py-1">Rechazar</button></div>` : `<button onclick="db.ref('mensajes/${key}').remove()" class="mt-2 text-xs text-slate-500 underline">Descartar / Borrar</button>`;
-            lista.innerHTML += `<div class="p-4 border ${bg} text-sm font-tech-body mb-3 shadow-md"><strong class="text-white block mb-1 font-tech-title">${msg.from}</strong>${msg.content} ${actions}</div>`;
+            let actions = (msg.type === 'invite_equipo' || msg.type === 'invite_faccion') ? `<div class="mt-2 flex gap-2"><button onclick="aceptarInvitacion('${key}', '${msg.refId}', '${msg.type}', '${msg.rango}')" class="bg-emerald-600 text-black text-xs px-3 py-1 font-bold">Aceptar</button><button onclick="borrarCorreo('${key}')" class="bg-red-900 text-white text-xs px-3 py-1">Rechazar / Borrar</button></div>` : `<button onclick="borrarCorreo('${key}')" class="mt-2 text-xs text-slate-400 hover:text-red-400 underline">🗑️ Borrar Correo</button>`;
+            lista.innerHTML += `<div class="p-4 border ${bg} text-sm font-tech-body mb-3 shadow-md relative"><strong class="text-white block mb-1 font-tech-title">De: ${msg.from}</strong><p class="text-slate-300">${msg.content}</p> ${actions}</div>`;
           }
         });
         if (unread > 0) badge.classList.remove('hidden'); else { badge.classList.add('hidden'); lista.innerHTML = '<p class="text-xs text-slate-500">Buzón vacío.</p>'; }
       });
 
       db.ref('equipos').on('value', snap => {
-        const equipos = snap.val() || {}; miEquipoActual = null; let idMiEq = null;
+        const equipos = snap.val() || {}; miEquipoActual = null; let idMiEq = null; const esAdmin = verificarEsAdmin(currentUser?.email);
         for (const eId in equipos) { if (equipos[eId].miembros && equipos[eId].miembros[currentUser.uid]) { miEquipoActual = equipos[eId]; idMiEq = eId; break; } }
         if (miEquipoActual) {
           document.getElementById('panelSinEquipo').classList.add('hidden'); document.getElementById('panelConEquipo').classList.remove('hidden');
           document.getElementById('equipoNombreUI').textContent = miEquipoActual.nombre; document.getElementById('equipoLiderUI').textContent = cacheJugadores[miEquipoActual.lider]?.nombre || 'Líder';
           const uids = Object.keys(miEquipoActual.miembros); document.getElementById('equipoConteoUI').textContent = uids.length;
-          document.getElementById('listaIntegrantesEquipo').innerHTML = uids.map(u => `<div class="bg-blue-950/40 p-2 border border-blue-900/50 text-xs text-blue-200">▪ ${cacheJugadores[u]?.nombre || 'Desconocido'} ${u === miEquipoActual.lider ? '(Líder)' : ''}</div>`).join('');
+          document.getElementById('listaIntegrantesEquipo').innerHTML = uids.map(u => `<div class="bg-blue-950/40 p-2 border border-blue-900/50 text-xs text-blue-200 flex justify-between items-center"><span>▪ ${cacheJugadores[u]?.nombre || 'Desconocido'} ${u === miEquipoActual.lider ? '(Líder)' : ''}</span> ${esAdmin ? `<button onclick="eliminarEquipoAdmin('${idMiEq}')" class="text-red-400 hover:text-red-200 text-[10px] uppercase font-bold">🗑️ Eliminar</button>` : ''}</div>`).join('');
           document.getElementById('panelConEquipo').dataset.id = idMiEq;
         } else { document.getElementById('panelSinEquipo').classList.remove('hidden'); document.getElementById('panelConEquipo').classList.add('hidden'); }
       });
 
       db.ref('facciones').on('value', snap => {
-        const facciones = snap.val() || {}; miFaccionActual = null; let idMiFac = null;
+        const facciones = snap.val() || {}; miFaccionActual = null; let idMiFac = null; const esAdmin = verificarEsAdmin(currentUser?.email);
         for (const fId in facciones) { if (facciones[fId].miembros && facciones[fId].miembros[currentUser.uid]) { miFaccionActual = facciones[fId]; idMiFac = fId; break; } }
         if (miFaccionActual) {
           document.getElementById('panelSinFaccion').classList.add('hidden'); document.getElementById('panelConFaccion').classList.remove('hidden');
           document.getElementById('faccionNombreUI').textContent = miFaccionActual.nombre; document.getElementById('faccionLiderUI').textContent = cacheJugadores[miFaccionActual.lider]?.nombre || 'Rey';
           const uids = Object.keys(miFaccionActual.miembros);
-          document.getElementById('listaIntegrantesFaccion').innerHTML = uids.map(u => `<div class="bg-indigo-950/40 p-2 border border-indigo-900/50 text-xs text-indigo-200 flex justify-between"><span>${cacheJugadores[u]?.nombre || 'Desconocido'}</span><span class="text-[10px] text-amber-300 font-bold">${miFaccionActual.miembros[u]}</span></div>`).join('');
+          document.getElementById('listaIntegrantesFaccion').innerHTML = uids.map(u => `<div class="bg-indigo-950/40 p-2 border border-indigo-900/50 text-xs text-indigo-200 flex justify-between items-center"><span>${cacheJugadores[u]?.nombre || 'Desconocido'}</span><div class="flex items-center gap-2"><span class="text-[10px] text-amber-300 font-bold">${miFaccionActual.miembros[u]}</span>${esAdmin ? `<button onclick="eliminarFaccionAdmin('${idMiFac}')" class="text-red-400 hover:text-red-200 text-[10px]">🗑️</button>` : ''}</div></div>`).join('');
           document.getElementById('panelConFaccion').dataset.id = idMiFac;
-        } else { document.getElementById('panelSinFaccion').classList.add('hidden'); document.getElementById('panelConFaccion').classList.add('hidden'); }
+        } else { document.getElementById('panelSinFaccion').classList.remove('hidden'); document.getElementById('panelConFaccion').classList.add('hidden'); }
       });
 
       db.ref('tienda').on('value', snap => {
         const data = snap.val() || {}; const cont = document.getElementById('contenedorTienda'); if(!cont) return;
+        const esAdmin = verificarEsAdmin(currentUser?.email);
         cont.innerHTML = Object.keys(data).length === 0 ? `<div class="col-span-full text-center py-12"><p class="text-amber-400">TIENDA VACÍA</p></div>` : Object.keys(data).map(key => {
-          const i = data[key]; return `<div class="bg-black/90 border border-amber-900/80 p-4 shadow-lg flex flex-col justify-between"><div><div class="flex justify-between items-start mb-2 border-b border-amber-900/50 pb-2"><div><span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${i.tipo}</span><h3 class="text-amber-300 font-bold mt-1">${i.nombre}</h3></div><div class="text-right"><span class="text-xs text-amber-400 font-bold">💰 ${formatearBigInt(parseTextoABigInt(i.precio))}</span></div></div><div class="text-xs font-tech-body mb-3"><p class="text-slate-300">Hab: ${i.habilidad}</p><div class="bg-slate-950 p-2 border border-slate-900 mt-2 text-slate-400">${i.descripcion}</div></div></div><div class="border-t border-slate-900 pt-3 mt-2 flex flex-col gap-2"><div class="flex justify-between text-[11px] text-slate-400"><span>Vend: <strong class="text-slate-200">${i.autor}</strong></span><input type="number" id="cant_buy_${key}" value="1" min="1" class="w-14 text-center tech-input text-xs"></div><button onclick="realizarCompraNube('${key}')" class="w-full bg-amber-600 hover:bg-amber-500 text-black py-2 uppercase font-bold text-xs">🛒 Comprar</button></div></div>`;
+          const i = data[key]; 
+          return `<div class="bg-black/90 border border-amber-900/80 p-4 shadow-lg flex flex-col justify-between relative">
+            ${esAdmin ? `<button onclick="borrarObjetoTiendaAdmin('${key}')" class="absolute top-2 right-2 bg-red-950 text-red-400 hover:bg-red-900 text-[10px] px-2 py-0.5 border border-red-700 font-bold">🗑️ Borrar</button>` : ''}
+            <div><div class="flex justify-between items-start mb-2 border-b border-amber-900/50 pb-2 pr-12"><div><span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${i.tipo}</span><h3 class="text-amber-300 font-bold mt-1">${i.nombre}</h3></div><div class="text-right"><span class="text-xs text-amber-400 font-bold">💰 ${formatearBigInt(parseTextoABigInt(i.precio))}</span></div></div><div class="text-xs font-tech-body mb-3"><p class="text-slate-300">Hab: ${i.habilidad}</p><div class="bg-slate-950 p-2 border border-slate-900 mt-2 text-slate-400">${i.descripcion}</div></div></div><div class="border-t border-slate-900 pt-3 mt-2 flex flex-col gap-2"><div class="flex justify-between text-[11px] text-slate-400"><span>Vend: <strong class="text-slate-200">${i.autor}</strong></span><input type="number" id="cant_buy_${key}" value="1" min="1" class="w-14 text-center tech-input text-xs"></div><button onclick="realizarCompraNube('${key}')" class="w-full bg-amber-600 hover:bg-amber-500 text-black py-2 uppercase font-bold text-xs">🛒 Comprar</button></div></div>`;
         }).join('');
+      });
+
+      db.ref('misiones').on('value', snap => {
+        const data = snap.val() || {}; const contGlob = document.getElementById('contenedorMisionesGlobales'); const contPers = document.getElementById('contenedorMisionesPersonales'); if(!contGlob || !contPers) return;
+        const esAdmin = verificarEsAdmin(currentUser?.email);
+        contGlob.innerHTML = ''; contPers.innerHTML = '';
+        let hayGlob = false, hayPers = false;
+
+        Object.keys(data).forEach(key => {
+          const m = data[key];
+          const tarjeta = `<div class="bg-black/80 border border-purple-900/60 p-4 relative shadow-md flex flex-col justify-between">
+            ${esAdmin ? `<button onclick="borrarMisionAdmin('${key}')" class="absolute top-2 right-2 text-red-400 hover:text-red-200 text-xs">🗑️</button>` : ''}
+            <div><h4 class="font-tech-title text-purple-300 font-bold mb-1">${m.titulo}</h4><p class="text-xs text-slate-300 mb-3">${m.descripcion}</p></div>
+            <div class="border-t border-purple-900/50 pt-2 text-[11px] text-amber-400">Recompensa: ${m.recompensa || 'Ninguna'}</div>
+          </div>`;
+
+          if (m.tipo === 'global') { hayGlob = true; contGlob.innerHTML += tarjeta; }
+          else if (m.tipo === 'personal' && m.destinatario === currentUser?.uid) { hayPers = true; contPers.innerHTML += tarjeta; }
+        });
+
+        if (!hayGlob) contGlob.innerHTML = '<p class="text-xs text-slate-500">No hay misiones globales.</p>';
+        if (!hayPers) contPers.innerHTML = '<p class="text-xs text-slate-500">No hay misiones personales asignadas.</p>';
       });
 
       const esAdmin = verificarEsAdmin(currentUser?.email);
@@ -675,7 +805,7 @@
         db.ref('forja_pendiente').on('value', snap => {
           const data = snap.val() || {}; const cont = document.getElementById('contenedorForjaPendiente');
           cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-orange-400">Sin creaciones pendientes.</p>' : Object.keys(data).map(k => {
-            const i = data[k]; return `<div class="bg-black border border-orange-700 p-3 text-xs"><h4 class="text-orange-300 font-bold">${i.nombre} (${i.tipo})</h4><p class="text-slate-400 mb-2">Por: ${i.autorNombre}</p><div class="flex gap-2"><button onclick="aprobarForja('${k}')" class="bg-emerald-700 text-white px-2 py-1 w-full">Aprobar</button><button onclick="db.ref('forja_pendiente/${k}').remove()" class="bg-red-800 text-white px-2 py-1 w-full">Rechazar</button></div></div>`;
+            const i = data[k]; return `<div class="bg-black border border-orange-700 p-3 text-xs"><h4 class="text-orange-300 font-bold">${i.nombre} (${i.tipo})</h4><p class="text-slate-400 mb-2">Por: ${i.autorNombre} | Precio: ${i.precio}</p><div class="flex gap-2"><button onclick="aprobarForja('${k}')" class="bg-emerald-700 text-white px-2 py-1 w-full">Aprobar Directo a Tienda</button><button onclick="db.ref('forja_pendiente/${k}').remove()" class="bg-red-800 text-white px-2 py-1 w-full">Rechazar</button></div></div>`;
           }).join('');
         });
 
@@ -702,47 +832,87 @@
 
     function crearEquipo() { const nom = prompt("Nombre del equipo:"); if (nom) { db.ref('equipos').push({ nombre: nom.trim(), lider: currentUser.uid, miembros: { [currentUser.uid]: true } }).then(() => alert("✅ Equipo creado.")); } }
     function salirOAbandonarEquipo() { const eqId = document.getElementById('panelConEquipo').dataset.id; if (miEquipoActual.lider === currentUser.uid) { if(confirm("¿Disolver equipo?")) db.ref(`equipos/${eqId}`).remove(); } else { db.ref(`equipos/${eqId}/miembros/${currentUser.uid}`).remove(); } }
+    function eliminarEquipoAdmin(id) { if(confirm("🗑️ ¿Eliminar este equipo por completo?")) db.ref(`equipos/${id}`).remove(); }
     
+    function crearFaccionUsuario() { const nom = prompt("⚔️ Nombre de tu nueva Facción o Reino:"); if(!nom) return; const rango = prompt("Tu título de Monarca/Líder (Ej. Emperador, Rey):") || "Rey"; db.ref('facciones').push({ nombre: nom.trim(), lider: currentUser.uid, miembros: { [currentUser.uid]: rango } }).then(() => alert("✅ ¡Facción fundada con éxito!")); }
     function abrirModalFaccionAdmin() { const nom = prompt("Nombre de la Facción/Reino:"); if(!nom) return; const liderUid = prompt("UID del Líder:"); if(liderUid) db.ref('facciones').push({ nombre: nom, lider: liderUid, miembros: { [liderUid]: 'Monarca Supremo' } }).then(()=>alert("✅ Facción creada.")); }
     function salirDeFaccion() { const fId = document.getElementById('panelConFaccion').dataset.id; if(confirm("¿Abandonar facción?")) db.ref(`facciones/${fId}/miembros/${currentUser.uid}`).remove(); }
+    function eliminarFaccionAdmin(id) { if(confirm("🗑️ ¿Destruir esta facción por completo?")) db.ref(`facciones/${id}`).remove(); }
     
     function abrirModalInvitar(tipo) { tipoInvitacionPendiente = tipo; document.getElementById('tituloInvitar').textContent = `// INVITAR A ${tipo.toUpperCase()}`; document.getElementById('cajaRangoFaccion').classList.toggle('hidden', tipo !== 'faccion'); document.getElementById('modalInvitar').classList.remove('hidden'); }
     function procesarInvitacion() { const target = document.getElementById('selectUsuarioInvitar').value, refId = tipoInvitacionPendiente === 'equipo' ? document.getElementById('panelConEquipo').dataset.id : document.getElementById('panelConFaccion').dataset.id, nom = tipoInvitacionPendiente === 'equipo' ? miEquipoActual.nombre : miFaccionActual.nombre, rango = document.getElementById('inputRangoFaccion').value; db.ref('mensajes').push({ to: target, from: cacheJugadores[currentUser.uid]?.nombre || 'Sistema', type: `invite_${tipoInvitacionPendiente}`, refId: refId, rango: rango, content: `Te invitó a su ${tipoInvitacionPendiente}: ${nom}.` }).then(() => { alert("✅ Invitación enviada."); document.getElementById('modalInvitar').classList.add('hidden'); }); }
     function aceptarInvitacion(idMsg, refId, tipo, rango) { const node = tipo === 'invite_equipo' ? `equipos/${refId}/miembros` : `facciones/${refId}/miembros`, val = tipo === 'invite_equipo' ? true : (rango || 'Miembro'); db.ref(`${node}/${currentUser.uid}`).set(val).then(() => { db.ref(`mensajes/${idMsg}`).remove(); alert("✅ Te has unido."); }).catch(e => alert(e.message)); }
-    function abrirModalCorreoAdmin() { const msg = prompt("Aviso global para todos los jugadores:"); if(msg) db.ref('mensajes').push({ to: 'global', from: 'ADMINISTRACIÓN', type: 'system', content: msg }); }
+    
+    function abrirModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.remove('hidden'); }
+    function cerrarModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.add('hidden'); document.getElementById('formCorreoAdmin').reset(); }
+    function toggleCorreoDestinatario() { document.getElementById('campoDestinatarioEspecifico').classList.toggle('hidden', document.getElementById('correoTipo').value !== 'personal'); }
+    function enviarCorreoAdminSubmit(e) {
+      e.preventDefault();
+      const tipo = document.getElementById('correoTipo').value;
+      const destino = tipo === 'personal' ? document.getElementById('selectDestinatarioCorreo').value : 'global';
+      const contenido = document.getElementById('contenidoMensajeCorreo').value.trim();
+      db.ref('mensajes').push({ to: destino, from: cacheJugadores[currentUser.uid]?.nombre || 'ADMINISTRACIÓN', type: 'system', content: contenido }).then(() => { cerrarModalCorreoAdmin(); alert("✉️ Notificación enviada correctamente."); });
+    }
+    function borrarCorreo(key) { db.ref('mensajes/' + key).remove(); }
 
-    function abrirModalProponerForja() { document.getElementById('formForja').reset(); document.getElementById('modalProponerForja').classList.remove('hidden'); }
+    let base64ForjaImagen = '';
+    function procesarArchivoForja(event) {
+      const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
+      lector.onload = function(e) { base64ForjaImagen = e.target.result; document.getElementById('forjaImgPreview').src = e.target.result; };
+      lector.readAsDataURL(archivo);
+    }
+    function abrirModalProponerForja() { base64ForjaImagen = ''; document.getElementById('formForja').reset(); document.getElementById('forjaImgPreview').src = 'https://via.placeholder.com/150/05080e/00f0ff?text=Previa'; document.getElementById('modalProponerForja').classList.remove('hidden'); }
+    
     function guardarForjaPendiente(e) {
       e.preventDefault();
+      const esAdmin = verificarEsAdmin(currentUser?.email);
+      const precioEstablecido = document.getElementById('forjaPrecio').value.trim() || '1000';
+      
       const obj = {
         autorUid: currentUser.uid, autorNombre: cacheJugadores[currentUser.uid]?.nombre || currentUser.email,
         nombre: document.getElementById('forjaNombre').value.trim(), tipo: document.getElementById('forjaTipo').value,
         nivelReq: document.getElementById('forjaNivelReq').value.trim(), clase: document.getElementById('forjaClase').value.trim(),
-        puntos: document.getElementById('forjaPuntos').value.trim(), imagen: document.getElementById('forjaImagen').value.trim(),
+        puntos: document.getElementById('forjaPuntos').value.trim(), imagen: base64ForjaImagen || document.getElementById('forjaImagenUrl').value.trim(),
         habilidad: document.getElementById('forjaHabilidades').value.trim(), descripcion: document.getElementById('forjaDescripcion').value.trim(),
-        precio: '0', timestamp: Date.now()
+        precio: precioEstablecido, timestamp: Date.now()
       };
-      db.ref('forja_pendiente').push(obj).then(() => { document.getElementById('modalProponerForja').classList.add('hidden'); alert("✅ Propuesta enviada a la Forja."); });
+
+      if (esAdmin) {
+        db.ref('tienda').push(obj).then(() => { document.getElementById('modalProponerForja').classList.add('hidden'); alert("⚡ Objeto creado y publicado directamente en la Tienda."); });
+      } else {
+        obj.precio = '0';
+        db.ref('forja_pendiente').push(obj).then(() => { document.getElementById('modalProponerForja').classList.add('hidden'); alert("✅ Propuesta enviada a la Forja para revisión."); });
+      }
     }
+
     function aprobarForja(key) {
       db.ref('forja_pendiente/' + key).once('value').then(snap => {
         const data = snap.val(); if (!data) return;
-        const objTienda = { autor: data.autorNombre, vendedorUid: data.autorUid, nombre: data.nombre, tipo: data.tipo, nivelReq: data.nivelReq, clase: data.clase, puntos: data.puntos, imagen: data.imagen, habilidad: data.habilidad, descripcion: data.descripcion, precio: '1000', timestamp: Date.now() };
-        db.ref('tienda').push(objTienda).then(() => {
+        const precioAsignado = prompt("💰 Establece el precio para este objeto en la Tienda:", "1000") || "1000";
+        data.precio = precioAsignado; data.vendedorUid = data.autorUid;
+        
+        db.ref('tienda').push(data).then(() => {
           db.ref('forja_pendiente/' + key).remove();
-          db.ref('mensajes').push({ to: data.autorUid, from: 'SISTEMA FORJA', type: 'system', content: `Tu creación [${data.nombre}] fue aprobada y añadida al Mercado Central.` });
+          db.ref('mensajes').push({ to: data.autorUid, from: 'SISTEMA FORJA', type: 'system', content: `Tu creación [${data.nombre}] fue aprobada y añadida al Mercado Central con valor de ${precioAsignado} Deniques.` });
         });
       });
     }
 
-    function abrirModalProponerMonstruo() { document.getElementById('formBestiario').reset(); document.getElementById('modalProponerBestiario').classList.remove('hidden'); }
+    let base64BestiarioImagen = '';
+    function procesarArchivoBestiario(event) {
+      const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
+      lector.onload = function(e) { base64BestiarioImagen = e.target.result; document.getElementById('bestiarioImgPreview').src = e.target.result; };
+      lector.readAsDataURL(archivo);
+    }
+    function abrirModalProponerMonstruo() { base64BestiarioImagen = ''; document.getElementById('formBestiario').reset(); document.getElementById('bestiarioImgPreview').src = 'https://via.placeholder.com/150/3f0000/ff0000?text=Previa'; document.getElementById('modalProponerBestiario').classList.remove('hidden'); }
+    
     function guardarBestiarioPendiente(e) {
       e.preventDefault();
       const monstruo = {
         autorUid: currentUser.uid, autorNombre: cacheJugadores[currentUser.uid]?.nombre || currentUser.email,
         nombre: document.getElementById('bestiarioNombre').value.trim(), rango: document.getElementById('bestiarioRango').value.trim(),
         nivel: document.getElementById('bestiarioNivel').value.trim(), locacion: document.getElementById('bestiarioLocacion').value.trim(),
-        imagen: document.getElementById('bestiarioImagen').value.trim(), descripcion: document.getElementById('bestiarioDesc').value.trim(),
+        imagen: base64BestiarioImagen || document.getElementById('bestiarioImagenUrl').value.trim(), descripcion: document.getElementById('bestiarioDesc').value.trim(),
         habilidades: document.getElementById('bestiarioHabilidades').value.trim(), debilidades: document.getElementById('bestiarioDebilidades').value.trim(),
         timestamp: Date.now()
       };
@@ -771,10 +941,14 @@
       document.getElementById('modalVerMonstruo').classList.remove('hidden');
     }
 
+    function borrarObjetoTiendaAdmin(key) { if(confirm("🗑️ ¿Borrar este objeto de la tienda?")) db.ref('tienda/' + key).remove(); }
+    function borrarMisionAdmin(key) { if(confirm("🗑️ ¿Eliminar esta misión?")) db.ref('misiones/' + key).remove(); }
+
     function abrirModalAgregarObjeto() { document.getElementById('modalTienda').classList.remove('hidden'); const n = document.getElementById('nombre').value.trim(); if(n) document.getElementById('tiendaAutor').value = n; }
     function cerrarModalAgregarObjeto() { document.getElementById('modalTienda').classList.add('hidden'); document.getElementById('formObjetoTienda').reset(); }
     function cambiarTipoFormularioObjeto() { document.getElementById('campoPuntosDinamico').classList.toggle('hidden', document.getElementById('tiendaTipo').value === 'Objeto'); }
     function guardarObjetoTienda(e) { e.preventDefault(); const t = document.getElementById('tiendaTipo').value; const o = { vendedorUid: currentUser?.uid + suffixFichaActiva, autor: document.getElementById('tiendaAutor').value.trim(), tipo: t, nombre: document.getElementById('tiendaNombre').value.trim(), precio: document.getElementById('tiendaPrecio').value.trim(), nivelReq: document.getElementById('tiendaNivelReq').value.trim(), puntos: t==='Objeto'?'-':document.getElementById('tiendaPuntos').value.trim(), clase: t==='Objeto'?'Objeto':document.getElementById('tiendaClase').value.trim(), habilidad: document.getElementById('tiendaHabilidad').value.trim(), descripcion: document.getElementById('tiendaDescripcion').value.trim(), timestamp: Date.now() }; db.ref('tienda').push(o).then(() => { cerrarModalAgregarObjeto(); alert('🛒 Objeto publicado!'); }).catch(err => alert('❌ Error: ' + err.message)); }
+    
     function realizarCompraNube(key) {
       if (!currentUser) return alert("❌ Inicia sesión para comprar.");
       db.ref('tienda/' + key).once('value').then(snapItem => {
@@ -802,6 +976,6 @@
     function guardarMision(e) { e.preventDefault(); const t = document.getElementById('misionTipo').value; const m = { tipo: t, destinatario: t === 'personal' ? document.getElementById('misionDestinatario').value : 'global', titulo: document.getElementById('misionTitulo').value.trim(), descripcion: document.getElementById('misionDesc').value.trim(), recompensa: document.getElementById('misionRecompensa').value.trim(), timestamp: Date.now() }; db.ref('misiones').push(m).then(() => { cerrarModalMision(); alert('📜 Misión enviada.'); }); }
     function otorgarSegundaFichaDesdeAdmin() { const uid = document.getElementById('adminSelectJugadorFicha').value; if(uid && cacheJugadores[uid]) db.ref('jugadores/' + uid + '_2').set({ uid: uid+'_2', ownerUid: uid, email: cacheJugadores[uid].email, nombre: (cacheJugadores[uid].nombre || "Personaje") + " [2]", clase: "-", raza: "-", isSecondChar: true, nivel: "1", deniques: "0", timestamp: Date.now() }).then(()=>alert("✅ Ficha 2 asignada.")); }
     function agregarPatrocinadorAdmin() { const p = prompt("Nombre del Patrocinador:"); if (p) db.ref('patrocinadores').push({ nombre: p.trim() }); }
-          </script>
+  </script>
 </body>
 </html>
