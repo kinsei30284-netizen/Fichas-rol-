@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPG Web App - Forja y Mazmorras</title>
+    <title>RPG Web App - Forja, Mazmorras y Torneo</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,6 +87,7 @@
       <button onclick="mostrarSeccion('bestiario')" class="w-full text-left font-tech-title text-red-300 hover:text-black hover:bg-red-900 transition flex items-center gap-3 text-sm"><span>🐉</span> Bestiario y Amenazas</button>
       <button onclick="mostrarSeccion('mazmorras')" class="w-full text-left font-tech-title text-rose-300 hover:text-black hover:bg-rose-400 p-2 border border-rose-800 transition flex items-center gap-3 text-sm"><span>🕳️</span> Mazmorras</button>
       <button onclick="mostrarSeccion('misiones')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-2 border border-purple-800 transition flex items-center gap-3 text-sm"><span>📜</span> Tablón de Misiones</button>
+      <button onclick="mostrarSeccion('torneo')" class="w-full text-left font-tech-title text-yellow-300 hover:text-black hover:bg-yellow-400 p-2 border border-yellow-800 transition flex items-center gap-3 text-sm"><span>🏆</span> Torneo de Combate</button>
       
       <button onclick="abrirConfiguracion()" class="w-full text-left font-tech-title text-slate-300 hover:text-black hover:bg-slate-400 p-2 border border-slate-700 transition flex items-center gap-3 text-sm mt-4"><span>🔧</span> Configuración Cuenta</button>
       <button id="btnMenuAdmin" onclick="mostrarSeccion('admin')" class="hidden w-full text-left font-tech-title text-red-400 hover:text-black hover:bg-red-400 p-2 border border-red-900 transition flex items-center gap-3 text-sm"><span>🛡️</span> Panel de Admin</button>
@@ -149,6 +150,36 @@
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel</label><input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input p-2 font-tech-body text-lg"><span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span></div>
       </div>
 
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Seguir vía:</label>
+          <select id="seguirVia" class="w-full tech-input p-2 font-tech-body text-md bg-slate-900">
+            <option value="">Ninguna</option>
+            <option value="Destrucción">Destrucción</option>
+            <option value="Conservación">Conservación</option>
+            <option value="Cacería">Cacería</option>
+            <option value="Abundancia">Abundancia</option>
+            <option value="Armonía">Armonía</option>
+            <option value="Nihilidad">Nihilidad</option>
+            <option value="Erudición">Erudición</option>
+            <option value="Reminiscencia">Reminiscencia</option>
+            <option value="Exultación">Exultación</option>
+            <option value="Propagación">Propagación</option>
+            <option value="Enigmata">Enigmata</option>
+            <option value="Voracidad">Voracidad</option>
+            <option value="Finalidad">Finalidad</option>
+            <option value="Permanencia">Permanencia</option>
+            <option value="Belleza">Belleza</option>
+            <option value="Orden">Orden</option>
+            <option value="Equilibrio">Equilibrio</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-red-400 mb-2">// Emanador:</label>
+          <input type="text" id="emanadorDisplay" value="no" readonly class="w-full tech-input p-2 font-tech-body text-md bg-slate-950 font-bold text-red-400">
+        </div>
+      </div>
+
       <div class="mb-8">
         <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por:</label>
         <select id="patrocinador" class="w-full tech-input border-purple-900 p-2 font-tech-body text-lg">
@@ -186,6 +217,7 @@
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">1. Habilidades de Clase</label><textarea id="habClase" rows="4" class="w-full tech-input p-3 font-tech-body leading-relaxed"></textarea></div>
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">2. Habilidades de Raza</label><textarea id="habRaza" rows="4" class="w-full tech-input p-3 font-tech-body leading-relaxed"></textarea></div>
         <div><label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">3. Habilidades Únicas / Definitivas</label><textarea id="habUnicas" rows="4" class="w-full tech-input border-purple-900 focus:border-purple-500 p-3 font-tech-body leading-relaxed"></textarea></div>
+        <div id="contenedorHabilidadEmanador" class="hidden"><label class="block text-xs font-tech-title uppercase text-red-400 mb-2">⚡ Habilidad de Emanador</label><textarea id="habEmanador" rows="4" class="w-full tech-input border-red-900 focus:border-red-500 p-3 font-tech-body leading-relaxed"></textarea></div>
         <div><label class="block text-xs font-tech-title uppercase text-red-400 mb-2">4. Habilidades Clase Desastre</label><textarea id="habDesastre" rows="4" class="w-full tech-input hazard-border p-3 font-tech-body leading-relaxed"></textarea></div>
       </div>
 
@@ -295,7 +327,35 @@
       </div>
       <div id="contenedorMazmorras" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 	</div>
-	    <!-- SECCIÓN: LISTA DE JUGADORES -->
+	    <!-- SECCIÓN: TORNEO -->
+    <div id="seccionTorneo" class="hidden">
+      <div class="border-b border-yellow-500/50 pb-3 mb-6 flex justify-between items-center flex-wrap gap-4">
+        <div>
+          <h2 class="text-xl font-tech-title text-yellow-400 uppercase tracking-widest">// TORNEO DE COMBATE</h2>
+          <p class="text-xs text-slate-400 mt-1">Estado de inscripción y llaves de combate.</p>
+        </div>
+        <div id="controlesAdminTorneo" class="hidden flex gap-2">
+          <button id="btnToggleInscripcion" onclick="adminToggleInscripcion()" class="bg-yellow-600 hover:bg-yellow-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">Abrir Inscripciones</button>
+          <button onclick="adminCerrarYSortearTorneo()" class="bg-amber-700 hover:bg-amber-600 text-white font-tech-title text-xs px-4 py-2 font-bold uppercase transition">Cerrar Registro y Sortear</button>
+          <button onclick="adminReiniciarTorneo()" class="bg-red-950 text-red-400 border border-red-700 text-xs px-3 py-2 uppercase font-bold">Reiniciar Torneo</button>
+        </div>
+      </div>
+
+      <div id="panelInscripcionTorneo" class="bg-black/80 border border-yellow-900/80 p-6 text-center mb-8 shadow-lg">
+        <div id="estadoInscripcionBanner" class="text-sm font-tech-title font-bold text-yellow-400 mb-4">INSCRIBIRSE AL TORNEO</div>
+        <p id="inscripcionMensajeEstado" class="text-xs text-slate-300 mb-4">Las inscripciones se encuentran cerradas por el momento.</p>
+        <button id="btnInscribirTorneo" onclick="inscribirMiPersonajeTorneo()" class="hidden bg-yellow-500 hover:bg-yellow-400 text-black font-tech-title font-bold px-6 py-2.5 uppercase text-xs transition">Inscribir Ficha Activa</button>
+      </div>
+
+      <div class="bg-black/90 border border-yellow-800/50 p-6 shadow-xl">
+        <h3 id="tituloFaseTorneo" class="text-md font-tech-title text-yellow-300 uppercase tracking-wider mb-4 border-l-2 border-yellow-500 pl-2">Llaves y Combates Activos</h3>
+        <div id="contenedorLlavesTorneo" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <p class="text-xs text-slate-500 col-span-full">No hay enfrentamientos activos o el torneo no ha comenzado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: LISTA DE JUGADORES -->
     <div id="seccionJugadores" class="hidden">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-cyan-900 pb-3 mb-6 gap-4">
         <h2 class="text-xl font-tech-title text-cyan-400 uppercase tracking-widest">// RED DE PERSONAJES</h2>
@@ -360,6 +420,15 @@
     <div id="seccionAdmin" class="hidden">
       <div class="flex justify-between items-center border-b border-red-500/50 pb-3 mb-6"><h2 class="text-xl font-tech-title text-red-400 uppercase tracking-widest">// PANEL DE ADMINISTRACIÓN</h2></div>
       
+      <div class="bg-black/50 border border-red-900 p-6 shadow-lg mb-8">
+        <h3 class="text-md font-tech-title text-red-300 uppercase tracking-wider mb-4 border-l-2 border-red-500 pl-2">Otorgar Estado de Emanador</h3>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <select id="adminSelectJugadorEmanador" class="w-full tech-input p-2.5 bg-slate-950 text-cyan-300 border-cyan-800"><option value="">Selecciona un jugador...</option></select>
+          <button onclick="otorgarEmanadorAdmin(true)" class="bg-red-600 hover:bg-red-500 text-white font-tech-title font-bold py-2.5 px-6 text-xs uppercase transition whitespace-nowrap">⚡ Asignar Emanador: Sí</button>
+          <button onclick="otorgarEmanadorAdmin(false)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-tech-title font-bold py-2.5 px-6 text-xs uppercase transition whitespace-nowrap">Quitar (No)</button>
+        </div>
+      </div>
+
       <div class="bg-black/50 border border-purple-900 p-6 shadow-lg mb-8">
         <h3 class="text-md font-tech-title text-purple-300 uppercase tracking-wider mb-4 border-l-2 border-purple-500 pl-2">Otorgar Segunda Ficha</h3>
         <div class="flex flex-col sm:flex-row gap-3">
@@ -477,20 +546,26 @@
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Rango de Amenaza *</label><input type="text" id="bestiarioRango" required placeholder="Ej. A, B, Desastre" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Nivel Estimado</label><input type="text" id="bestiarioNivel" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Nivel Estimado *</label><input type="text" id="bestiarioNivel" required value="1" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Locación / Hábitat *</label><input type="text" id="bestiarioLocacion" required class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
         </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Puntos de Armadura (CA)</label><input type="text" id="bestiarioCa" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Puntos de Arma (Iniciativa)</label><input type="text" id="bestiarioIniciativa" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
+        </div>
+
         <div class="border border-red-900/60 p-3 bg-red-950/10 space-y-2">
-          <label class="block text-xs font-tech-title uppercase text-red-400 font-bold">// Estadísticas Base del Monstruo</label>
+          <label class="block text-xs font-tech-title uppercase text-red-400 font-bold">// Estadísticas Base del Monstruo (Puntos Extra)</label>
           <div class="grid grid-cols-2 md:grid-cols-6 gap-2">
-            <div><label class="text-[9px] text-red-300">PV Pts</label><input type="text" id="bestiario_pv" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Fuerza Pts</label><input type="text" id="bestiario_fuerza" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Destreza Pts</label><input type="text" id="bestiario_destreza" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Constitución</label><input type="text" id="bestiario_constitucion" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Inteligencia</label><input type="text" id="bestiario_inteligencia" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Sentidos Pts</label><input type="text" id="bestiario_sentidos" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">PV Pts</label><input type="text" id="bestiario_pv" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Fuerza Pts</label><input type="text" id="bestiario_fuerza" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Destreza Pts</label><input type="text" id="bestiario_destreza" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Constitución</label><input type="text" id="bestiario_constitucion" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Inteligencia</label><input type="text" id="bestiario_inteligencia" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Sentidos Pts</label><input type="text" id="bestiario_sentidos" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
           </div>
+          <div class="text-right text-[11px] font-mono text-emerald-400 pt-1" id="bestiarioCalculoPreview">PV Total: 500 | Carga: 100 Kg | Vel: 100 m/s | Def: 300 Df | Arcana: 1k J | Alcance: 100 m</div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -532,8 +607,8 @@
           <div><span class="block text-[10px] text-red-500 font-bold uppercase">Locación</span><span id="verMonstruoLocacion" class="text-red-200">??</span></div>
         </div>
         <div class="bg-red-950/25 border border-red-900 p-3">
-          <h4 class="text-[11px] text-red-400 font-bold uppercase mb-2">Estadísticas de Combate</h4>
-          <div id="verMonstruoStats" class="grid grid-cols-3 gap-2 text-xs font-mono text-red-200"></div>
+          <h4 class="text-[11px] text-red-400 font-bold uppercase mb-2">Estadísticas Convergentes de Combate</h4>
+          <div id="verMonstruoStats" class="grid grid-cols-2 gap-2 text-xs font-mono text-red-200"></div>
         </div>
         <div><h4 class="text-[11px] text-red-500 font-bold uppercase mb-1">Descripción</h4><p id="verMonstruoDesc" class="text-slate-300 leading-relaxed"></p></div>
         <div><h4 class="text-[11px] text-red-500 font-bold uppercase mb-1">Habilidades</h4><div id="verMonstruoHab" class="bg-red-950/30 border border-red-900 p-3 text-red-200 whitespace-pre-line"></div></div>
@@ -588,12 +663,12 @@
                 <div><label class="text-[10px] text-rose-300">Imagen (Archivo)</label><input type="file" id="m1_file" accept="image/*" onchange="procesarArchivoMonstruo(event, 1)" class="w-full text-[10px] text-slate-400 file:py-0.5 file:px-1 file:bg-rose-950 file:text-rose-300"></div>
               </div>
               <div class="grid grid-cols-2 md:grid-cols-6 gap-2 pt-1">
-                <div><label class="text-[9px] text-slate-400">PV Pts</label><input type="text" id="m1_pv" value="10" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Fuerza Pts</label><input type="text" id="m1_fuerza" value="10" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Destreza Pts</label><input type="text" id="m1_destreza" value="10" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Constitución Pts</label><input type="text" id="m1_constitucion" value="10" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Inteligencia Pts</label><input type="text" id="m1_inteligencia" value="10" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m1_sentidos" value="10" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">PV Pts</label><input type="text" id="m1_pv" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Fuerza Pts</label><input type="text" id="m1_fuerza" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Destreza Pts</label><input type="text" id="m1_destreza" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Constitución Pts</label><input type="text" id="m1_constitucion" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Inteligencia Pts</label><input type="text" id="m1_inteligencia" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m1_sentidos" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
                 <div><label class="text-[10px] text-rose-300">Habilidades (Expandible)</label><textarea id="m1_hab" rows="2" class="w-full tech-input p-1 text-xs" placeholder="Garra oscura..."></textarea></div>
@@ -612,12 +687,12 @@
                 <div><label class="text-[10px] text-rose-300">Imagen (Archivo)</label><input type="file" id="m2_file" accept="image/*" onchange="procesarArchivoMonstruo(event, 2)" class="w-full text-[10px] text-slate-400 file:py-0.5 file:px-1 file:bg-rose-950 file:text-rose-300"></div>
               </div>
               <div class="grid grid-cols-2 md:grid-cols-6 gap-2 pt-1">
-                <div><label class="text-[9px] text-slate-400">PV Pts</label><input type="text" id="m2_pv" value="12" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Fuerza Pts</label><input type="text" id="m2_fuerza" value="12" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Destreza Pts</label><input type="text" id="m2_destreza" value="12" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Constitución Pts</label><input type="text" id="m2_constitucion" value="12" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Inteligencia Pts</label><input type="text" id="m2_inteligencia" value="12" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m2_sentidos" value="12" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">PV Pts</label><input type="text" id="m2_pv" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Fuerza Pts</label><input type="text" id="m2_fuerza" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Destreza Pts</label><input type="text" id="m2_destreza" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Constitución Pts</label><input type="text" id="m2_constitucion" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Inteligencia Pts</label><input type="text" id="m2_inteligencia" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m2_sentidos" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
                 <div><label class="text-[10px] text-rose-300">Habilidades (Expandible)</label><textarea id="m2_hab" rows="2" class="w-full tech-input p-1 text-xs" placeholder="Veneno..."></textarea></div>
@@ -636,12 +711,12 @@
                 <div><label class="text-[10px] text-rose-300">Imagen (Archivo)</label><input type="file" id="m3_file" accept="image/*" onchange="procesarArchivoMonstruo(event, 3)" class="w-full text-[10px] text-slate-400 file:py-0.5 file:px-1 file:bg-rose-950 file:text-rose-300"></div>
               </div>
               <div class="grid grid-cols-2 md:grid-cols-6 gap-2 pt-1">
-                <div><label class="text-[9px] text-slate-400">PV Pts</label><input type="text" id="m3_pv" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Fuerza Pts</label><input type="text" id="m3_fuerza" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Destreza Pts</label><input type="text" id="m3_destreza" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Constitución Pts</label><input type="text" id="m3_constitucion" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Inteligencia Pts</label><input type="text" id="m3_inteligencia" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m3_sentidos" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">PV Pts</label><input type="text" id="m3_pv" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Fuerza Pts</label><input type="text" id="m3_fuerza" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Destreza Pts</label><input type="text" id="m3_destreza" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Constitución Pts</label><input type="text" id="m3_constitucion" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Inteligencia Pts</label><input type="text" id="m3_inteligencia" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
+                <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m3_sentidos" value="0" class="w-full tech-input p-1 text-xs text-center"></div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
                 <div><label class="text-[10px] text-rose-300">Habilidades (Expandible)</label><textarea id="m3_hab" rows="2" class="w-full tech-input p-1 text-xs" placeholder="Magia..."></textarea></div>
@@ -662,12 +737,12 @@
             <div><label class="text-[10px] text-red-300">Imagen (Archivo)</label><input type="file" id="boss_file" accept="image/*" onchange="procesarArchivoBoss(event)" class="w-full text-[10px] text-slate-400 file:py-0.5 file:px-1 file:bg-red-950 file:text-red-300"></div>
           </div>
           <div class="grid grid-cols-2 md:grid-cols-6 gap-2 pt-1">
-            <div><label class="text-[9px] text-red-300">PV Pts</label><input type="text" id="boss_pv" value="30" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Fuerza Pts</label><input type="text" id="boss_fuerza" value="30" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Destreza Pts</label><input type="text" id="boss_destreza" value="30" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Constitución Pts</label><input type="text" id="boss_constitucion" value="30" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Inteligencia Pts</label><input type="text" id="boss_inteligencia" value="30" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
-            <div><label class="text-[9px] text-red-300">Sentidos Pts</label><input type="text" id="boss_sentidos" value="30" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">PV Pts</label><input type="text" id="boss_pv" value="0" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Fuerza Pts</label><input type="text" id="boss_fuerza" value="0" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Destreza Pts</label><input type="text" id="boss_destreza" value="0" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Constitución Pts</label><input type="text" id="boss_constitucion" value="0" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Inteligencia Pts</label><input type="text" id="boss_inteligencia" value="0" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Sentidos Pts</label><input type="text" id="boss_sentidos" value="0" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
             <div><label class="text-[10px] text-red-300">Habilidades (Expandible)</label><textarea id="boss_hab" rows="2" class="w-full tech-input p-1 text-xs border-red-900" placeholder="Cataclismo..."></textarea></div>
@@ -788,6 +863,9 @@
             document.getElementById('adminBadgeDisplay').classList.remove('hidden'); document.getElementById('btnMenuAdmin').classList.remove('hidden');
             document.getElementById('btnNuevaMisionAdmin').classList.remove('hidden'); document.getElementById('btnAdminCorreo').classList.remove('hidden'); document.getElementById('btnAdminFaccion').classList.remove('hidden');
             document.getElementById('btnNuevaMazmorraAdmin').classList.remove('hidden');
+            document.getElementById('panelAdminForja')?.classList.remove('hidden');
+            document.getElementById('panelAdminBestiario')?.classList.remove('hidden');
+            document.getElementById('controlesAdminTorneo')?.classList.remove('hidden');
           }
           db.ref('jugadores/' + user.uid + '_2').on('value', snap => { document.getElementById('selectorPersonajes').classList.toggle('hidden', !snap.exists()); });
           cargarFichaNube(targetUidToEdit); inicializarSistemasNuevos();
@@ -803,7 +881,7 @@
     
     function mostrarSeccion(s) {
       document.getElementById('sideDrawer').classList.remove('open'); 
-      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionMazmorras', 'seccionConfiguracion'];
+      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionMazmorras', 'seccionTorneo', 'seccionConfiguracion'];
       secciones.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); });
       const act = document.getElementById('seccion' + s.charAt(0).toUpperCase() + s.slice(1));
       if (act) act.classList.remove('hidden');
@@ -881,7 +959,13 @@
         const ex = document.getElementById(`${attr}_expand`); if(ex) ex.textContent = `${va} = ${formatearConSeparadores(vf)} ${config[attr].unidad}`;
       }
       const pv = (BigInt(VALOR_BASE_ESTADISTICA) + BigInt(puntosExtraAsignados.pv || '0')) * BigInt(config.pv.mult); document.getElementById('pvActualesDisplay').textContent = `${formatearBigInt(pv)} PV`;
-		}
+
+      const emanadorVal = document.getElementById('emanadorDisplay').value.trim().toLowerCase();
+      const containerEmanador = document.getElementById('contenedorHabilidadEmanador');
+      if (containerEmanador) {
+        containerEmanador.classList.toggle('hidden', emanadorVal !== 'si');
+      }
+	}
 		    function procesarArchivoImagen(event, tipo) {
       const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
       lector.onload = function(e) { if (tipo === 'avatar') { base64AvatarLista = e.target.result; document.getElementById('avatarListaPreview').src = e.target.result; } else { base64FichaIlustracion = e.target.result; document.getElementById('fichaIlustracionPreview').src = e.target.result; } };
@@ -895,7 +979,7 @@
       const uidToSave = targetUidToEdit || currentUser.uid, emailToSave = targetEmailToEdit || currentUser.email;
       Object.assign(puntosGuardadosBloqueados, puntosExtraAsignados);
       const ficha = {
-        uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido', clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, patrocinador: document.getElementById('patrocinador').value, avatarListaUrl: base64AvatarLista, fichaIlustracionUrl: base64FichaIlustracion, nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value, habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value, isSecondChar: fichaActualCargada.isSecondChar || false, mainCharName: fichaActualCargada.mainCharName || '', ownerUid: fichaActualCargada.ownerUid || currentUser.uid, timestamp: Date.now()
+        uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido', clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, patrocinador: document.getElementById('patrocinador').value, seguirVia: document.getElementById('seguirVia').value, emanador: document.getElementById('emanadorDisplay').value, avatarListaUrl: base64AvatarLista, fichaIlustracionUrl: base64FichaIlustracion, nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value, habEmanador: document.getElementById('habEmanador').value, habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value, isSecondChar: fichaActualCargada.isSecondChar || false, mainCharName: fichaActualCargada.mainCharName || '', ownerUid: fichaActualCargada.ownerUid || currentUser.uid, timestamp: Date.now()
       };
       db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Datos guardados globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error al guardar: ' + e.message));
     }
@@ -907,6 +991,7 @@
           document.querySelectorAll('#seccionEditor input[type="text"], #seccionEditor textarea, #seccionEditor input[type="number"]').forEach(el => el.value = '');
           puntosExtraAsignados.pv='0';puntosExtraAsignados.fuerza='0';puntosExtraAsignados.destreza='0';puntosExtraAsignados.constitucion='0';puntosExtraAsignados.inteligencia='0';puntosExtraAsignados.sentidos='0';
           document.getElementById('nivel').value = '1'; document.getElementById('montoPuntos').value = '1'; document.getElementById('deniques').value = '0'; document.getElementById('iniciativa').value = '0'; document.getElementById('ca').value = '0';
+          document.getElementById('emanadorDisplay').value = 'no';
           base64AvatarLista = ''; base64FichaIlustracion = ''; document.getElementById('avatarListaPreview').src = "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar"; document.getElementById('fichaIlustracionPreview').src = "https://via.placeholder.com/600x300/05080e/00f0ff?text=Ilustracion+Amplia";
       } else {
         for (const k in f) {
@@ -922,9 +1007,32 @@
     }
 
     function aplicarPermisos() {
-      const esAdmin = verificarEsAdmin(currentUser?.email); const inpDeniques = document.getElementById('deniques'), selPat = document.getElementById('patrocinador'), inpNotas = document.getElementById('notas');
-      if (!esAdmin) { if (inpDeniques) inpDeniques.disabled = true; if (inpNotas) inpNotas.disabled = true; if (selPat) selPat.disabled = selPat.value !== ''; } 
-      else { if (!esModoLectura) { if(inpDeniques) inpDeniques.disabled = false; if(selPat) selPat.disabled = false; if(inpNotas) inpNotas.disabled = false; } else { if(inpNotas) inpNotas.disabled = true; } }
+      const esAdmin = verificarEsAdmin(currentUser?.email); 
+      const inpDeniques = document.getElementById('deniques'), selPat = document.getElementById('patrocinador'), inpNotas = document.getElementById('notas');
+      const selSeguirVia = document.getElementById('seguirVia');
+      
+      if (!esAdmin) { 
+        if (inpDeniques) inpDeniques.disabled = true; 
+        if (inpNotas) inpNotas.disabled = true; 
+        if (selPat) selPat.disabled = selPat.value !== ''; 
+        if (selSeguirVia) {
+          // Solo se puede modificar una vez si ya tiene valor seleccionado y no es admin
+          if (fichaActualCargada.seguirVia && fichaActualCargada.seguirVia !== '') {
+            selSeguirVia.disabled = true;
+          } else {
+            selSeguirVia.disabled = false;
+          }
+        }
+      } else { 
+        if (selSeguirVia) selSeguirVia.disabled = false;
+        if (!esModoLectura) { 
+          if(inpDeniques) inpDeniques.disabled = false; 
+          if(selPat) selPat.disabled = false; 
+          if(inpNotas) inpNotas.disabled = false; 
+        } else { 
+          if(inpNotas) inpNotas.disabled = true; 
+        } 
+      }
     }
     function bloquearDesbloquearInputs(b) { document.querySelectorAll('#seccionEditor input, #seccionEditor textarea, #seccionEditor select').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); }
     function verPersonajeObjeto(pj) {
@@ -936,19 +1044,26 @@
     function cambiarFichaPropia(suffix) { if(esModoLectura) return; suffixFichaActiva = suffix; targetUidToEdit = currentUser.uid + suffix; cargarFichaNube(targetUidToEdit); mostrarSeccion('editor'); }
 		    function inicializarSistemasNuevos() {
       db.ref('jugadores').on('value', snap => {
-        cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha'), selectMisionDest = document.getElementById('misionDestinatario');
+        cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha'), selectAdminEmanador = document.getElementById('adminSelectJugadorEmanador'), selectMisionDest = document.getElementById('misionDestinatario');
         
         if (selectInv) selectInv.innerHTML = Object.keys(cacheJugadores).filter(uid => uid !== currentUser.uid).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
         if (selectMail) selectMail.innerHTML = Object.keys(cacheJugadores).filter(uid => uid !== currentUser.uid).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
         if (selectAdminFicha) selectAdminFicha.innerHTML = `<option value="">Selecciona un jugador...</option>` + Object.keys(cacheJugadores).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
+        if (selectAdminEmanador) selectAdminEmanador.innerHTML = `<option value="">Selecciona un jugador...</option>` + Object.keys(cacheJugadores).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email} (${cacheJugadores[uid].nombre || 'Sin nombre'})</option>`).join('');
         if (selectMisionDest) selectMisionDest.innerHTML = Object.keys(cacheJugadores).map(uid => `<option value="${uid}">${cacheJugadores[uid].nombre || cacheJugadores[uid].email}</option>`).join('');
 
         if (cont) {
           cont.innerHTML = Object.keys(cacheJugadores).map(uid => {
             const pj = cacheJugadores[uid]; const isSecond = pj.isSecondChar; const av = pj.avatarListaUrl || 'https://via.placeholder.com/150/05080e/00f0ff?text=Avatar';
-            return `<div class="bg-black/80 border ${isSecond?'border-purple-900':'border-cyan-900'} p-4 flex flex-col justify-between shadow-md"><div class="mb-3"><div class="flex items-center gap-3 mb-3"><img src="${av}" class="w-12 h-12 object-cover border border-cyan-500 rounded-full shadow-[0_0_8px_rgba(0,240,255,0.3)]"><div class="overflow-hidden"><h3 class="font-tech-title text-cyan-300 font-bold truncate">${pj.nombre || 'Sin Nombre'}</h3><p class="text-xs text-slate-400 truncate">${pj.clase || 'Sin Clase'} | ${pj.raza || 'Sin Raza'}</p></div></div></div><button onclick='verPersonajeObjeto(${JSON.stringify(pj)})' class="w-full bg-cyan-950 hover:bg-cyan-400 hover:text-black border border-cyan-500 text-cyan-300 text-xs py-2 uppercase font-bold transition">👁️ Ver Ficha</button></div>`;
+            return `<div class="bg-black/80 border ${isSecond?'border-purple-900':'border-cyan-900'} p-4 flex flex-col justify-between shadow-md"><div class="mb-3"><div class="flex items-center gap-3 mb-3"><img src="${av}" class="w-12 h-12 object-cover border border-cyan-500 rounded-full shadow-[0_0_8px_rgba(0,240,255,0.3)]"><div class="overflow-hidden"><h3 class="font-tech-title text-cyan-300 font-bold truncate">${pj.nombre || 'Sin Nombre'}</h3><p class="text-xs text-slate-400 truncate">${pj.clase || 'Sin Clase'} | Vía: ${pj.seguirVia || 'Ninguna'}</p></div></div></div><button onclick='verPersonajeObjeto(${JSON.stringify(pj)})' class="w-full bg-cyan-950 hover:bg-cyan-400 hover:text-black border border-cyan-500 text-cyan-300 text-xs py-2 uppercase font-bold transition">👁️ Ver Ficha</button></div>`;
           }).join('');
         }
+      });
+
+      // Sincronizar Torneo en tiempo real
+      db.ref('torneo').on('value', snap => {
+        const torneo = snap.val() || { estado: 'cerrado', inscritos: {}, fase: 'Inscripción Cerrada', combates: {} };
+        renderizarSeccionTorneo(torneo);
       });
 
       // Sincronizar patrocinadores en tiempo real
@@ -974,6 +1089,43 @@
         if (listaAdmin) {
           listaAdmin.innerHTML = adminHtml || '<span class="text-xs text-slate-500">No hay patrocinadores registrados.</span>';
         }
+      });
+				      // Sincronizar Forja Pendiente en tiempo real
+      db.ref('forja_pendiente').on('value', snap => {
+        const data = snap.val() || {};
+        const cont = document.getElementById('contenedorForjaPendiente');
+        if (!cont) return;
+        const esAdmin = verificarEsAdmin(currentUser?.email);
+        cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-slate-500 col-span-full">No hay propuestas pendientes en la forja.</p>' : Object.keys(data).map(key => {
+          const item = data[key];
+          return `<div class="bg-black/90 border border-orange-900 p-4 text-xs space-y-2 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between font-bold text-orange-300 mb-1"><span>${item.nombre} (${item.tipo})</span><span>Req: Niv ${item.nivelReq}</span></div>
+              <p class="text-slate-300 mb-2">${item.descripcion}</p>
+              <p class="text-[10px] text-slate-400 font-mono">Propuesto por: ${item.autorNombre}</p>
+            </div>
+            ${esAdmin ? `<button onclick="aprobarForja('${key}')" class="w-full bg-orange-600 hover:bg-orange-500 text-black font-bold py-1.5 uppercase tracking-wide mt-2">✔ Aprobar y Enviar a Tienda</button>` : ''}
+          </div>`;
+        }).join('');
+      });
+
+      // Sincronizar Bestiario Pendiente en tiempo real
+      db.ref('bestiario_pendiente').on('value', snap => {
+        const data = snap.val() || {};
+        const cont = document.getElementById('contenedorBestiarioPendiente');
+        if (!cont) return;
+        const esAdmin = verificarEsAdmin(currentUser?.email);
+        cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-slate-500 col-span-full">No hay avistamientos pendientes.</p>' : Object.keys(data).map(key => {
+          const m = data[key];
+          return `<div class="bg-black/90 border border-red-900 p-4 text-xs space-y-2 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="flex justify-between font-bold text-red-400 mb-1"><span>${m.nombre} (Rango ${m.rango})</span><span>Niv: ${m.nivel || '?'}</span></div>
+              <p class="text-slate-300 mb-2">${m.descripcion}</p>
+              <p class="text-[10px] text-slate-400 font-mono">Reportado por: ${m.autorNombre}</p>
+            </div>
+            ${esAdmin ? `<button onclick="aprobarBestiario('${key}')" class="w-full bg-red-700 hover:bg-red-600 text-white font-bold py-1.5 uppercase tracking-wide mt-2">✔ Aprobar Avistamiento</button>` : ''}
+          </div>`;
+        }).join('');
       });
 
       db.ref('mensajes').on('value', snap => {
@@ -1048,7 +1200,7 @@
         if (!hayGlob) contGlob.innerHTML = '<p class="text-xs text-slate-500">No hay misiones globales.</p>';
         if (!hayPers) contPers.innerHTML = '<p class="text-xs text-slate-500">No hay misiones personales asignadas.</p>';
       });
-		}
+			}
 		    document.addEventListener("DOMContentLoaded", () => {
       if(db) {
         db.ref('mazmorras').on('value', snap => {
@@ -1111,7 +1263,7 @@
       base64MazmorraImagen = ''; base64Monstruos = { 1: '', 2: '', 3: '' }; base64Boss = '';
       document.getElementById('formMazmorra').reset();
       document.getElementById('modalMazmorra').classList.remove('hidden');
-		}
+	}
 		    function guardarMazmorraAdmin(event) {
       event.preventDefault();
       const horas = parseInt(document.getElementById('mazDuracionHoras').value) || 24;
@@ -1166,6 +1318,20 @@
 
     function borrarMazmorraAdmin(key) { if(confirm("🗑️ ¿Cerrar y eliminar esta mazmorra?")) db.ref('mazmorras/' + key).remove(); }
 
+    function calcularAtributoConvergente(nivelStr, puntosExtraStr, iniciativaOrCaStr, multiplicador) {
+      const niv = parseTextoABigInt(nivelStr) > 0n ? parseTextoABigInt(nivelStr) : 1n;
+      const base = BigInt(VALOR_BASE_ESTADISTICA);
+      const extra = parseTextoABigInt(puntosExtraStr);
+      const modExtra = parseTextoABigInt(iniciativaOrCaStr);
+      let total = (base + extra) * BigInt(multiplicador);
+      if (multiplicador === 10 || multiplicador === 10) { // fuerza o destreza
+        total += modExtra * 10n;
+      } else if (multiplicador === 30) { // constitucion / defensa
+        total += modExtra * 30n;
+      }
+      return total;
+    }
+
     function verDetallesMazmorra(mJson) {
       const m = JSON.parse(decodeURIComponent(mJson));
       let html = `<div class="fixed inset-0 bg-black/95 z-[150] flex items-center justify-center p-4">
@@ -1175,30 +1341,44 @@
             <button onclick="this.closest('.fixed').remove()" class="text-rose-400 font-bold text-xl">✕</button>
           </div>
           <p class="text-xs text-slate-300">${m.descripcion}</p>
-          <h4 class="text-xs font-tech-title text-rose-300 uppercase font-bold border-b border-rose-900">Monstruos de Incursión (Fases 1 a 3)</h4>`;
+          <h4 class="text-xs font-tech-title text-rose-300 uppercase font-bold border-b border-rose-900">Monstruos de Incursión (Fases 1 a 3) - Estadísticas Convergentes</h4>`;
       
       m.monstruos.forEach((mon, idx) => {
         const imgTag = mon.imagen ? `<img src="${mon.imagen}" class="w-12 h-12 object-cover border border-rose-800 rounded">` : '';
+        const pvConv = formatearBigInt(calcularAtributoConvergente(mon.nivel, mon.pv, 0, config.pv.mult));
+        const fueConv = formatearBigInt(calcularAtributoConvergente(mon.nivel, mon.fuerza, mon.arma, config.fuerza.mult));
+        const desConv = formatearBigInt(calcularAtributoConvergente(mon.nivel, mon.destreza, mon.arma, config.destreza.mult));
+        const conConv = formatearBigInt(calcularAtributoConvergente(mon.nivel, mon.constitucion, mon.armadura, config.constitucion.mult));
+        const intConv = formatearBigInt(calcularAtributoConvergente(mon.nivel, mon.inteligencia, 0, config.inteligencia.mult));
+        const stConv = formatearBigInt(calcularAtributoConvergente(mon.nivel, mon.sentidos, 0, config.sentidos.mult));
+
         html += `<div class="bg-black/60 border border-rose-950 p-3 text-xs space-y-1 flex gap-3 items-center">
           ${imgTag}
           <div class="flex-1">
             <div class="flex justify-between font-bold text-rose-300"><span>Fase ${idx+1}: ${mon.nombre} (Cant: ${mon.cantidad})</span><span>Niv: ${mon.nivel}</span></div>
             <p class="text-[11px] text-slate-300 whitespace-pre-line">Desc: ${mon.descripcion}</p>
-            <p class="text-[10px] text-slate-400 whitespace-pre-line">Hab: ${mon.habilidades} | CA: ${mon.armadura} | Arma: ${mon.arma}</p>
-            <p class="text-[10px] text-emerald-400 font-mono">Pts [PV:${mon.pv} | Fue:${mon.fuerza} | Des:${mon.destreza} | Con:${mon.constitucion} | Int:${mon.inteligencia} | St:${mon.sentidos}]</p>
+            <p class="text-[10px] text-slate-400 whitespace-pre-line">Hab: ${mon.habilidades} | CA: ${mon.armadura} | Puntos Arma: ${mon.arma}</p>
+            <p class="text-[10px] text-emerald-400 font-mono">Convergencia [PV:${pvConv} | Fue:${fueConv} | Des:${desConv} | Con:${conConv} | Int:${intConv} | St:${stConv}]</p>
           </div>
         </div>`;
       });
 
       const bossImg = m.boss.imagen ? `<img src="${m.boss.imagen}" class="w-12 h-12 object-cover border border-red-700 rounded">` : '';
+      const bPv = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.pv, 0, config.pv.mult));
+      const bFue = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.fuerza, m.boss.arma, config.fuerza.mult));
+      const bDes = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.destreza, m.boss.arma, config.destreza.mult));
+      const bCon = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.constitucion, m.boss.armadura, config.constitucion.mult));
+      const bInt = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.inteligencia, 0, config.inteligencia.mult));
+      const bSt = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.sentidos, 0, config.sentidos.mult));
+
       html += `<h4 class="text-xs font-tech-title text-red-500 uppercase font-bold border-b border-red-900 pt-2">Fase Final: Boss</h4>
         <div class="bg-red-950/20 border border-red-800 p-3 text-xs space-y-1 flex gap-3 items-center">
           ${bossImg}
           <div class="flex-1">
             <div class="flex justify-between font-bold text-red-400"><span>👑 ${m.boss.nombre} (Cant: ${m.boss.cantidad})</span><span>Niv: ${m.boss.nivel}</span></div>
             <p class="text-[11px] text-red-200 whitespace-pre-line">Desc: ${m.boss.descripcion}</p>
-            <p class="text-[10px] text-slate-300 whitespace-pre-line">Hab: ${m.boss.habilidades} | CA: ${m.boss.armadura} | Arma: ${m.boss.arma}</p>
-            <p class="text-[10px] text-amber-400 font-mono">Pts [PV:${m.boss.pv} | Fue:${m.boss.fuerza} | Des:${m.boss.destreza} | Con:${m.boss.constitucion} | Int:${m.boss.inteligencia} | St:${m.boss.sentidos}]</p>
+            <p class="text-[10px] text-slate-300 whitespace-pre-line">Hab: ${m.boss.habilidades} | CA: ${m.boss.armadura} | Puntos Arma: ${m.boss.arma}</p>
+            <p class="text-[10px] text-amber-400 font-mono">Convergencia [PV:${bPv} | Fue:${bFue} | Des:${bDes} | Con:${bCon} | Int:${bInt} | St:${bSt}]</p>
           </div>
         </div>
         <button onclick="this.closest('.fixed').remove()" class="w-full bg-rose-600 text-black py-2 font-bold uppercase text-xs">Cerrar Inspección</button>
@@ -1270,7 +1450,7 @@
       }
       const node = tipo === 'invite_equipo' ? `equipos/${refId}/miembros` : `facciones/${refId}/miembros`, val = tipo === 'invite_equipo' ? true : (rango || 'Miembro'); db.ref(`${node}/${currentUser.uid}`).set(val).then(() => { db.ref(`mensajes/${idMsg}`).remove(); alert("✅ Te has unido."); }).catch(e => alert(e.message)); 
 	}
-	     function abrirModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.remove('hidden'); }
+		    function abrirModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.remove('hidden'); }
     function cerrarModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.add('hidden'); document.getElementById('formCorreoAdmin').reset(); }
     function toggleCorreoDestinatario() { document.getElementById('campoDestinatarioEspecifico').classList.toggle('hidden', document.getElementById('correoTipo').value !== 'personal'); }
     function enviarCorreoAdminSubmit(e) {
@@ -1288,7 +1468,90 @@
       lector.onload = function(e) { base64ForjaImagen = e.target.result; document.getElementById('forjaImgPreview').src = e.target.result; };
       lector.readAsDataURL(archivo);
     }
-    function abrirModalProponerMonstruo() { base64BestiarioImagen = ''; document.getElementById('formBestiario').reset(); document.getElementById('bestiarioImgPreview').src = 'https://via.placeholder.com/150/3f0000/ff0000?text=Previa'; document.getElementById('modalProponerBestiario').classList.remove('hidden'); }
+    
+    function abrirModalProponerForja() {
+      base64ForjaImagen = '';
+      document.getElementById('formForja').reset();
+      document.getElementById('forjaImgPreview').src = 'https://via.placeholder.com/150/05080e/00f0ff?text=Previa';
+      document.getElementById('modalProponerForja').classList.remove('hidden');
+    }
+
+    function guardarForjaPendiente(e) {
+      e.preventDefault();
+      const item = {
+        autorUid: currentUser.uid,
+        autorNombre: cacheJugadores[currentUser.uid]?.nombre || currentUser.email,
+        nombre: document.getElementById('forjaNombre').value.trim(),
+        tipo: document.getElementById('forjaTipo').value,
+        nivelReq: document.getElementById('forjaNivelReq').value.trim(),
+        clase: document.getElementById('forjaClase').value.trim(),
+        puntos: document.getElementById('forjaPuntos').value.trim(),
+        precio: document.getElementById('forjaPrecio').value.trim(),
+        imagen: base64ForjaImagen || document.getElementById('forjaImagenUrl').value.trim(),
+        habilidad: document.getElementById('forjaHabilidades').value.trim(),
+        descripcion: document.getElementById('forjaDescripcion').value.trim(),
+        timestamp: Date.now()
+      };
+      db.ref('forja_pendiente').push(item).then(() => {
+        document.getElementById('modalProponerForja').classList.add('hidden');
+        alert("🔨 ¡Creación propuesta con éxito! Pendiente de aprobación de los administradores.");
+      }).catch(err => alert("❌ Error al proponer creación: " + err.message));
+    }
+
+    function aprobarForja(key) {
+      db.ref('forja_pendiente/' + key).once('value').then(snap => {
+        const item = snap.val();
+        if (!item) return;
+        db.ref('tienda').push(item).then(() => {
+          db.ref('forja_pendiente/' + key).remove();
+          db.ref('mensajes').push({
+            to: item.autorUid,
+            from: 'MAESTROS DE LA FORJA',
+            type: 'system',
+            content: `¡Tu propuesta [${item.nombre}] ha sido aprobada y publicada en el Mercado Central!`
+          });
+          alert("✅ Objeto aprobado y transferido a la tienda.");
+        });
+      });
+    }
+
+    let base64BestiarioImagen = '';
+    function procesarArchivoBestiario(event) {
+      const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
+      lector.onload = function(e) { base64BestiarioImagen = e.target.result; document.getElementById('bestiarioImgPreview').src = e.target.result; };
+      lector.readAsDataURL(archivo);
+	}
+		    function actualizarEstadisticasBestiarioModal() {
+      const niv = document.getElementById('bestiarioNivel').value;
+      const pv = document.getElementById('bestiario_pv').value;
+      const fue = document.getElementById('bestiario_fuerza').value;
+      const des = document.getElementById('bestiario_destreza').value;
+      const con = document.getElementById('bestiario_constitucion').value;
+      const int = document.getElementById('bestiario_inteligencia').value;
+      const st = document.getElementById('bestiario_sentidos').value;
+      const ini = document.getElementById('bestiarioIniciativa').value;
+      const ca = document.getElementById('bestiarioCa').value;
+
+      const pvConv = formatearBigInt(calcularAtributoConvergente(niv, pv, 0, config.pv.mult));
+      const fueConv = formatearBigInt(calcularAtributoConvergente(niv, fue, ini, config.fuerza.mult));
+      const desConv = formatearBigInt(calcularAtributoConvergente(niv, des, ini, config.destreza.mult));
+      const conConv = formatearBigInt(calcularAtributoConvergente(niv, con, ca, config.constitucion.mult));
+      const intConv = formatearBigInt(calcularAtributoConvergente(niv, int, 0, config.inteligencia.mult));
+      const stConv = formatearBigInt(calcularAtributoConvergente(niv, st, 0, config.sentidos.mult));
+
+      const prev = document.getElementById('bestiarioCalculoPreview');
+      if (prev) {
+        prev.textContent = `PV: ${pvConv} | Fue: ${fueConv} | Des: ${desConv} | Con: ${conConv} | Int: ${intConv} | St: ${stConv}`;
+      }
+    }
+
+    function abrirModalProponerMonstruo() { 
+      base64BestiarioImagen = ''; 
+      document.getElementById('formBestiario').reset(); 
+      document.getElementById('bestiarioImgPreview').src = 'https://via.placeholder.com/150/3f0000/ff0000?text=Previa'; 
+      actualizarEstadisticasBestiarioModal();
+      document.getElementById('modalProponerBestiario').classList.remove('hidden'); 
+    }
     
     function guardarBestiarioPendiente(e) {
       e.preventDefault();
@@ -1296,6 +1559,7 @@
         autorUid: currentUser.uid, autorNombre: cacheJugadores[currentUser.uid]?.nombre || currentUser.email,
         nombre: document.getElementById('bestiarioNombre').value.trim(), rango: document.getElementById('bestiarioRango').value.trim(),
         nivel: document.getElementById('bestiarioNivel').value.trim(), locacion: document.getElementById('bestiarioLocacion').value.trim(),
+        ca: document.getElementById('bestiarioCa').value, iniciativa: document.getElementById('bestiarioIniciativa').value,
         pv: document.getElementById('bestiario_pv').value, fuerza: document.getElementById('bestiario_fuerza').value, destreza: document.getElementById('bestiario_destreza').value,
         constitucion: document.getElementById('bestiario_constitucion').value, inteligencia: document.getElementById('bestiario_inteligencia').value, sentidos: document.getElementById('bestiario_sentidos').value,
         imagen: base64BestiarioImagen || document.getElementById('bestiarioImagenUrl').value.trim(), descripcion: document.getElementById('bestiarioDesc').value.trim(),
@@ -1304,6 +1568,24 @@
       };
       db.ref('bestiario_pendiente').push(monstruo).then(() => { document.getElementById('modalProponerBestiario').classList.add('hidden'); alert("📜 Avistamiento registrado y pendiente de verificación."); });
     }
+
+    function aprobarBestiario(key) {
+      db.ref('bestiario_pendiente/' + key).once('value').then(snap => {
+        const data = snap.val();
+        if(!data) return;
+        db.ref('bestiario').push(data).then(() => {
+          db.ref('bestiario_pendiente/' + key).remove();
+          db.ref('mensajes').push({
+            to: data.autorUid,
+            from: 'GREMIO DE CAZADORES',
+            type: 'system',
+            content: `Tu registro del monstruo [${data.nombre}] se oficializó en el Bestiario.`
+          });
+          alert("✅ Avistamiento aprobado y añadido al Bestiario.");
+        });
+      });
+    }
+
     function verMonstruo(monstruoString) {
       const m = JSON.parse(decodeURIComponent(monstruoString));
       document.getElementById('verMonstruoImg').src = m.imagen || 'https://via.placeholder.com/400x400/3f0000/ff0000?text=SIN+IMAGEN';
@@ -1316,13 +1598,20 @@
       document.getElementById('verMonstruoDeb').textContent = m.debilidades || 'Ninguna registrada';
       document.getElementById('verMonstruoAutor').textContent = m.autorNombre;
       
+      const pvConv = formatearBigInt(calcularAtributoConvergente(m.nivel || 1, m.pv || 0, 0, config.pv.mult));
+      const fueConv = formatearBigInt(calcularAtributoConvergente(m.nivel || 1, m.fuerza || 0, m.iniciativa || 0, config.fuerza.mult));
+      const desConv = formatearBigInt(calcularAtributoConvergente(m.nivel || 1, m.destreza || 0, m.iniciativa || 0, config.destreza.mult));
+      const conConv = formatearBigInt(calcularAtributoConvergente(m.nivel || 1, m.constitucion || 0, m.ca || 0, config.constitucion.mult));
+      const intConv = formatearBigInt(calcularAtributoConvergente(m.nivel || 1, m.inteligencia || 0, 0, config.inteligencia.mult));
+      const stConv = formatearBigInt(calcularAtributoConvergente(m.nivel || 1, m.sentidos || 0, 0, config.sentidos.mult));
+
       document.getElementById('verMonstruoStats').innerHTML = `
-        <div>PV Pts: <strong>${m.pv || 10}</strong></div>
-        <div>Fuerza: <strong>${m.fuerza || 10}</strong></div>
-        <div>Destreza: <strong>${m.destreza || 10}</strong></div>
-        <div>Constitución: <strong>${m.constitucion || 10}</strong></div>
-        <div>Inteligencia: <strong>${m.inteligencia || 10}</strong></div>
-        <div>Sentidos: <strong>${m.sentidos || 10}</strong></div>
+        <div>PV Total: <strong>${pvConv} PV</strong></div>
+        <div>Fuerza: <strong>${fueConv} Kg</strong></div>
+        <div>Destreza: <strong>${desConv} m/s</strong></div>
+        <div>Defensa (Con): <strong>${conConv} Df</strong></div>
+        <div>Arcana (Int): <strong>${intConv} J</strong></div>
+        <div>Sentidos: <strong>${stConv} m</strong></div>
       `;
       document.getElementById('modalVerMonstruo').classList.remove('hidden');
     }
@@ -1411,7 +1700,24 @@
       }).catch(err => alert('❌ Error al publicar misión: ' + err.message));
     }
 
-    function otorgarSegundaFichaDesdeAdmin() { const uid = document.getElementById('adminSelectJugadorFicha').value; if(uid && cacheJugadores[uid]) db.ref('jugadores/' + uid + '_2').set({ uid: uid+'_2', ownerUid: uid, email: cacheJugadores[uid].email, nombre: (cacheJugadores[uid].nombre || "Personaje") + " [2]", clase: "-", raza: "-", isSecondChar: true, nivel: "1", deniques: "0", timestamp: Date.now() }).then(()=>alert("✅ Ficha 2 asignada.")); }
+    function otorgarSegundaFichaDesdeAdmin() { 
+      const uid = document.getElementById('adminSelectJugadorFicha').value; 
+      if(uid && cacheJugadores[uid]) {
+        db.ref('jugadores/' + uid + '_2').set({ 
+          uid: uid+'_2', ownerUid: uid, email: cacheJugadores[uid].email, nombre: (cacheJugadores[uid].nombre || "Personaje") + " [2]", clase: "-", raza: "-", isSecondChar: true, nivel: "1", deniques: "0", emanador: "no", timestamp: Date.now() 
+        }).then(()=>alert("✅ Ficha 2 asignada.")); 
+      }
+    }
+
+    function otorgarEmanadorAdmin(estado) {
+      const uid = document.getElementById('adminSelectJugadorEmanador').value;
+      if (!uid) return alert("❌ Selecciona un jugador.");
+      const valor = estado ? "si" : "no";
+      db.ref('jugadores/' + uid + '/emanador').set(valor).then(() => {
+        alert(`⚡ Estado de Emanador actualizado a [${valor.toUpperCase()}] para el jugador.`);
+      }).catch(err => alert("❌ Error: " + err.message));
+    }
+
     function agregarPatrocinadorAdmin() {
       const p = prompt("Nombre del Patrocinador:");
       if (p && p.trim()) {
@@ -1419,6 +1725,192 @@
           alert("✅ Patrocinador registrado correctamente.");
         }).catch(err => alert("❌ Error: " + err.message));
       }
+		}
+		    // Funciones del Torneo
+    function adminToggleInscripcion() {
+      db.ref('torneo').once('value').then(snap => {
+        const torneo = snap.val() || { estado: 'cerrado', inscritos: {}, combates: {} };
+        const nuevoEstado = torneo.estado === 'abierto' ? 'cerrado' : 'abierto';
+        db.ref('torneo/estado').set(nuevoEstado).then(() => {
+          alert(`🏆 Inscripciones del torneo ${nuevoEstado === 'abierto' ? 'ABIERTAS' : 'CERRADAS'}.`);
+        });
+      });
+    }
+
+    function inscribirMiPersonajeTorneo() {
+      if (!currentUser) return;
+      const realUid = targetUidToEdit || (currentUser.uid + suffixFichaActiva);
+      db.ref('jugadores/' + realUid).once('value').then(snap => {
+        const pj = snap.val();
+        if (!pj) return alert("❌ No se encontró la ficha activa.");
+        db.ref('torneo/estado').once('value').then(snapEst => {
+          if (snapEst.val() !== 'abierto') return alert("❌ Las inscripciones están cerradas.");
+          db.ref('torneo/inscritos/' + realUid).set({
+            uid: realUid,
+            nombre: pj.nombre || 'Desconocido',
+            clase: pj.clase || 'Sin clase',
+            ownerUid: currentUser.uid
+          }).then(() => alert("🏆 ¡Te has inscrito exitosamente al torneo!"));
+        });
+      });
+    }
+
+    function adminCerrarYSortearTorneo() {
+      db.ref('torneo').once('value').then(snap => {
+        const torneo = snap.val();
+        if (!torneo || !torneo.inscritos) return alert("❌ No hay participantes inscritos.");
+        const participantes = Object.values(torneo.inscritos);
+        if (participantes.length < 2) return alert("❌ Se necesitan al menos 2 participantes.");
+
+        // Validar pares
+        if (participantes.length % 2 !== 0) {
+          return alert("⚠️ ALERTA DE PARES: El número de participantes es impar (" + participantes.length + "). Se necesita que una persona cancele su registro o que se agregue a otro participante para continuar.");
+        }
+
+        // Mezclar participantes aleatoriamente
+        const mezcla = [...participantes].sort(() => Math.random() - 0.5);
+        const combates = {};
+        for (let i = 0; i < mezcla.length; i += 2) {
+          const idCombate = 'combate_' + (i / 2 + 1);
+          combates[idCombate] = {
+            id: idCombate,
+            p1: mezcla[i],
+            p2: mezcla[i+1],
+            ganador: null
+          };
+        }
+
+        db.ref('torneo').update({
+          estado: 'en_curso',
+          fase: 'Ronda 1',
+          combates: combates,
+          rondaActual: 1
+        }).then(() => alert("⚔️ ¡Sorteo completado y llaves generadas con éxito!"));
+      });
+    }
+
+    function adminSeleccionarGanadorTorneo(combateId, ganadorUid) {
+      db.ref('torneo').once('value').then(snap => {
+        const torneo = snap.val();
+        if (!torneo || !torneo.combates || !torneo.combates[combateId]) return;
+        const combate = torneo.combates[combateId];
+        const ganadorObj = combate.p1.uid === ganadorUid ? combate.p1 : combate.p2;
+
+        db.ref(`torneo/combates/${combateId}/ganador`).set(ganadorObj).then(() => {
+          // Verificar si todos los combates de esta ronda tienen ganador
+          db.ref('torneo/combates').once('value').then(snapCombates => {
+            const combatesObj = snapCombates.val() || {};
+            const keys = Object.keys(combatesObj);
+            const todosTienenGanador = keys.every(k => combatesObj[k].ganador);
+
+            if (todosTienenGanador) {
+              const ganadoresRonda = keys.map(k => combatesObj[k].ganador);
+              if (ganadoresRonda.length === 1) {
+                db.ref('torneo').update({
+                  fase: `¡CAMPEÓN: ${ganadoresRonda[0].nombre}!`
+                });
+                alert(`🏆 ¡El torneo ha finalizado! El campeón es ${ganadoresRonda[0].nombre}`);
+              } else {
+                // Generar siguiente ronda
+                if (ganadoresRonda.length % 2 !== 0) {
+                  return alert("⚠️ ALERTA DE PARES PARA SIGUIENTE RONDA: El número de ganadores es impar (" + ganadoresRonda.length + "). Agrega o retira un combatiente.");
+                }
+                const siguienteCombates = {};
+                for (let i = 0; i < ganadoresRonda.length; i += 2) {
+                  const idC = 'combate_' + (i / 2 + 1);
+                  siguienteCombates[idC] = {
+                    id: idC,
+                    p1: ganadoresRonda[i],
+                    p2: ganadoresRonda[i+1],
+                    ganador: null
+                  };
+                }
+                const siguienteRondaNum = (torneo.rondaActual || 1) + 1;
+                db.ref('torneo').update({
+                  fase: `Ronda ${siguienteRondaNum}`,
+                  combates: siguienteCombates,
+                  rondaActual: siguienteRondaNum
+                }).then(() => alert(`⚡ ¡Ronda completada! Pasando a la siguiente fase (Ronda ${siguienteRondaNum}).`));
+              }
+            }
+          });
+        });
+      });
+    }
+
+    function adminReiniciarTorneo() {
+      if (confirm("🗑️ ¿Deseas reiniciar el torneo y borrar todas las inscripciones y llaves?")) {
+        db.ref('torneo').set({
+          estado: 'cerrado',
+          fase: 'Inscripción Cerrada',
+          inscritos: {},
+          combates: {}
+        }).then(() => alert("🔄 Torneo reiniciado."));
+      }
+    }
+
+    function renderizarSeccionTorneo(torneo) {
+      const banner = document.getElementById('estadoInscripcionBanner');
+      const mensaje = document.getElementById('inscripcionMensajeEstado');
+      const btnInscribir = document.getElementById('btnInscribirTorneo');
+      const tituloFase = document.getElementById('tituloFaseTorneo');
+      const contenedorLlaves = document.getElementById('contenedorLlavesTorneo');
+      const esAdmin = verificarEsAdmin(currentUser?.email);
+
+      if (!banner || !contenedorLlaves) return;
+
+      banner.textContent = `ESTADO: ${torneo.estado.toUpperCase()} (${torneo.fase})`;
+
+      if (torneo.estado === 'abierto') {
+        mensaje.textContent = "Las inscripciones se encuentran abiertas. ¡Inscribe tu ficha activa para participar!";
+        btnInscribir.classList.remove('hidden');
+      } else {
+        mensaje.textContent = torneo.estado === 'en_curso' ? "El torneo está en marcha. Revisa las llaves de combate." : "Inscripciones cerradas temporalmente.";
+        btnInscribir.classList.add('hidden');
+      }
+
+      tituloFase.textContent = `Llaves y Combates (${torneo.fase})`;
+
+      const inscritosArr = Object.values(torneo.inscritos || {});
+      let htmlInscritos = `<div class="col-span-full mb-4 bg-black/60 p-3 border border-yellow-900/50"><span class="text-xs text-yellow-400 font-bold uppercase">Participantes inscritos (${inscritosArr.length}):</span> <span class="text-xs text-slate-300">${inscritosArr.map(i => i.nombre).join(', ') || 'Ninguno'}</span></div>`;
+
+      const combatesObj = torneo.combates || {};
+      const keysC = Object.keys(combatesObj);
+
+      if (keysC.length === 0) {
+        contenedorLlaves.innerHTML = htmlInscritos + `<p class="text-xs text-slate-500 col-span-full">No hay enfrentamientos generados todavía.</p>`;
+        return;
+      }
+
+      let htmlCombates = htmlInscritos;
+      keysC.forEach(k => {
+        const c = combatesObj[k];
+        const p1Ganador = c.ganador && c.ganador.uid === c.p1.uid;
+        const p2Ganador = c.ganador && c.ganador.uid === c.p2.uid;
+        
+        let clickP1 = esAdmin && !c.ganador ? `onclick="adminSeleccionarGanadorTorneo('${c.id}', '${c.p1.uid}')" style="cursor: pointer;" title="Haz clic para declarar ganador"` : '';
+        let clickP2 = esAdmin && !c.ganador ? `onclick="adminSeleccionarGanadorTorneo('${c.id}', '${c.p2.uid}')" style="cursor: pointer;" title="Haz clic para declarar ganador"` : '';
+
+        htmlCombates += `
+          <div class="bg-black border ${c.ganador ? 'border-emerald-600' : 'border-yellow-900'} p-4 flex flex-col justify-between shadow-md">
+            <div class="text-[10px] text-yellow-500 font-mono mb-2 uppercase font-bold">Enfrentamiento // ${c.id}</div>
+            <div class="space-y-2">
+              <div ${clickP1} class="p-2 border ${p1Ganador ? 'border-emerald-400 bg-emerald-950/40 text-emerald-300' : 'border-slate-800 bg-slate-900/50 text-slate-200'} flex justify-between items-center transition hover:border-yellow-400">
+                <span>⚔️ ${c.p1.nombre} <span class="text-[10px] text-slate-400">(${c.p1.clase})</span></span>
+                ${p1Ganador ? '<span class="text-xs font-bold text-emerald-400">👑 GANADOR</span>' : (esAdmin ? '<span class="text-[10px] text-yellow-400 underline">Elegir ganador</span>' : '')}
+              </div>
+              <div class="text-center text-[10px] text-slate-500 font-bold">VS</div>
+              <div ${clickP2} class="p-2 border ${p2Ganador ? 'border-emerald-400 bg-emerald-950/40 text-emerald-300' : 'border-slate-800 bg-slate-900/50 text-slate-200'} flex justify-between items-center transition hover:border-yellow-400">
+                <span>⚔️ ${c.p2.nombre} <span class="text-[10px] text-slate-400">(${c.p2.clase})</span></span>
+                ${p2Ganador ? '<span class="text-xs font-bold text-emerald-400">👑 GANADOR</span>' : (esAdmin ? '<span class="text-[10px] text-yellow-400 underline">Elegir ganador</span>' : '')}
+              </div>
+            </div>
+            ${c.ganador ? '<div class="mt-3 text-center text-xs text-emerald-400 font-bold font-tech-title">Ganador Avanza</div>' : (esAdmin ? '<div class="mt-3 text-center text-[10px] text-slate-400 italic">Haz clic sobre el nombre del ganador para filtrarlo</div>' : '')}
+          </div>
+        `;
+      });
+
+      contenedorLlaves.innerHTML = htmlCombates;
     }
   </script>
 </body>
