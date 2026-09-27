@@ -84,7 +84,7 @@
       
       <button onclick="mostrarSeccion('tienda')" class="w-full text-left font-tech-title text-amber-300 hover:text-black hover:bg-amber-400 p-2 border border-amber-800 transition flex items-center gap-3 text-sm"><span>🛒</span> Tienda Global</button>
       <button onclick="mostrarSeccion('forja')" class="w-full text-left font-tech-title text-orange-300 hover:text-black hover:bg-orange-400 p-2 border border-orange-800 transition flex items-center gap-3 text-sm"><span>🔨</span> Forja de Creación</button>
-      <button onclick="mostrarSeccion('bestiario')" class="w-full text-left font-tech-title text-red-300 hover:text-black hover:bg-red-400 p-2 border border-red-900 transition flex items-center gap-3 text-sm"><span>🐉</span> Bestiario y Amenazas</button>
+      <button onclick="mostrarSeccion('bestiario')" class="w-full text-left font-tech-title text-red-300 hover:text-black hover:bg-red-900 transition flex items-center gap-3 text-sm"><span>🐉</span> Bestiario y Amenazas</button>
       <button onclick="mostrarSeccion('mazmorras')" class="w-full text-left font-tech-title text-rose-300 hover:text-black hover:bg-rose-400 p-2 border border-rose-800 transition flex items-center gap-3 text-sm"><span>🕳️</span> Mazmorras</button>
       <button onclick="mostrarSeccion('misiones')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-2 border border-purple-800 transition flex items-center gap-3 text-sm"><span>📜</span> Tablón de Misiones</button>
       
@@ -98,7 +98,8 @@
       </div>
     </nav>
   </div>
-  <div class="max-w-6xl mx-auto tech-card p-6 md:p-8 relative">
+
+      <div class="max-w-6xl mx-auto tech-card p-6 md:p-8 relative">
     <header class="border-b border-cyan-500/40 pb-6 mb-8 flex justify-between items-center gap-4">
       <div class="flex items-center gap-4">
         <button onclick="toggleMenu()" class="bg-cyan-950 border border-cyan-400 text-cyan-300 p-2.5 rounded-none hover:bg-cyan-400 hover:text-black transition shadow-[0_0_10px_rgba(0,240,255,0.3)]">
@@ -200,7 +201,7 @@
       <div class="mt-6"><label class="block text-xs font-tech-title uppercase text-emerald-400 mb-2">// Apariencia e Historia</label><textarea id="apariencia" rows="5" class="w-full tech-input border-emerald-900 focus:border-emerald-500 p-3 font-tech-body"></textarea></div>
     </div>
 
-        <!-- SECCIÓN: CORREO Y AVISOS -->
+            <!-- SECCIÓN: CORREO Y AVISOS -->
     <div id="seccionCorreo" class="hidden">
       <div class="flex justify-between items-center border-b border-emerald-500/50 pb-3 mb-6">
         <h2 class="text-xl font-tech-title text-emerald-400 uppercase tracking-widest">// BANDEJA DE ENTRADA</h2>
@@ -230,7 +231,7 @@
       </div>
     </div>
 
-        <!-- SECCIÓN: FACCIONES Y REINOS -->
+            <!-- SECCIÓN: FACCIONES Y REINOS -->
     <div id="seccionFacciones" class="hidden">
       <div class="border-b border-indigo-500/50 pb-3 mb-6 flex justify-between items-center">
         <h2 class="text-xl font-tech-title text-indigo-400 uppercase tracking-widest">// FACCIONES Y REINOS</h2>
@@ -255,7 +256,7 @@
       </div>
     </div>
 
-        <!-- SECCIÓN: FORJA DE CREACIÓN -->
+            <!-- SECCIÓN: FORJA DE CREACIÓN -->
     <div id="seccionForja" class="hidden">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-orange-500/50 pb-3 mb-6 gap-4">
         <h2 class="text-xl font-tech-title text-orange-400 uppercase tracking-widest">// FORJA DEL MUNDO</h2>
@@ -301,7 +302,7 @@
       <div id="contenedorMazmorras" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
 
-        <!-- SECCIÓN: LISTA DE JUGADORES -->
+            <!-- SECCIÓN: LISTA DE JUGADORES -->
     <div id="seccionJugadores" class="hidden">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-cyan-900 pb-3 mb-6 gap-4">
         <h2 class="text-xl font-tech-title text-cyan-400 uppercase tracking-widest">// RED DE PERSONAJES</h2>
@@ -322,7 +323,7 @@
       <div id="contenedorTienda" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
-        <!-- SECCIÓN: MISIONES -->
+            <!-- SECCIÓN: MISIONES -->
     <div id="seccionMisiones" class="hidden">
       <div class="flex justify-between items-center border-b border-purple-500/50 pb-3 mb-6">
         <h2 class="text-xl font-tech-title text-purple-400 uppercase tracking-widest">// TABLÓN DE MISIONES</h2>
@@ -364,7 +365,7 @@
       </form>
     </div>
 
-        <!-- SECCIÓN: PANEL DE ADMINISTRADOR -->
+            <!-- SECCIÓN: PANEL DE ADMINISTRADOR -->
     <div id="seccionAdmin" class="hidden">
       <div class="flex justify-between items-center border-b border-red-500/50 pb-3 mb-6"><h2 class="text-xl font-tech-title text-red-400 uppercase tracking-widest">// PANEL DE ADMINISTRACIÓN</h2></div>
       
@@ -476,6 +477,98 @@
     </div>
   </div>
 
+      <!-- MODALES FLOTANTES -->
+  <div id="modalConfirmarGuardado" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border-2 border-cyan-400 max-w-md w-full p-6 text-center shadow-[0_0_30px_rgba(0,240,255,0.3)]">
+      <div class="text-cyan-400 text-5xl mb-3">⚠️</div><h3 class="text-lg font-tech-title text-cyan-400 uppercase tracking-wider mb-2">// ¿GUARDAR INFORMACIÓN?</h3><p class="text-xs text-slate-400 mb-6 font-tech-body">Al confirmar, los datos se actualizarán en el registro global.</p>
+      <div class="flex justify-center gap-4"><button onclick="cancelarGuardado()" class="px-5 py-2.5 bg-slate-900 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase hover:bg-slate-800 transition">✕ Rechazar</button><button onclick="ejecutarGuardadoConfirmado()" class="px-6 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold text-xs uppercase transition">✔ Confirmar</button></div>
+    </div>
+  </div>
+
+  <div id="modalInvitar" class="hidden fixed inset-0 bg-black/80 z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-cyan-500 w-full max-w-md p-6">
+      <h3 id="tituloInvitar" class="text-lg font-tech-title text-cyan-400 mb-4">// ENVIAR INVITACIÓN</h3>
+      <select id="selectUsuarioInvitar" class="w-full tech-input p-2 mb-4"></select>
+      <div id="cajaRangoFaccion" class="hidden mb-4">
+        <label class="block text-xs text-indigo-300 mb-1">Rango del Miembro (Ej. Caballero, Duque, Aldeano)</label>
+        <input type="text" id="inputRangoFaccion" value="Miembro" class="w-full tech-input p-2">
+      </div>
+      <div class="flex justify-end gap-2">
+        <button onclick="document.getElementById('modalInvitar').classList.add('hidden')" class="px-4 py-2 border border-slate-700 text-slate-300 font-tech-title text-xs uppercase">Cancelar</button>
+        <button onclick="procesarInvitacion()" class="px-4 py-2 bg-cyan-600 text-black font-tech-title font-bold text-xs uppercase">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalCorreoAdmin" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-emerald-500 max-w-md w-full p-6">
+      <div class="flex justify-between items-center border-b border-emerald-900 pb-3 mb-4">
+        <h3 class="text-lg font-tech-title text-emerald-400 uppercase tracking-wider">// ENVIAR NOTIFICACIÓN</h3>
+        <button onclick="cerrarModalCorreoAdmin()" class="text-emerald-400 font-bold">✕</button>
+      </div>
+      <form id="formCorreoAdmin" onsubmit="enviarCorreoAdminSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-emerald-300 mb-1">Tipo de Envío *</label>
+          <select id="correoTipo" onchange="toggleCorreoDestinatario()" class="w-full tech-input p-2 text-sm bg-slate-900">
+            <option value="global">Global (Todos los usuarios)</option>
+            <option value="personal">Personal (Usuario Específico)</option>
+          </select>
+        </div>
+        <div id="campoDestinatarioEspecifico" class="hidden">
+          <label class="block text-xs font-tech-title uppercase text-cyan-300 mb-1">Seleccionar Usuario *</label>
+          <select id="selectDestinatarioCorreo" class="w-full tech-input p-2 text-sm bg-slate-900 border-cyan-800"></select>
+        </div>
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-emerald-300 mb-1">Contenido del Mensaje *</label>
+          <textarea id="contenidoMensajeCorreo" required rows="4" class="w-full tech-input p-2 text-sm" placeholder="Escribe el aviso..."></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="cerrarModalCorreoAdmin()" class="px-4 py-2 border border-slate-700 text-slate-300 text-xs uppercase">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-600 text-black font-bold text-xs uppercase">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalProponerForja" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div class="bg-slate-950 border border-orange-500 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-orange-900/80 pb-3 mb-4">
+        <h3 class="text-lg font-tech-title text-orange-400 uppercase tracking-wider">// PROPONER / CREAR EN LA FORJA</h3>
+        <button onclick="document.getElementById('modalProponerForja').classList.add('hidden')" class="text-orange-400 hover:text-orange-200 font-bold">✕</button>
+      </div>
+      <form id="formForja" onsubmit="guardarForjaPendiente(event)" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Nombre del Objeto/Arma *</label><input type="text" id="forjaNombre" required class="w-full tech-input px-3 py-1.5 text-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Tipo *</label><select id="forjaTipo" class="w-full tech-input px-3 py-1.5 text-sm bg-slate-900"><option value="Arma">Arma</option><option value="Armadura">Armadura</option><option value="Objeto">Objeto</option></select></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Nivel Requerido *</label><input type="text" id="forjaNivelReq" required class="w-full tech-input px-3 py-1.5 text-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Clase Perteneciente</label><input type="text" id="forjaClase" class="w-full tech-input px-3 py-1.5 text-sm"></div>
+          <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Puntos Arma/Def</label><input type="text" id="forjaPuntos" class="w-full tech-input px-3 py-1.5 text-sm"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Precio en Tienda (Deniques)</label>
+            <input type="text" id="forjaPrecio" value="1000" class="w-full tech-input px-3 py-1.5 text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Subir Imagen Local</label>
+            <input type="file" id="inputArchivoForja" accept="image/*" onchange="procesarArchivoForja(event)" class="w-full text-xs text-slate-400 file:mr-2 file:py-1 file:px-2 file:border-0 file:bg-orange-950 file:text-orange-300 cursor-pointer">
+          </div>
+        </div>
+        <div class="flex items-center gap-4 bg-black/40 p-2 border border-orange-900/40">
+          <img id="forjaImgPreview" src="https://via.placeholder.com/150/05080e/00f0ff?text=Previa" class="w-12 h-12 object-cover border border-orange-500">
+          <span class="text-[11px] text-slate-400">O ingresa URL alternativa: <input type="url" id="forjaImagenUrl" placeholder="https://..." class="tech-input p-1 text-xs w-full mt-1"></span>
+        </div>
+        <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Habilidades (Extensible) *</label><textarea id="forjaHabilidades" required rows="2" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div>
+        <div><label class="block text-xs font-tech-title uppercase text-orange-300 mb-1">Descripción y Lore *</label><textarea id="forjaDescripcion" required rows="2" class="w-full tech-input px-3 py-1.5 text-sm"></textarea></div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="submit" class="px-5 py-2 bg-orange-600 text-black font-tech-title font-bold text-xs uppercase">Guardar / Proponer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
       <div id="modalProponerBestiario" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-red-500 max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-red-900/80 pb-3 mb-4">
@@ -491,6 +584,20 @@
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Nivel Estimado</label><input type="text" id="bestiarioNivel" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Locación / Hábitat *</label><input type="text" id="bestiarioLocacion" required class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
         </div>
+
+        <!-- Estadísticas completas en Bestiario -->
+        <div class="border border-red-900/60 p-3 bg-red-950/10 space-y-2">
+          <label class="block text-xs font-tech-title uppercase text-red-400 font-bold">// Estadísticas Base del Monstruo</label>
+          <div class="grid grid-cols-2 md:grid-cols-6 gap-2">
+            <div><label class="text-[9px] text-red-300">PV Pts</label><input type="text" id="bestiario_pv" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Fuerza Pts</label><input type="text" id="bestiario_fuerza" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Destreza Pts</label><input type="text" id="bestiario_destreza" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Constitución</label><input type="text" id="bestiario_constitucion" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Inteligencia</label><input type="text" id="bestiario_inteligencia" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+            <div><label class="text-[9px] text-red-300">Sentidos Pts</label><input type="text" id="bestiario_sentidos" value="10" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Subir Imagen Local</label>
@@ -530,6 +637,11 @@
           <div><span class="block text-[10px] text-red-500 font-bold uppercase">Nivel</span><span id="verMonstruoNivel" class="text-red-200">??</span></div>
           <div><span class="block text-[10px] text-red-500 font-bold uppercase">Locación</span><span id="verMonstruoLocacion" class="text-red-200">??</span></div>
         </div>
+        <!-- Estadísticas visibles del monstruo -->
+        <div class="bg-red-950/25 border border-red-900 p-3">
+          <h4 class="text-[11px] text-red-400 font-bold uppercase mb-2">Estadísticas de Combate</h4>
+          <div id="verMonstruoStats" class="grid grid-cols-3 gap-2 text-xs font-mono text-red-200"></div>
+        </div>
         <div><h4 class="text-[11px] text-red-500 font-bold uppercase mb-1">Descripción</h4><p id="verMonstruoDesc" class="text-slate-300 leading-relaxed"></p></div>
         <div><h4 class="text-[11px] text-red-500 font-bold uppercase mb-1">Habilidades</h4><div id="verMonstruoHab" class="bg-red-950/30 border border-red-900 p-3 text-red-200 whitespace-pre-line"></div></div>
         <div><h4 class="text-[11px] text-red-500 font-bold uppercase mb-1">Debilidades Notables</h4><div id="verMonstruoDeb" class="bg-green-950/20 border border-green-900 p-3 text-green-300 whitespace-pre-line"></div></div>
@@ -551,7 +663,22 @@
           <div><label class="block text-rose-300 font-bold mb-1 uppercase">Nivel Mínimo Requerido *</label><input type="text" id="mazNivelReq" required class="w-full tech-input p-2 text-sm border-rose-900"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div><label class="block text-rose-300 font-bold mb-1 uppercase">Tipo de Acceso *</label><select id="mazTipoAcceso" class="w-full tech-input p-2 text-sm bg-slate-900 border-rose-900"><option value="global">Global (Público)</option><option value="individual">Individual (1 Jugador)</option><option value="equipo">Equipo (2 a 10 jugadores)</option></select></div>
+          <div>
+            <label class="block text-rose-300 font-bold mb-1 uppercase">Tipo de Acceso *</label>
+            <select id="mazTipoAcceso" class="w-full tech-input p-2 text-sm bg-slate-900 border-rose-900">
+              <option value="Global">Global</option>
+              <option value="De una persona">De una persona</option>
+              <option value="De dos personas">De dos personas</option>
+              <option value="De tres personas">De tres personas</option>
+              <option value="De cuatro personas">De cuatro personas</option>
+              <option value="De cinco personas">De cinco personas</option>
+              <option value="De seis personas">De seis personas</option>
+              <option value="De siete personas">De siete personas</option>
+              <option value="De ocho personas">De ocho personas</option>
+              <option value="De nueve personas">De nueve personas</option>
+              <option value="De diez personas">De diez personas</option>
+            </select>
+          </div>
           <div><label class="block text-rose-300 font-bold mb-1 uppercase">Duración / Cronómetro (Horas, máx 168) *</label><input type="number" id="mazDuracionHoras" min="1" max="168" value="24" required class="w-full tech-input p-2 text-sm border-rose-900"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -560,7 +687,7 @@
         </div>
         <div><label class="block text-rose-300 font-bold mb-1 uppercase">Descripción de la Mazmorra *</label><textarea id="mazDesc" required rows="2" class="w-full tech-input p-2 text-sm border-rose-900"></textarea></div>
 
-        <!-- 3 Monstruos Normales con campos de usuario separados + archivo de imagen -->
+        <!-- 3 Monstruos Normales con textareas expandibles para habilidades y descripción -->
         <div class="border border-rose-900/60 p-3 bg-black/40 space-y-4">
           <h4 class="font-tech-title text-rose-400 font-bold uppercase">// FASE 1: MONSTRUOS NORMALES (3 OBLIGATORIOS)</h4>
           <div id="contenedorMonstruosNormales" class="space-y-4">
@@ -585,8 +712,8 @@
                 <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m1_sentidos" value="10" class="w-full tech-input p-1 text-xs text-center"></div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
-                <div><label class="text-[10px] text-rose-300">Habilidades</label><input type="text" id="m1_hab" class="w-full tech-input p-1 text-xs" placeholder="Garra oscura, rugido..."></div>
-                <div><label class="text-[10px] text-rose-300">Descripción (Separada)</label><textarea id="m1_desc" rows="1" class="w-full tech-input p-1 text-xs" placeholder="Descripción detallada del monstruo..."></textarea></div>
+                <div><label class="text-[10px] text-rose-300">Habilidades (Expandible)</label><textarea id="m1_hab" rows="3" class="w-full tech-input p-1 text-xs" placeholder="Garra oscura, rugido..."></textarea></div>
+                <div><label class="text-[10px] text-rose-300">Descripción (Expandible)</label><textarea id="m1_desc" rows="3" class="w-full tech-input p-1 text-xs" placeholder="Descripción detallada del monstruo..."></textarea></div>
               </div>
             </div>
 
@@ -610,8 +737,8 @@
                 <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m2_sentidos" value="12" class="w-full tech-input p-1 text-xs text-center"></div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
-                <div><label class="text-[10px] text-rose-300">Habilidades</label><input type="text" id="m2_hab" class="w-full tech-input p-1 text-xs" placeholder="Veneno, vuelo..."></div>
-                <div><label class="text-[10px] text-rose-300">Descripción (Separada)</label><textarea id="m2_desc" rows="1" class="w-full tech-input p-1 text-xs" placeholder="Descripción detallada del monstruo..."></textarea></div>
+                <div><label class="text-[10px] text-rose-300">Habilidades (Expandible)</label><textarea id="m2_hab" rows="3" class="w-full tech-input p-1 text-xs" placeholder="Veneno, vuelo..."></textarea></div>
+                <div><label class="text-[10px] text-rose-300">Descripción (Expandible)</label><textarea id="m2_desc" rows="3" class="w-full tech-input p-1 text-xs" placeholder="Descripción detallada del monstruo..."></textarea></div>
               </div>
             </div>
 
@@ -626,30 +753,20 @@
                 <div><label class="text-[10px] text-rose-300">Puntos Arma (Iniciativa)</label><input type="text" id="m3_arma" class="w-full tech-input p-1 text-xs" value="80"></div>
                 <div><label class="text-[10px] text-rose-300">Imagen (Archivo)</label><input type="file" id="m3_file" accept="image/*" onchange="procesarArchivoMonstruo(event, 3)" class="w-full text-[10px] text-slate-400 file:py-0.5 file:px-1 file:bg-rose-950 file:text-rose-300"></div>
               </div>
-              <div class="grid grid-cols-2 md:grid-cols-6 gap-2 pt-1">
-                <div><label class="text-[9px] text-slate-400">PV Pts</label><input type="text" id="m3_pv" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Fuerza Pts</label><input type="text" id="m3_fuerza" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Destreza Pts</label><input type="text" id="m3_destreza" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Constitución Pts</label><input type="text" id="m3_constitucion" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Inteligencia Pts</label><input type="text" id="m3_inteligencia" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-                <div><label class="text-[9px] text-slate-400">Sentidos Pts</label><input type="text" id="m3_sentidos" value="15" class="w-full tech-input p-1 text-xs text-center"></div>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
-                <div><label class="text-[10px] text-rose-300">Habilidades</label><input type="text" id="m3_hab" class="w-full tech-input p-1 text-xs" placeholder="Fuego, escudo..."></div>
-                <div><label class="text-[10px] text-rose-300">Descripción (Separada)</label><textarea id="m3_desc" rows="1" class="w-full tech-input p-1 text-xs" placeholder="Descripción detallada del monstruo..."></textarea></div>
-              </div>
-            </div>
+                 </div>
 
           </div>
         </div>
 
-        <!-- Boss Final (Color Rojo) con estadísticas y archivo -->
+        <!-- Boss Final con textareas expandibles -->
         <div class="border border-red-600 p-3 bg-red-950/20 space-y-3">
           <h4 class="font-tech-title text-red-500 font-bold uppercase">// FASE FINAL: BOSS DE LA MAZMORRA (COLOR ROJO)</h4>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div><label class="text-[10px] text-red-300">Nombre del Boss</label><input type="text" id="boss_nombre" required class="w-full tech-input p-1 text-xs border-red-900" value="Señor del Abismo"></div>
             <div><label class="text-[10px] text-red-300">Cantidad</label><input type="text" id="boss_cant" required class="w-full tech-input p-1 text-xs border-red-900" value="1"></div>
-            <div><label class="text-[10px] text-red-300">Nivel</label><input type="text" id="boss_nivel" required class="w-full tech-input p-1 text-xs border-red-900" value="300"></div>
+            <div><label class="text-[10px] text-red-300">Nivel</label><input type="text" id="boss_nivel" required class="w-full tech-input p-1 text-xs border-red-900" value="30"></div>
+            <div><label class="text-[10px] text-red-300">Armadura (CA)</label><input type="text" id="boss_armadura" required class="w-full tech-input p-1 text-xs border-red-900" value="500"></div>
+            <div><label class="text-[10px] text-red-300">Arma (Iniciativa)</label><input type="text" id="boss_arma" required class="w-full tech-input p-1 text-xs border-red-900" value="300"></div>
             <div><label class="text-[10px] text-red-300">Imagen (Archivo)</label><input type="file" id="boss_file" accept="image/*" onchange="procesarArchivoBoss(event)" class="w-full text-[10px] text-slate-400 file:py-0.5 file:px-1 file:bg-red-950 file:text-red-300"></div>
           </div>
           <div class="grid grid-cols-2 md:grid-cols-6 gap-2 pt-1">
@@ -661,8 +778,8 @@
             <div><label class="text-[9px] text-red-300">Sentidos Pts</label><input type="text" id="boss_sentidos" value="30" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
-            <div><label class="text-[10px] text-red-300">Habilidades</label><input type="text" id="boss_hab" class="w-full tech-input p-1 text-xs border-red-900" placeholder="Cataclismo, dominio sombrío..."></div>
-            <div><label class="text-[10px] text-red-300">Descripción (Separada)</label><textarea id="boss_desc" rows="1" class="w-full tech-input p-1 text-xs border-red-900" placeholder="Descripción detallada del Boss..."></textarea></div>
+            <div><label class="text-[10px] text-red-300">Habilidades (Expandible)</label><textarea id="boss_hab" rows="3" class="w-full tech-input p-1 text-xs border-red-900" placeholder="Cataclismo, dominio sombrío..."></textarea></div>
+            <div><label class="text-[10px] text-red-300">Descripción (Expandible)</label><textarea id="boss_desc" rows="3" class="w-full tech-input p-1 text-xs border-red-900" placeholder="Descripción detallada del Boss..."></textarea></div>
           </div>
         </div>
 
@@ -864,6 +981,193 @@
       </script>
 
       <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCKuQO4HbvOSjDtg02kuzRteawZbKs7MGQ", authDomain: "fichas-593a4.firebaseapp.com",
+      databaseURL: "https://fichas-593a4-default-rtdb.firebaseio.com", projectId: "fichas-593a4",
+      storageBucket: "fichas-593a4.firebasestorage.app", messagingSenderId: "312612537611",
+      appId: "1:123456789:web:038579e38ed98d2e6e4e0e"
+    };
+
+    const ADMIN_EMAILS = ["kinsei30284@gmail.com", "clamorventus.7.7.7@gmail.com"];
+
+    let db, auth, currentUser = null, authMode = 'login', esModoLectura = false;
+    let targetUidToEdit = null, targetEmailToEdit = null, cacheJugadores = {}, fichaActualCargada = {}, suffixFichaActiva = '';
+    let base64AvatarLista = '', base64FichaIlustracion = '';
+    let miEquipoActual = null, miFaccionActual = null, tipoInvitacionPendiente = '';
+
+    const puntosExtraAsignados = { pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0' };
+    const puntosGuardadosBloqueados = { pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0' };
+    const VALOR_BASE_ESTADISTICA = 10;
+    const config = { pv: { mult: 50, unidad: 'PV' }, fuerza: { mult: 10, unidad: 'Kg' }, destreza: { mult: 10, unidad: 'm/s' }, constitucion: { mult: 30, unidad: 'Df' }, inteligencia: { mult: 100, unidad: 'J' }, sentidos: { mult: 10, unidad: 'm' } };
+    const unidadesEscalaBigInt = [{ val: 10n**33n, symbol: 'Dc' }, { val: 10n**30n, symbol: 'No' }, { val: 10n**27n, symbol: 'Oc' }, { val: 10n**24n, symbol: 'Sp' }, { val: 10n**21n, symbol: 'Sx' }, { val: 10n**18n, symbol: 'Qi' }, { val: 10n**15n, symbol: 'Qa' }, { val: 10n**12n, symbol: 'T' }, { val: 10n**9n, symbol: 'B' }, { val: 10n**6n, symbol: 'M' }, { val: 10n**3n, symbol: 'k' }];
+
+    try { firebase.initializeApp(firebaseConfig); db = firebase.database(); auth = firebase.auth(); document.getElementById('estadoRed').textContent = '🟢 SERVIDOR ACTIVO'; document.getElementById('estadoRed').className = 'text-xs text-emerald-400 font-tech-title font-bold'; } catch(e) { }
+
+    function verificarEsAdmin(email) { return email ? ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase()) : false; }
+
+    if (auth) {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          currentUser = user; targetUidToEdit = user.uid + suffixFichaActiva; targetEmailToEdit = user.email;
+          document.getElementById('authOverlay').classList.add('hidden'); document.getElementById('userEmailDisplay').textContent = `Usuario: ${user.email}`;
+          document.getElementById('configUidDisplay').value = user.uid;
+          if (verificarEsAdmin(user.email)) {
+            document.getElementById('adminBadgeDisplay').classList.remove('hidden'); document.getElementById('btnMenuAdmin').classList.remove('hidden');
+            document.getElementById('btnNuevaMisionAdmin').classList.remove('hidden'); document.getElementById('btnAdminCorreo').classList.remove('hidden'); document.getElementById('btnAdminFaccion').classList.remove('hidden');
+            document.getElementById('btnNuevaMazmorraAdmin').classList.remove('hidden');
+          }
+          db.ref('jugadores/' + user.uid + '_2').on('value', snap => { document.getElementById('selectorPersonajes').classList.toggle('hidden', !snap.exists()); });
+          cargarFichaNube(targetUidToEdit); inicializarSistemasNuevos();
+        } else {
+          currentUser = null; document.getElementById('authOverlay').classList.remove('hidden');
+        }
+      });
+    }
+
+    function switchAuthTab(mode) { authMode = mode; const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit'); document.getElementById('authError').classList.add('hidden'); if (mode === 'login') { tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema"; } else { tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta"; } }
+    function handleAuthSubmit(e) { e.preventDefault(); const email = document.getElementById('authEmail').value.trim(), pass = document.getElementById('authPassword').value; const errBox = document.getElementById('authError'); errBox.classList.add('hidden'); if (authMode === 'login') auth.signInWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); else auth.createUserWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); }); }
+    function cerrarSesion() { if (auth) auth.signOut().then(() => location.reload()); }
+    function toggleMenu() { document.getElementById('sideDrawer').classList.toggle('open'); }
+    
+    function mostrarSeccion(s) {
+      document.getElementById('sideDrawer').classList.remove('open'); 
+      const secciones = ['seccionEditor', 'seccionJugadores', 'seccionTienda', 'seccionMisiones', 'seccionAdmin', 'seccionCorreo', 'seccionEquipos', 'seccionFacciones', 'seccionForja', 'seccionBestiario', 'seccionMazmorras', 'seccionConfiguracion'];
+      secciones.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); });
+      const act = document.getElementById('seccion' + s.charAt(0).toUpperCase() + s.slice(1));
+      if (act) act.classList.remove('hidden');
+    }
+
+    function filtrarLista(tipo) {
+      let idBuscador = 'buscadorJugadores'; let idContenedor = 'contenedorListaJugadores';
+      if(tipo === 'tienda') { idBuscador = 'buscadorTienda'; idContenedor = 'contenedorTienda'; }
+      else if(tipo === 'bestiario') { idBuscador = 'buscadorBestiario'; idContenedor = 'contenedorListaBestiario'; }
+      const texto = document.getElementById(idBuscador).value.toLowerCase();
+      const contenedor = document.getElementById(idContenedor);
+      if(!contenedor) return;
+      Array.from(contenedor.children).forEach(el => { el.style.display = el.textContent.toLowerCase().includes(texto) ? '' : 'none'; });
+    }
+
+    function abrirConfiguracion() { mostrarSeccion('configuracion'); }
+
+    function cambiarPasswordCuenta(e) {
+      e.preventDefault();
+      const actual = document.getElementById('passActual').value;
+      const nueva = document.getElementById('passNueva').value;
+      const confirmacion = document.getElementById('passConfirmar').value;
+      const errorBox = document.getElementById('configError');
+      errorBox.classList.add('hidden');
+
+      if (nueva !== confirmacion) { errorBox.textContent = "❌ Las nuevas contraseñas no coinciden."; errorBox.classList.remove('hidden'); return; }
+      if (!currentUser || !currentUser.email) return;
+
+      const credencial = firebase.auth.EmailAuthProvider.credential(currentUser.email, actual);
+      currentUser.reauthenticateWithCredential(credencial).then(() => {
+        currentUser.updatePassword(nueva).then(() => {
+          alert("✅ Contraseña actualizada correctamente.");
+          document.getElementById('formConfiguracion').reset();
+          mostrarSeccion('editor');
+        }).catch(err => { errorBox.textContent = "❌ Error al actualizar: " + err.message; errorBox.classList.remove('hidden'); });
+      }).catch(() => { errorBox.textContent = "❌ La contraseña actual es incorrecta."; errorBox.classList.remove('hidden'); });
+    }
+
+    function parseTextoABigInt(strInput) {
+      if (!strInput) return 0n; let str = strInput.toString().trim(); if (str === '' || str.toLowerCase() === 'inf' || str === '∞') return str === '' ? 0n : Infinity;
+      const match = str.match(/^([\d\.]+)\s*([a-zA-Z]+)?$/); if (!match) { try { return BigInt(str.replace(/[^0-9]/g, '')); } catch(e) { return 0n; } }
+      let numPart = parseFloat(match[1]), sufijo = match[2] ? match[2] : ''; if (isNaN(numPart)) return 0n; if (!sufijo) return BigInt(Math.floor(numPart));
+      let multiplicador = 1n; for (let i=0; i<unidadesEscalaBigInt.length; i++) { if (unidadesEscalaBigInt[i].symbol.toUpperCase() === sufijo.toUpperCase() || unidadesEscalaBigInt[i].symbol === (sufijo.charAt(0).toUpperCase() + sufijo.slice(1).toLowerCase())) { multiplicador = unidadesEscalaBigInt[i].val; break; } }
+      if (numPart % 1 !== 0) { let e = Math.floor(numPart), d = numPart - e; return BigInt(e) * multiplicador + BigInt(Math.floor(d * Number(multiplicador))); }
+      return BigInt(Math.floor(numPart)) * multiplicador;
+    }
+    function formatearBigInt(bigNum) {
+      if (bigNum === Infinity) return '∞'; if (typeof bigNum === 'bigint' && bigNum < 1000n) return bigNum.toString();
+      for (let i=0; i<unidadesEscalaBigInt.length; i++) { const f = unidadesEscalaBigInt[i].val; if (bigNum >= f) { const e = bigNum / f, r = (bigNum % f) / (f / 10n); return r === 0n ? `${e}${unidadesEscalaBigInt[i].symbol}` : `${e}.${r}${unidadesEscalaBigInt[i].symbol}`; } } return bigNum.toString();
+    }
+    function formatearConSeparadores(bigNum) { return bigNum === Infinity ? 'Infinito (∞)' : bigNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+    function toggleExpand(attr) { const el = document.getElementById(`${attr}_expand`); if(el) el.classList.toggle('hidden'); }
+    function obtenerMontoActual() { return parseTextoABigInt(document.getElementById('montoPuntos').value); }
+    function obtenerNivelBigInt() { return parseTextoABigInt(document.getElementById('nivel').value); }
+    function obtenerPuntosOtorgadosPorNivel() { const n = obtenerNivelBigInt(); return n === Infinity ? Infinity : n * 10n; }
+    function obtenerPuntosUsadosTotalesBigInt() { return Object.values(puntosExtraAsignados).reduce((a, b) => a + BigInt(b), 0n); }
+    
+    function modificarPunto(attr, direccion) {
+      if (esModoLectura) return; const m = obtenerMontoActual(); if (m <= 0n && m !== Infinity) return;
+      const p = obtenerPuntosOtorgadosPorNivel(), u = obtenerPuntosUsadosTotalesBigInt(), d = p === Infinity ? Infinity : (p > u ? p - u : 0n);
+      if (direccion > 0) { const add = m < d ? m : d; if (add <= 0n) return; puntosExtraAsignados[attr] = (BigInt(puntosExtraAsignados[attr]) + add).toString(); } 
+      else { const lim = BigInt(puntosGuardadosBloqueados[attr]), act = BigInt(puntosExtraAsignados[attr]), maxRes = act > lim ? act - lim : 0n, res = m < maxRes ? m : maxRes; if (res <= 0n) return; puntosExtraAsignados[attr] = (act - res).toString(); }
+      actualizarSistemas();
+    }
+    
+    function actualizarSistemas() {
+      const niv = obtenerNivelBigInt(); document.getElementById('nivelFormateado').textContent = `Nivel: ${formatearBigInt(niv)}`;
+      const den = parseTextoABigInt(document.getElementById('deniques').value); document.getElementById('deniquesFormateado').textContent = `${formatearBigInt(den)} Deniques`;
+      const po = obtenerPuntosOtorgadosPorNivel(), u = obtenerPuntosUsadosTotalesBigInt(), d = po === Infinity ? Infinity : (po > u ? po - u : 0n), pt = d === Infinity ? Infinity : (6n * BigInt(VALOR_BASE_ESTADISTICA)) + u + d;
+      const pa = parseTextoABigInt(document.getElementById('iniciativa').value), pdef = parseTextoABigInt(document.getElementById('ca').value);
+      document.getElementById('puntosDisponiblesText').textContent = formatearBigInt(d); document.getElementById('puntosUsadosText').textContent = formatearBigInt(u); document.getElementById('puntosTotalesText').textContent = formatearBigInt(pt);
+      for (const attr in config) {
+        const e = BigInt(puntosExtraAsignados[attr] || '0'), tp = BigInt(VALOR_BASE_ESTADISTICA) + e; document.getElementById(`${attr}_pts`).textContent = formatearBigInt(tp);
+        let vf = tp * BigInt(config[attr].mult); if(attr==='fuerza' || attr==='destreza') vf += pa === Infinity ? Infinity : pa * 10n; if(attr==='constitucion') vf += pdef === Infinity ? Infinity : pdef * 30n;
+        const va = formatearBigInt(vf); document.getElementById(`${attr}_val`).textContent = `${va} ${config[attr].unidad}`;
+        const ex = document.getElementById(`${attr}_expand`); if(ex) ex.textContent = `${va} = ${formatearConSeparadores(vf)} ${config[attr].unidad}`;
+      }
+      const pv = (BigInt(VALOR_BASE_ESTADISTICA) + BigInt(puntosExtraAsignados.pv || '0')) * BigInt(config.pv.mult); document.getElementById('pvActualesDisplay').textContent = `${formatearBigInt(pv)} PV`;
+    }
+                                                                    </script>
+                         <script>
+    function procesarArchivoImagen(event, tipo) {
+      const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
+      lector.onload = function(e) { if (tipo === 'avatar') { base64AvatarLista = e.target.result; document.getElementById('avatarListaPreview').src = e.target.result; } else { base64FichaIlustracion = e.target.result; document.getElementById('fichaIlustracionPreview').src = e.target.result; } };
+      lector.readAsDataURL(archivo);
+    }
+    
+    function solicitarGuardado() { if (esModoLectura) return; document.getElementById('modalConfirmarGuardado').classList.remove('hidden'); }
+    function cancelarGuardado() { document.getElementById('modalConfirmarGuardado').classList.add('hidden'); }
+    function ejecutarGuardadoConfirmado() {
+      cancelarGuardado(); if (!currentUser) return;
+      const uidToSave = targetUidToEdit || currentUser.uid, emailToSave = targetEmailToEdit || currentUser.email;
+      Object.assign(puntosGuardadosBloqueados, puntosExtraAsignados);
+      const ficha = {
+        uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido', clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, patrocinador: document.getElementById('patrocinador').value, avatarListaUrl: base64AvatarLista, fichaIlustracionUrl: base64FichaIlustracion, nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value, habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value, isSecondChar: fichaActualCargada.isSecondChar || false, mainCharName: fichaActualCargada.mainCharName || '', ownerUid: fichaActualCargada.ownerUid || currentUser.uid, timestamp: Date.now()
+      };
+      db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Datos guardados globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error al guardar: ' + e.message));
+    }
+
+    function cargarFichaNube(uid) { db.ref('jugadores/' + uid).once('value').then(s => { cargarDatosEnInterfaz(s.exists() ? s.val() : {}); }); }
+    function cargarDatosEnInterfaz(f) {
+      fichaActualCargada = f || {}; 
+      if(!f || Object.keys(f).length === 0) {
+          document.querySelectorAll('#seccionEditor input[type="text"], #seccionEditor textarea, #seccionEditor input[type="number"]').forEach(el => el.value = '');
+          puntosExtraAsignados.pv='0';puntosExtraAsignados.fuerza='0';puntosExtraAsignados.destreza='0';puntosExtraAsignados.constitucion='0';puntosExtraAsignados.inteligencia='0';puntosExtraAsignados.sentidos='0';
+          document.getElementById('nivel').value = '1'; document.getElementById('montoPuntos').value = '1'; document.getElementById('deniques').value = '0'; document.getElementById('iniciativa').value = '0'; document.getElementById('ca').value = '0';
+          base64AvatarLista = ''; base64FichaIlustracion = ''; document.getElementById('avatarListaPreview').src = "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar"; document.getElementById('fichaIlustracionPreview').src = "https://via.placeholder.com/600x300/05080e/00f0ff?text=Ilustracion+Amplia";
+      } else {
+        for (const k in f) {
+          if (k === 'puntosExtraAsignados') Object.assign(puntosExtraAsignados, f[k]);
+          else if (k === 'puntosGuardadosBloqueados') Object.assign(puntosGuardadosBloqueados, f[k]);
+          else if (document.getElementById(k)) { const el = document.getElementById(k); if (k === 'patrocinador' && f[k] && !Array.from(el.options).some(o => o.value === f[k])) el.add(new Option(f[k], f[k])); el.value = f[k]; }
+        }
+        base64AvatarLista = f.avatarListaUrl || ''; base64FichaIlustracion = f.fichaIlustracionUrl || '';
+        document.getElementById('avatarListaPreview').src = base64AvatarLista !== '' ? base64AvatarLista : "https://via.placeholder.com/150/05080e/00f0ff?text=Avatar";
+        document.getElementById('fichaIlustracionPreview').src = base64FichaIlustracion !== '' ? base64FichaIlustracion : "https://via.placeholder.com/600x300/05080e/00f0ff?text=Ilustracion+Amplia";
+      }
+      actualizarSistemas(); aplicarPermisos();
+    }
+
+    function aplicarPermisos() {
+      const esAdmin = verificarEsAdmin(currentUser?.email); const inpDeniques = document.getElementById('deniques'), selPat = document.getElementById('patrocinador'), inpNotas = document.getElementById('notas');
+      if (!esAdmin) { if (inpDeniques) inpDeniques.disabled = true; if (inpNotas) inpNotas.disabled = true; if (selPat) selPat.disabled = selPat.value !== ''; } 
+      else { if (!esModoLectura) { if(inpDeniques) inpDeniques.disabled = false; if(selPat) selPat.disabled = false; if(inpNotas) inpNotas.disabled = false; } else { if(inpNotas) inpNotas.disabled = true; } }
+    }
+    function bloquearDesbloquearInputs(b) { document.querySelectorAll('#seccionEditor input, #seccionEditor textarea, #seccionEditor select').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); }
+    function verPersonajeObjeto(pj) {
+      if (verificarEsAdmin(currentUser?.email)) { esModoLectura = false; targetUidToEdit = pj.uid; targetEmailToEdit = pj.email; cargarDatosEnInterfaz(pj); bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.add('hidden'); document.getElementById('adminSaveBtn').classList.remove('hidden'); } 
+      else { esModoLectura = true; targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; cargarDatosEnInterfaz(pj); bloquearDesbloquearInputs(true); document.getElementById('readOnlyBanner').classList.remove('hidden'); document.getElementById('saveBtn').classList.add('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); }
+      mostrarSeccion('editor');
+    }
+    function volverAMiFicha() { esModoLectura = false; if (currentUser) { targetUidToEdit = currentUser.uid + suffixFichaActiva; targetEmailToEdit = currentUser.email; } bloquearDesbloquearInputs(false); document.getElementById('readOnlyBanner').classList.add('hidden'); document.getElementById('saveBtn').classList.remove('hidden'); document.getElementById('adminSaveBtn').classList.add('hidden'); if (currentUser) cargarFichaNube(targetUidToEdit); }
+    function cambiarFichaPropia(suffix) { if(esModoLectura) return; suffixFichaActiva = suffix; targetUidToEdit = currentUser.uid + suffix; cargarFichaNube(targetUidToEdit); mostrarSeccion('editor'); }
+                         </script>
+
+      <script>
     function inicializarSistemasNuevos() {
       db.ref('jugadores').on('value', snap => {
         cacheJugadores = snap.val() || {}; const cont = document.getElementById('contenedorListaJugadores'), selectInv = document.getElementById('selectUsuarioInvitar'), selectMail = document.getElementById('selectDestinatarioCorreo'), selectAdminFicha = document.getElementById('adminSelectJugadorFicha'), selectMisionDest = document.getElementById('misionDestinatario');
@@ -906,7 +1210,6 @@
         } else { document.getElementById('panelSinEquipo').classList.remove('hidden'); document.getElementById('panelConEquipo').classList.add('hidden'); }
       });
 
-      // FACCIONES (Corregido y sincronizado)
       db.ref('facciones').on('value', snap => {
         const facciones = snap.val() || {}; miFaccionActual = null; let idMiFac = null; const esAdmin = verificarEsAdmin(currentUser?.email);
         for (const fId in facciones) { if (facciones[fId].miembros && facciones[fId].miembros[currentUser.uid]) { miFaccionActual = facciones[fId]; idMiFac = fId; break; } }
@@ -955,75 +1258,66 @@
         if (!hayGlob) contGlob.innerHTML = '<p class="text-xs text-slate-500">No hay misiones globales.</p>';
         if (!hayPers) contPers.innerHTML = '<p class="text-xs text-slate-500">No hay misiones personales asignadas.</p>';
       });
+    }
+      </script>
 
-      db.ref('mazmorras').on('value', snap => {
-        const data = snap.val() || {}; const cont = document.getElementById('contenedorMazmorras'); if(!cont) return;
-        const esAdmin = verificarEsAdmin(currentUser?.email);
-        cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-rose-400 col-span-full text-center">No hay portales de mazmorras activos.</p>' : Object.keys(data).map(key => {
-          const m = data[key];
-          const tiempoRestante = (m.tiempoFin - Date.now());
-          const expirada = tiempoRestante <= 0;
-          const horasRestantes = expirada ? "EXPIRADA" : Math.floor(tiempoRestante / (1000 * 60 * 60)) + "h " + Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60)) + "m";
-          
-          let btnAccion = '';
-          if (m.tipoAcceso === 'global') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">⚔️ Entrar a Mazmorra</button>`;
-          else if (m.tipoAcceso === 'individual') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👤 Limpiar en Solitario</button>`;
-          else if (m.tipoAcceso === 'equipo') btnAccion = `<button onclick="convocarEquipoMazmorra('${key}')" class="bg-blue-600 hover:bg-blue-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👥 Formar Equipo (2-10)</button>`;
+      <script>
+    // Continuación de inicializarSistemasNuevos para Mazmorras y Bestiario
+    document.addEventListener("DOMContentLoaded", () => {
+      // Listener para Mazmorras
+      if(db) {
+        db.ref('mazmorras').on('value', snap => {
+          const data = snap.val() || {}; const cont = document.getElementById('contenedorMazmorras'); if(!cont) return;
+          const esAdmin = verificarEsAdmin(currentUser?.email);
+          cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-rose-400 col-span-full text-center">No hay portales de mazmorras activos.</p>' : Object.keys(data).map(key => {
+            const m = data[key];
+            const tiempoRestante = (m.tiempoFin - Date.now());
+            const expirada = tiempoRestante <= 0;
+            const horasRestantes = expirada ? "EXPIRADA" : Math.floor(tiempoRestante / (1000 * 60 * 60)) + "h " + Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60)) + "m";
+            
+            let btnAccion = '';
+            if (m.tipoAcceso === 'Global') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">⚔️ Entrar a Mazmorra</button>`;
+            else if (m.tipoAcceso === 'De una persona') btnAccion = `<button onclick="entrarMazmorra('${key}', false)" class="bg-rose-600 hover:bg-rose-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👤 Limpiar en Solitario</button>`;
+            else btnAccion = `<button onclick="convocarEquipoMazmorra('${key}')" class="bg-blue-600 hover:bg-blue-500 text-black py-2 px-4 text-xs font-bold uppercase w-full">👥 Conocar para (${m.tipoAcceso})</button>`;
 
-          return `<div class="bg-black/90 border border-rose-900 p-4 shadow-xl flex flex-col justify-between relative">
-            ${esAdmin ? `<button onclick="borrarMazmorraAdmin('${key}')" class="absolute top-2 right-2 bg-red-950 text-red-400 text-xs px-2 py-0.5 border border-red-700">🗑️</button>` : ''}
-            <div>
-              <div class="h-36 overflow-hidden mb-3 border border-rose-900 relative">
-                <img src="${m.imagen || 'https://via.placeholder.com/400x200/3f0000/ff0000?text=Mazmorra'}" class="w-full h-full object-cover">
-                <span class="absolute bottom-2 left-2 bg-black/80 text-rose-300 text-[10px] px-2 py-0.5 font-bold uppercase border border-rose-700">Nivel Req: ${m.nivelReq}</span>
-                <span class="absolute bottom-2 right-2 bg-rose-950 text-rose-200 text-[10px] px-2 py-0.5 font-bold uppercase border border-rose-500">⏱️ ${horasRestantes}</span>
+            let botonRupturaAdmin = esAdmin ? `<button onclick="entrarMazmorra('${key}', true)" class="bg-red-600 hover:bg-red-500 text-white py-1 px-3 text-[10px] font-bold uppercase w-full border border-red-400">⚡ [ADMIN] Provocar Ruptura</button>` : '';
+
+            return `<div class="bg-black/90 border border-rose-900 p-4 shadow-xl flex flex-col justify-between relative">
+              ${esAdmin ? `<button onclick="borrarMazmorraAdmin('${key}')" class="absolute top-2 right-2 bg-red-950 text-red-400 text-xs px-2 py-0.5 border border-red-700">🗑️</button>` : ''}
+              <div>
+                <div class="h-36 overflow-hidden mb-3 border border-rose-900 relative">
+                  <img src="${m.imagen || 'https://via.placeholder.com/400x200/3f0000/ff0000?text=Mazmorra'}" class="w-full h-full object-cover">
+                  <span class="absolute bottom-2 left-2 bg-black/80 text-rose-300 text-[10px] px-2 py-0.5 font-bold uppercase border border-rose-700">Nivel Req: ${m.nivelReq}</span>
+                  <span class="absolute bottom-2 right-2 bg-rose-950 text-rose-200 text-[10px] px-2 py-0.5 font-bold uppercase border border-rose-500">⏱️ ${horasRestantes}</span>
+                </div>
+                <h3 class="text-lg font-tech-title text-rose-400 font-bold mb-1">${m.nombre}</h3>
+                <p class="text-xs text-slate-300 mb-3">${m.descripcion}</p>
+                <div class="bg-rose-950/20 border border-rose-900/60 p-2 text-[11px] text-rose-200 mb-3">Acceso: <strong class="text-cyan-300">${m.tipoAcceso}</strong><br>Recompensa: <strong>${m.recompensa}</strong></div>
               </div>
-              <h3 class="text-lg font-tech-title text-rose-400 font-bold mb-1">${m.nombre}</h3>
-              <p class="text-xs text-slate-300 mb-3">${m.descripcion}</p>
-              <div class="bg-rose-950/20 border border-rose-900/60 p-2 text-[11px] text-rose-200 mb-3">Recompensa: <strong>${m.recompensa}</strong></div>
-            </div>
-            <div class="space-y-2">
-              <button onclick="verDetallesMazmorra('${encodeURIComponent(JSON.stringify(m))}')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 py-1.5 px-3 text-xs uppercase w-full font-bold">🔍 Inspeccionar Fases y Monstruos</button>
-              ${!expirada ? btnAccion : '<p class="text-center text-xs text-red-500 font-bold">PORTAL CERRADO</p>'}
-            </div>
-          </div>`;
-        }).join('');
-      });
-
-      const esAdmin = verificarEsAdmin(currentUser?.email);
-      if (esAdmin) {
-        document.getElementById('panelAdminForja').classList.remove('hidden');
-        document.getElementById('panelAdminBestiario').classList.remove('hidden');
-        
-        db.ref('forja_pendiente').on('value', snap => {
-          const data = snap.val() || {}; const cont = document.getElementById('contenedorForjaPendiente');
-          cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-orange-400">Sin creaciones pendientes.</p>' : Object.keys(data).map(k => {
-            const i = data[k]; return `<div class="bg-black border border-orange-700 p-3 text-xs"><h4 class="text-orange-300 font-bold">${i.nombre} (${i.tipo})</h4><p class="text-slate-400 mb-2">Por: ${i.autorNombre} | Precio: ${i.precio}</p><div class="flex gap-2"><button onclick="aprobarForja('${k}')" class="bg-emerald-700 text-white px-2 py-1 w-full">Aprobar Directo a Tienda</button><button onclick="db.ref('forja_pendiente/${k}').remove()" class="bg-red-800 text-white px-2 py-1 w-full">Rechazar</button></div></div>`;
+              <div class="space-y-2">
+                <button onclick="verDetallesMazmorra('${encodeURIComponent(JSON.stringify(m))}')" class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 py-1.5 px-3 text-xs uppercase w-full font-bold">🔍 Inspeccionar Fases y Monstruos</button>
+                ${!expirada ? btnAccion : '<p class="text-center text-xs text-red-500 font-bold">PORTAL CERRADO</p>'}
+                ${botonRupturaAdmin}
+              </div>
+            </div>`;
           }).join('');
         });
 
-        db.ref('bestiario_pendiente').on('value', snap => {
-          const data = snap.val() || {}; const cont = document.getElementById('contenedorBestiarioPendiente');
-          cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-red-400">Sin avistamientos pendientes.</p>' : Object.keys(data).map(k => {
-            const i = data[k]; return `<div class="bg-black border border-red-700 p-3 text-xs"><h4 class="text-red-300 font-bold">${i.nombre} [Rango: ${i.rango}]</h4><p class="text-slate-400 mb-2">Por: ${i.autorNombre}</p><div class="flex gap-2"><button onclick="aprobarBestiario('${k}')" class="bg-emerald-700 text-white px-2 py-1 w-full">Oficializar</button><button onclick="db.ref('bestiario_pendiente/${k}').remove()" class="bg-red-800 text-white px-2 py-1 w-full">Rechazar</button></div></div>`;
+        // Bestiario Listener
+        db.ref('bestiario').on('value', snap => {
+          const data = snap.val() || {}; const cont = document.getElementById('contenedorListaBestiario'); if(!cont) return;
+          cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-red-500">El bestiario está vacío.</p>' : Object.keys(data).map(key => {
+            const m = data[key]; const mStr = encodeURIComponent(JSON.stringify(m));
+            const img = m.imagen || 'https://via.placeholder.com/200x200/3f0000/ff0000?text=X';
+            return `<div class="bg-black/80 border border-red-900/60 hover:border-red-500 cursor-pointer group shadow-lg transition" onclick="verMonstruo('${mStr}')">
+                      <div class="h-40 overflow-hidden relative"><img src="${img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-70 group-hover:opacity-100"><div class="absolute top-2 left-2 bg-black/80 border border-red-700 text-[10px] text-white px-2 py-0.5 font-bold uppercase">Rango ${m.rango}</div></div>
+                      <div class="p-3 border-t border-red-900"><h3 class="font-tech-title text-red-400 font-bold truncate">${m.nombre}</h3><p class="text-xs text-slate-400 font-mono mt-1">Niv: ${m.nivel || '?'}</p></div>
+                    </div>`;
           }).join('');
         });
       }
+    });
 
-      db.ref('bestiario').on('value', snap => {
-        const data = snap.val() || {}; const cont = document.getElementById('contenedorListaBestiario'); if(!cont) return;
-        cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-red-500">El bestiario está vacío.</p>' : Object.keys(data).map(key => {
-          const m = data[key]; const mStr = encodeURIComponent(JSON.stringify(m));
-          const img = m.imagen || 'https://via.placeholder.com/200x200/3f0000/ff0000?text=X';
-          return `<div class="bg-black/80 border border-red-900/60 hover:border-red-500 cursor-pointer group shadow-lg transition" onclick="verMonstruo('${mStr}')">
-                    <div class="h-40 overflow-hidden relative"><img src="${img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 opacity-70 group-hover:opacity-100"><div class="absolute top-2 left-2 bg-black/80 border border-red-700 text-[10px] text-white px-2 py-0.5 font-bold uppercase">Rango ${m.rango}</div></div>
-                    <div class="p-3 border-t border-red-900"><h3 class="font-tech-title text-red-400 font-bold truncate">${m.nombre}</h3><p class="text-xs text-slate-400 font-mono mt-1">Niv: ${m.nivel || '?'}</p></div>
-                  </div>`;
-        }).join('');
-      });
-    }
-
-    // Procesadores de archivos para mazmorras (Monstruos y Boss)
     let base64MazmorraImagen = '', base64Monstruos = { 1: '', 2: '', 3: '' }, base64Boss = '';
     function procesarArchivoMazmorra(event) { const f = event.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = e => base64MazmorraImagen = e.target.result; r.readAsDataURL(f); }
     function procesarArchivoMonstruo(event, idx) { const f = event.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = e => base64Monstruos[idx] = e.target.result; r.readAsDataURL(f); }
@@ -1106,8 +1400,8 @@
           ${imgTag}
           <div class="flex-1">
             <div class="flex justify-between font-bold text-rose-300"><span>${idx+1}. ${mon.nombre} (Cant: ${mon.cantidad})</span><span>Niv: ${mon.nivel}</span></div>
-            <p class="text-[11px] text-slate-300">Desc: ${mon.descripcion}</p>
-            <p class="text-[10px] text-slate-400">Hab: ${mon.habilidades} | CA: ${mon.armadura} | Arma: ${mon.arma}</p>
+            <p class="text-[11px] text-slate-300 whitespace-pre-line">Desc: ${mon.descripcion}</p>
+            <p class="text-[10px] text-slate-400 whitespace-pre-line">Hab: ${mon.habilidades} | CA: ${mon.armadura} | Arma: ${mon.arma}</p>
             <p class="text-[10px] text-emerald-400 font-mono">Pts [PV:${mon.pv} | Fue:${mon.fuerza} | Des:${mon.destreza} | Con:${mon.constitucion} | Int:${mon.inteligencia} | St:${mon.sentidos}]</p>
           </div>
         </div>`;
@@ -1119,8 +1413,8 @@
           ${bossImg}
           <div class="flex-1">
             <div class="flex justify-between font-bold text-red-400"><span>👑 ${m.boss.nombre} (Cant: ${m.boss.cantidad})</span><span>Niv: ${m.boss.nivel}</span></div>
-            <p class="text-[11px] text-red-200">Desc: ${m.boss.descripcion}</p>
-            <p class="text-[10px] text-slate-300">Hab: ${m.boss.habilidades} | CA: ${m.boss.armadura} | Arma: ${m.boss.arma}</p>
+            <p class="text-[11px] text-red-200 whitespace-pre-line">Desc: ${m.boss.descripcion}</p>
+            <p class="text-[10px] text-slate-300 whitespace-pre-line">Hab: ${m.boss.habilidades} | CA: ${m.boss.armadura} | Arma: ${m.boss.arma}</p>
             <p class="text-[10px] text-amber-400 font-mono">Pts [PV:${m.boss.pv} | Fue:${m.boss.fuerza} | Des:${m.boss.destreza} | Con:${m.boss.constitucion} | Int:${m.boss.inteligencia} | St:${m.boss.sentidos}]</p>
           </div>
         </div>
@@ -1130,31 +1424,30 @@
     }
 
     function entrarMazmorra(key, colapsoActivo) {
-      const textoColapso = colapsoActivo ? "⚠️ ¡COLAPSO DE MAZMORRA! Los monstruos tienen sus estadísticas multiplicadas x10." : "⚔️ Entrando a la mazmorra con éxito.";
-      alert(textoColapso + "\n¡Has derrotado a los monstruos y al Boss obteniendo la recompensa!");
+      const textoColapso = colapsoActivo ? "⚠️ ¡RUPTURA / COLAPSO DE MAZMORRA ACTIVADA! Los monstruos tienen sus atributos multiplicados x10." : "⚔️ Entrando a la mazmorra con éxito.";
+      alert(textoColapso + "\n¡Has completado la incursión y obtenido la recompensa!");
     }
 
     function convocarEquipoMazmorra(mazId) {
       const liderEquipo = miEquipoActual;
-      if (!liderEquipo) return alert("❌ Debes pertenecer a un equipo (Squad) para entrar en modo equipo a una mazmorra.");
+      if (!liderEquipo) return alert("❌ Debes pertenecer a un equipo (Squad) para unirte a esta mazmorra.");
       const uids = Object.keys(liderEquipo.miembros).filter(u => u !== currentUser.uid);
-      if (uids.length < 1) return alert("❌ Tu equipo necesita al menos otro miembro para cumplir el mínimo de 2 jugadores.");
+      if (uids.length < 1) return alert("❌ Tu equipo necesita más miembros para esta incursión.");
       
       uids.forEach(u => {
         db.ref('mensajes').push({
-          to: u, from: cacheJugadores[currentUser.uid]?.nombre || 'Líder de Squad',
+          to: u, from: cacheJugadores[currentUser.uid]?.nombre || 'Líder',
           type: 'invite_mazmorra', refId: mazId,
-          content: `Te invita a participar en la incursión a la mazmorra del equipo.`
+          content: `Te convoca para entrar a la mazmorra grupal.`
         });
       });
-      alert("📨 Solicitudes enviadas a los miembros del equipo a través del buzón de correo.");
+      alert("📨 Solicitudes enviadas a los miembros del equipo.");
     }
 
     function crearEquipo() { const nom = prompt("Nombre del equipo:"); if (nom) { db.ref('equipos').push({ nombre: nom.trim(), lider: currentUser.uid, miembros: { [currentUser.uid]: true } }).then(() => alert("✅ Equipo creado.")); } }
     function salirOAbandonarEquipo() { const eqId = document.getElementById('panelConEquipo').dataset.id; if (miEquipoActual.lider === currentUser.uid) { if(confirm("¿Disolver equipo?")) db.ref(`equipos/${eqId}`).remove(); } else { db.ref(`equipos/${eqId}/miembros/${currentUser.uid}`).remove(); } }
     function eliminarEquipoAdmin(id) { if(confirm("🗑️ ¿Eliminar este equipo por completo?")) db.ref(`equipos/${id}`).remove(); }
     
-    // FACCIONES CORREGIDAS Y SINCRONIZADAS
     function crearFaccionUsuario() {
       const nom = prompt("⚔️ Nombre de tu nueva Facción o Reino:");
       if(!nom || !nom.trim()) return;
@@ -1189,7 +1482,7 @@
     function aceptarInvitacion(idMsg, refId, tipo, rango) { 
       if (tipo === 'invite_mazmorra') {
         db.ref(`mensajes/${idMsg}`).remove();
-        alert("✅ Te has unido a la mazmorra del equipo. ¡Colapso de mazmorra evitado o preparado!");
+        alert("✅ Te has unido a la mazmorra.");
         entrarMazmorra(refId, Math.random() < 0.3);
         return;
       }
@@ -1214,49 +1507,6 @@
       lector.onload = function(e) { base64ForjaImagen = e.target.result; document.getElementById('forjaImgPreview').src = e.target.result; };
       lector.readAsDataURL(archivo);
     }
-    function abrirModalProponerForja() { base64ForjaImagen = ''; document.getElementById('formForja').reset(); document.getElementById('forjaImgPreview').src = 'https://via.placeholder.com/150/05080e/00f0ff?text=Previa'; document.getElementById('modalProponerForja').classList.remove('hidden'); }
-    
-    function guardarForjaPendiente(e) {
-      e.preventDefault();
-      const esAdmin = verificarEsAdmin(currentUser?.email);
-      const precioEstablecido = document.getElementById('forjaPrecio').value.trim() || '1000';
-      
-      const obj = {
-        autorUid: currentUser.uid, autorNombre: cacheJugadores[currentUser.uid]?.nombre || currentUser.email,
-        nombre: document.getElementById('forjaNombre').value.trim(), tipo: document.getElementById('forjaTipo').value,
-        nivelReq: document.getElementById('forjaNivelReq').value.trim(), clase: document.getElementById('forjaClase').value.trim(),
-        puntos: document.getElementById('forjaPuntos').value.trim(), imagen: base64ForjaImagen || document.getElementById('forjaImagenUrl').value.trim(),
-        habilidad: document.getElementById('forjaHabilidades').value.trim(), descripcion: document.getElementById('forjaDescripcion').value.trim(),
-        precio: precioEstablecido, timestamp: Date.now()
-      };
-
-      if (esAdmin) {
-        db.ref('tienda').push(obj).then(() => { document.getElementById('modalProponerForja').classList.add('hidden'); alert("⚡ Objeto creado y publicado directamente en la Tienda."); });
-      } else {
-        obj.precio = '0';
-        db.ref('forja_pendiente').push(obj).then(() => { document.getElementById('modalProponerForja').classList.add('hidden'); alert("✅ Propuesta enviada a la Forja para revisión."); });
-      }
-    }
-
-    function aprobarForja(key) {
-      db.ref('forja_pendiente/' + key).once('value').then(snap => {
-        const data = snap.val(); if (!data) return;
-        const precioAsignado = prompt("💰 Establece el precio para este objeto en la Tienda:", "1000") || "1000";
-        data.precio = precioAsignado; data.vendedorUid = data.autorUid;
-        
-        db.ref('tienda').push(data).then(() => {
-          db.ref('forja_pendiente/' + key).remove();
-          db.ref('mensajes').push({ to: data.autorUid, from: 'SISTEMA FORJA', type: 'system', content: `Tu creación [${data.nombre}] fue aprobada y añadida al Mercado Central con valor de ${precioAsignado} Deniques.` });
-        });
-      });
-    }
-
-    let base64BestiarioImagen = '';
-    function procesarArchivoBestiario(event) {
-      const archivo = event.target.files[0]; if (!archivo) return; const lector = new FileReader();
-      lector.onload = function(e) { base64BestiarioImagen = e.target.result; document.getElementById('bestiarioImgPreview').src = e.target.result; };
-      lector.readAsDataURL(archivo);
-    }
     function abrirModalProponerMonstruo() { base64BestiarioImagen = ''; document.getElementById('formBestiario').reset(); document.getElementById('bestiarioImgPreview').src = 'https://via.placeholder.com/150/3f0000/ff0000?text=Previa'; document.getElementById('modalProponerBestiario').classList.remove('hidden'); }
     
     function guardarBestiarioPendiente(e) {
@@ -1265,6 +1515,8 @@
         autorUid: currentUser.uid, autorNombre: cacheJugadores[currentUser.uid]?.nombre || currentUser.email,
         nombre: document.getElementById('bestiarioNombre').value.trim(), rango: document.getElementById('bestiarioRango').value.trim(),
         nivel: document.getElementById('bestiarioNivel').value.trim(), locacion: document.getElementById('bestiarioLocacion').value.trim(),
+        pv: document.getElementById('bestiario_pv').value, fuerza: document.getElementById('bestiario_fuerza').value, destreza: document.getElementById('bestiario_destreza').value,
+        constitucion: document.getElementById('bestiario_constitucion').value, inteligencia: document.getElementById('bestiario_inteligencia').value, sentidos: document.getElementById('bestiario_sentidos').value,
         imagen: base64BestiarioImagen || document.getElementById('bestiarioImagenUrl').value.trim(), descripcion: document.getElementById('bestiarioDesc').value.trim(),
         habilidades: document.getElementById('bestiarioHabilidades').value.trim(), debilidades: document.getElementById('bestiarioDebilidades').value.trim(),
         timestamp: Date.now()
@@ -1291,6 +1543,16 @@
       document.getElementById('verMonstruoHab').textContent = m.habilidades;
       document.getElementById('verMonstruoDeb').textContent = m.debilidades || 'Ninguna registrada';
       document.getElementById('verMonstruoAutor').textContent = m.autorNombre;
+      
+      document.getElementById('verMonstruoStats').innerHTML = `
+        <div>PV Pts: <strong>${m.pv || 10}</strong></div>
+        <div>Fuerza: <strong>${m.fuerza || 10}</strong></div>
+        <div>Destreza: <strong>${m.destreza || 10}</strong></div>
+        <div>Constitución: <strong>${m.constitucion || 10}</strong></div>
+        <div>Inteligencia: <strong>${m.inteligencia || 10}</strong></div>
+        <div>Sentidos: <strong>${m.sentidos || 10}</strong></div>
+      `;
+
       document.getElementById('modalVerMonstruo').classList.remove('hidden');
     }
 
