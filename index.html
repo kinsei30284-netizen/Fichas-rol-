@@ -43,10 +43,17 @@
       transition: all 0.3s ease;
     }
 
-    .tech-input:focus {
+    .tech-input:focus:not(:disabled) {
       border-color: #00f0ff;
       box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
       outline: none;
+    }
+    
+    .tech-input:disabled {
+      background-color: #030508;
+      border-color: #0f1c2e;
+      color: #476b91;
+      cursor: not-allowed;
     }
 
     input[type=number]::-webkit-inner-spin-button, 
@@ -77,23 +84,19 @@
       transform: scale(1.05);
     }
 
-    .hazard-border {
-      border-left: 4px solid #ef4444;
-    }
+    .hazard-border { border-left: 4px solid #ef4444; }
 
     .menu-drawer {
       transition: transform 0.3s ease-in-out;
       transform: translateX(-100%);
     }
-    .menu-drawer.open {
-      transform: translateX(0);
-    }
+    .menu-drawer.open { transform: translateX(0); }
   </style>
 </head>
 
   <body class="text-slate-200 min-h-screen p-4 md:p-8 font-tech-body tracking-wide relative">
 
-  <!-- OVERLAY DE INICIO DE SESIÓN / REGISTRO -->
+  <!-- OVERLAY AUTENTICACIÓN -->
   <div id="authOverlay" class="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-4">
     <div class="tech-card max-w-md w-full p-8 relative shadow-[0_0_50px_rgba(0,240,255,0.3)]">
       <div class="text-center mb-6">
@@ -101,25 +104,15 @@
         <h2 class="text-2xl font-tech-title text-cyan-400 font-bold uppercase tracking-widest">// AUTENTICACIÓN EN RED</h2>
         <p class="text-xs text-slate-400 mt-1">Ingresa con tus credenciales para acceder a tu personaje.</p>
       </div>
-
       <div class="flex border-b border-cyan-900 mb-6">
         <button id="tabLogin" onclick="switchAuthTab('login')" class="w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold">Iniciar Sesión</button>
         <button id="tabRegister" onclick="switchAuthTab('register')" class="w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300">Crear Cuenta</button>
       </div>
-
       <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Correo Electrónico</label>
-          <input type="email" id="authEmail" required class="w-full tech-input p-2.5 rounded-sm text-sm" placeholder="usuario@red.com">
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Contraseña</label>
-          <input type="password" id="authPassword" required minlength="6" class="w-full tech-input p-2.5 rounded-sm text-sm" placeholder="******">
-        </div>
+        <div><label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Correo Electrónico</label><input type="email" id="authEmail" required class="w-full tech-input p-2.5 rounded-sm text-sm" placeholder="usuario@red.com"></div>
+        <div><label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Contraseña</label><input type="password" id="authPassword" required minlength="6" class="w-full tech-input p-2.5 rounded-sm text-sm" placeholder="******"></div>
         <p id="authError" class="text-xs text-red-400 font-mono hidden text-center"></p>
-        <button type="submit" id="authBtnSubmit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold py-3 uppercase tracking-wider transition shadow-[0_0_15px_rgba(0,240,255,0.4)]">
-          Ingresar al Sistema
-        </button>
+        <button type="submit" id="authBtnSubmit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-tech-title font-bold py-3 uppercase tracking-wider transition shadow-[0_0_15px_rgba(0,240,255,0.4)]">Ingresar al Sistema</button>
       </form>
     </div>
   </div>
@@ -130,13 +123,15 @@
       <h2 class="text-lg font-tech-title text-cyan-400 uppercase tracking-widest">// MENÚ CENTRAL</h2>
       <button onclick="toggleMenu()" class="text-cyan-400 text-2xl hover:text-cyan-200">✕</button>
     </div>
-    
     <nav class="space-y-4">
-      <button onclick="mostrarSeccion('editor')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 rounded-none border border-cyan-800 transition duration-200 flex items-center gap-3"><span>⚙️</span> Mi Personaje (Editor)</button>
-      <button onclick="mostrarSeccion('jugadores')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 rounded-none border border-cyan-800 transition duration-200 flex items-center gap-3"><span>🌐</span> Lista de Jugadores</button>
-      <button onclick="mostrarSeccion('tienda')" class="w-full text-left font-tech-title text-amber-300 hover:text-black hover:bg-amber-400 p-3 rounded-none border border-amber-800 transition duration-200 flex items-center gap-3"><span>🛒</span> Tienda de Objetos</button>
-      <button onclick="mostrarSeccion('misiones')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-3 rounded-none border border-purple-800 transition duration-200 flex items-center gap-3"><span>📜</span> Tablón de Misiones</button>
+      <button onclick="mostrarSeccion('editor')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 border border-cyan-800 transition flex items-center gap-3"><span>⚙️</span> Mi Personaje</button>
+      <button onclick="mostrarSeccion('jugadores')" class="w-full text-left font-tech-title text-cyan-300 hover:text-black hover:bg-cyan-400 p-3 border border-cyan-800 transition flex items-center gap-3"><span>🌐</span> Lista de Jugadores</button>
+      <button onclick="mostrarSeccion('tienda')" class="w-full text-left font-tech-title text-amber-300 hover:text-black hover:bg-amber-400 p-3 border border-amber-800 transition flex items-center gap-3"><span>🛒</span> Tienda de Objetos</button>
+      <button onclick="mostrarSeccion('misiones')" class="w-full text-left font-tech-title text-purple-300 hover:text-black hover:bg-purple-400 p-3 border border-purple-800 transition flex items-center gap-3"><span>📜</span> Tablón de Misiones</button>
       
+      <!-- BOTÓN EXCLUSIVO ADMIN -->
+      <button id="btnMenuAdmin" onclick="mostrarSeccion('admin')" class="hidden w-full text-left font-tech-title text-red-400 hover:text-black hover:bg-red-400 p-3 border border-red-900 transition flex items-center gap-3 mt-4"><span>🛡️</span> Panel de Admin</button>
+
       <div class="border-t border-cyan-900 pt-4 mt-6">
         <div class="text-[11px] font-mono text-cyan-400/70 mb-1 truncate" id="userEmailDisplay">Usuario: ---</div>
         <div id="adminBadgeDisplay" class="hidden text-[10px] font-tech-title text-red-400 font-bold mb-3 uppercase">🛡️ Rol: Administrador</div>
@@ -172,57 +167,32 @@
         <button id="adminSaveBtn" onclick="solicitarGuardado()" class="hidden bg-amber-600 hover:bg-amber-500 text-black font-tech-title font-bold py-2.5 px-6 rounded-none border border-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.4)] transition uppercase tracking-wider">🛡️ Guardar Ficha (Admin)</button>
       </div>
 
-      <!-- Datos Generales + Patrocinador -->
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre</label>
-          <input type="text" id="nombre" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nombre">
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Clase</label>
-          <input type="text" id="clase" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Clase">
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Raza</label>
-          <input type="text" id="raza" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Raza">
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por</label>
-          <input type="text" id="patrocinador" class="w-full tech-input border-purple-900 rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Sin Patrocinador">
-        </div>
-        <div>
-          <label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel / Rango</label>
-          <input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nivel">
-          <span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span>
-        </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nombre</label><input type="text" id="nombre" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nombre"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Clase</label><input type="text" id="clase" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Clase"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Raza</label><input type="text" id="raza" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Raza"></div>
+        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">// Nivel / Rango</label><input type="text" id="nivel" value="1" oninput="actualizarSistemas();" class="w-full tech-input rounded-sm px-4 py-2 font-tech-body text-lg" placeholder="Nivel"><span id="nivelFormateado" class="text-[11px] text-cyan-300 font-mono block mt-1">Nivel: 1</span></div>
+      </div>
+
+      <!-- Menú Desplegable de Patrocinadores -->
+      <div class="mb-8">
+        <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por:</label>
+        <select id="patrocinador" class="w-full tech-input border-purple-900 rounded-sm px-4 py-2 font-tech-body text-lg">
+          <option value="">Sin Patrocinador</option>
+          <option value="El que le ganó al guión">El que le ganó al guión</option>
+          <!-- Las opciones dinámicas se cargan por JS -->
+        </select>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center">
-          <label class="block text-xs font-tech-title font-bold text-amber-400 uppercase mb-1">Puntos de Armadura</label>
-          <input type="text" id="ca" value="0" oninput="actualizarSistemas();" class="w-24 bg-transparent text-center text-2xl font-tech-title font-bold text-amber-300 focus:outline-none">
-        </div>
-        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center">
-          <label class="block text-xs font-tech-title font-bold text-sky-400 uppercase mb-1">Puntos de Arma</label>
-          <input type="text" id="iniciativa" value="0" oninput="actualizarSistemas();" class="w-24 bg-transparent text-center text-3xl font-tech-title font-bold text-sky-300 focus:outline-none">
-        </div>
-        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center border-emerald-500/60">
-          <label class="block text-xs font-tech-title font-bold text-emerald-400 uppercase mb-1">PV Actuales</label>
-          <span id="pvActualesDisplay" class="text-2xl font-tech-title font-bold text-emerald-400">500 PV</span>
-        </div>
-        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center border-amber-500/60">
-          <label class="block text-xs font-tech-title font-bold text-amber-300 uppercase mb-1">💰 Deniques</label>
-          <input type="text" id="deniques" value="0" oninput="actualizarSistemas();" class="w-full bg-transparent text-center text-2xl font-tech-title font-bold text-amber-400 focus:outline-none disabled:opacity-50">
-          <span id="deniquesFormateado" class="text-[10px] text-amber-300/80 font-mono block mt-0.5">0 Deniques</span>
-        </div>
+        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center"><label class="block text-xs font-tech-title font-bold text-amber-400 uppercase mb-1">Puntos de Armadura</label><input type="text" id="ca" value="0" oninput="actualizarSistemas();" class="w-24 bg-transparent text-center text-2xl font-tech-title font-bold text-amber-300 focus:outline-none"></div>
+        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center"><label class="block text-xs font-tech-title font-bold text-sky-400 uppercase mb-1">Puntos de Arma</label><input type="text" id="iniciativa" value="0" oninput="actualizarSistemas();" class="w-24 bg-transparent text-center text-3xl font-tech-title font-bold text-sky-300 focus:outline-none"></div>
+        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center border-emerald-500/60"><label class="block text-xs font-tech-title font-bold text-emerald-400 uppercase mb-1">PV Actuales</label><span id="pvActualesDisplay" class="text-2xl font-tech-title font-bold text-emerald-400">500 PV</span></div>
+        <div class="shield-badge p-4 rounded-sm text-center flex flex-col justify-center items-center border-amber-500/60"><label class="block text-xs font-tech-title font-bold text-amber-300 uppercase mb-1">💰 Deniques</label><input type="text" id="deniques" value="0" oninput="actualizarSistemas();" class="w-full bg-transparent text-center text-2xl font-tech-title font-bold text-amber-400 focus:outline-none disabled:opacity-50"><span id="deniquesFormateado" class="text-[10px] text-amber-300/80 font-mono block mt-0.5">0 Deniques</span></div>
       </div>
 
-      <!-- Panel de Puntos -->
       <div class="bg-slate-900/80 border border-cyan-500/50 p-4 rounded-sm mb-6 flex flex-col lg:flex-row justify-between items-center gap-4 shadow-lg">
-        <div>
-          <h3 class="text-md font-tech-title text-cyan-400 uppercase tracking-wider">// Núcleo de Asignación de Puntos</h3>
-          <p class="text-xs text-slate-400">Cada Nivel otorga 10 Puntos Disponibles. Ajusta el monto (+/-).</p>
-        </div>
+        <div><h3 class="text-md font-tech-title text-cyan-400 uppercase tracking-wider">// Núcleo de Asignación de Puntos</h3><p class="text-xs text-slate-400">Cada Nivel otorga 10 Puntos Disponibles. Ajusta el monto (+/-).</p></div>
         <div class="flex flex-wrap items-center justify-center gap-4">
           <div class="bg-black/60 px-3 py-1.5 rounded border border-emerald-800 text-center min-w-[100px]"><span class="block text-[10px] text-slate-400 font-tech-title uppercase">Disponibles</span><span id="puntosDisponiblesText" class="text-xl font-tech-title font-bold text-emerald-400">10</span></div>
           <div class="flex items-center gap-2"><label class="text-xs font-tech-title text-cyan-300 uppercase">Monto (+/-):</label><input type="text" id="montoPuntos" value="1" oninput="actualizarSistemas();" placeholder="0" class="w-28 tech-input text-center rounded px-2 py-1 text-lg font-tech-title font-bold text-cyan-300"></div>
@@ -231,25 +201,17 @@
         </div>
       </div>
 
-      <!-- Atributos -->
       <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Parámetros Físicos y Moduladores</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-        <!-- VIDA -->
         <div class="bg-black/50 border border-emerald-800 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-emerald-400 mb-1">VIDA (PV)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="pv_pts" class="font-tech-title font-bold text-emerald-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('pv', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('pv', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-emerald-950/40 rounded border border-emerald-800/60 p-2"><span class="block text-[10px] text-emerald-400 uppercase font-bold">Total PV</span><span id="pv_val" class="text-lg font-tech-title font-bold text-emerald-300">500 PV</span><button onclick="toggleExpand('pv')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="pv_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-emerald-500/40 text-[11px] font-mono text-emerald-200 break-all"></div></div></div>
-        <!-- FUERZA -->
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">FUERZA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="fuerza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('fuerza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('fuerza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Carga Real</span><span id="fuerza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 Kg</span><button onclick="toggleExpand('fuerza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="fuerza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
-        <!-- DESTREZA -->
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">DESTREZA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="destreza_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('destreza', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('destreza', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Velocidad</span><span id="destreza_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m/s</span><button onclick="toggleExpand('destreza')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="destreza_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
-        <!-- CONSTITUCIÓN -->
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">CONSTITUCIÓN</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="constitucion_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('constitucion', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('constitucion', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Defensa</span><span id="constitucion_val" class="text-lg font-tech-title font-bold text-cyan-300">300 Df</span><button onclick="toggleExpand('constitucion')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="constitucion_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
-        <!-- INTELIGENCIA -->
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">INTELIGENCIA</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="inteligencia_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('inteligencia', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('inteligencia', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Energía Arcana</span><span id="inteligencia_val" class="text-lg font-tech-title font-bold text-cyan-300">1k J</span><button onclick="toggleExpand('inteligencia')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="inteligencia_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
-        <!-- SENTIDOS -->
         <div class="bg-black/50 border border-cyan-900 p-3 rounded-sm text-center flex flex-col justify-between"><span class="block text-xs font-tech-title font-bold text-cyan-400 mb-1">SENTIDOS (ST)</span><div class="text-xs text-slate-400 mb-2">Pts: <span id="sentidos_pts" class="font-tech-title font-bold text-cyan-400">10</span></div><div class="flex justify-center items-center gap-2 mb-3"><button onclick="modificarPunto('sentidos', -1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">-</button><button onclick="modificarPunto('sentidos', 1)" class="btn-point font-tech-title font-bold w-8 h-8 rounded-sm flex items-center justify-center text-lg">+</button></div><div class="bg-cyan-950/40 rounded border border-cyan-800/60 p-2"><span class="block text-[10px] text-cyan-400 uppercase font-bold">Alcance / Percepción</span><span id="sentidos_val" class="text-lg font-tech-title font-bold text-cyan-300">100 m</span><button onclick="toggleExpand('sentidos')" class="mt-1 text-[10px] text-cyan-400 hover:text-cyan-200 block w-full underline">🔍 Ver completo</button><div id="sentidos_expand" class="hidden mt-2 p-1 bg-black/80 rounded border border-cyan-500/40 text-[11px] font-mono text-cyan-200 break-all"></div></div></div>
       </div>
 
-      <!-- Módulos de Habilidades -->
-      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Módulos de Habilidades</h2>
+      <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Módlos de Habilidades</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">1. Habilidades de Clase</label><textarea id="habClase" rows="4" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">2. Habilidades de Raza</label><textarea id="habRaza" rows="4" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
@@ -257,14 +219,19 @@
         <div><label class="block text-xs font-tech-title uppercase text-red-400 mb-2">4. Habilidades Clase Desastre</label><textarea id="habDesastre" rows="4" class="w-full tech-input hazard-border rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
       </div>
 
-      <!-- Inventario, Notas, Apariencia -->
       <h2 class="text-lg font-tech-title text-cyan-400 border-b border-cyan-900 pb-2 mb-4 tracking-wider">// Almacenamiento y Registros Adicionales</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">Equipamiento e Inventario</label><textarea id="inventario" rows="5" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
-        <div><label class="block text-xs font-tech-title uppercase text-cyan-400 mb-2">Bitácora y Notas del Sistema</label><textarea id="notas" rows="5" class="w-full tech-input rounded-sm p-3 font-tech-body leading-relaxed"></textarea></div>
+        
+        <!-- Ahora esto es exclusivamente de uso administrativo -->
+        <div>
+          <label class="block text-xs font-tech-title uppercase text-red-400 mb-2">🛡️ Notas del sistema</label>
+          <textarea id="notas" rows="5" class="w-full tech-input border-red-900/50 bg-black/60 rounded-sm p-3 font-tech-body leading-relaxed placeholder:text-red-900/50" placeholder="Registro administrativo. Exclusivo para el control del sistema..."></textarea>
+        </div>
       </div>
+
       <div class="mt-6">
-        <label class="block text-xs font-tech-title uppercase text-emerald-400 mb-2">Apariencia e Historia (Lore)</label>
+        <label class="block text-xs font-tech-title uppercase text-emerald-400 mb-2">// Apariencia e Historia</label>
         <textarea id="apariencia" rows="5" class="w-full tech-input border-emerald-900 focus:border-emerald-500 rounded-sm p-3 font-tech-body leading-relaxed" placeholder="Descripción física del personaje, sus orígenes, trasfondo y desarrollo personal..."></textarea>
       </div>
     </div>
@@ -272,10 +239,7 @@
     <!-- SECCIÓN: LISTA DE JUGADORES -->
     <div id="seccionJugadores" class="hidden">
       <div class="flex justify-between items-center border-b border-cyan-900 pb-3 mb-6">
-        <div>
-          <h2 class="text-xl font-tech-title text-cyan-400 uppercase tracking-widest">// RED DE PERSONAJES REGISTRADOS</h2>
-          <p class="text-xs text-slate-400">Selecciona cualquier jugador para inspeccionar su ficha técnica.</p>
-        </div>
+        <div><h2 class="text-xl font-tech-title text-cyan-400 uppercase tracking-widest">// RED DE PERSONAJES REGISTRADOS</h2><p class="text-xs text-slate-400">Selecciona cualquier jugador para inspeccionar su ficha técnica.</p></div>
       </div>
       <div id="contenedorListaJugadores" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
@@ -283,10 +247,7 @@
     <!-- SECCIÓN: TIENDA DE OBJETOS -->
     <div id="seccionTienda" class="hidden">
       <div class="flex justify-between items-center border-b border-amber-500/40 pb-3 mb-6">
-        <div>
-          <h2 class="text-xl font-tech-title text-amber-400 uppercase tracking-widest">// MERCADO CENTRAL</h2>
-          <p class="text-xs text-slate-400">Adquiere ítems con tus Deniques reales. Los fondos se transfieren al vendedor.</p>
-        </div>
+        <div><h2 class="text-xl font-tech-title text-amber-400 uppercase tracking-widest">// MERCADO CENTRAL</h2><p class="text-xs text-slate-400">Adquiere ítems con tus Deniques reales. Los fondos se transfieren al vendedor.</p></div>
         <button onclick="abrirModalAgregarObjeto()" class="bg-amber-600 hover:bg-amber-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">➕ Publicar Objeto</button>
       </div>
       <div id="contenedorTienda" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -298,11 +259,27 @@
         <div><h2 class="text-xl font-tech-title text-purple-400 uppercase tracking-widest">// TABLÓN DE MISIONES Y ENCARGOS</h2><p class="text-xs text-slate-400">Revisa encargos globales de la red y tus misiones personales asginadas.</p></div>
         <button id="btnNuevaMisionAdmin" onclick="abrirModalMision()" class="hidden bg-purple-600 hover:bg-purple-500 text-black font-tech-title text-xs px-4 py-2 font-bold uppercase transition">➕ Crear Misión (Admin)</button>
       </div>
-      <h3 class="text-md font-tech-title text-purple-300 uppercase tracking-wider mb-4 border-l-2 border-purple-500 pl-2">Misiones Globales (Públicas)</h3>
-      <div id="contenedorMisionesGlobales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
-      <h3 class="text-md font-tech-title text-cyan-300 uppercase tracking-wider mb-4 border-l-2 border-cyan-500 pl-2">Mis Misiones Personales</h3>
-      <div id="contenedorMisionesPersonales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <h3 class="text-md font-tech-title text-purple-300 uppercase tracking-wider mb-4 border-l-2 border-purple-500 pl-2">Misiones Globales (Públicas)</h3><div id="contenedorMisionesGlobales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
+      <h3 class="text-md font-tech-title text-cyan-300 uppercase tracking-wider mb-4 border-l-2 border-cyan-500 pl-2">Misiones Personales</h3><div id="contenedorMisionesPersonales" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
+
+    <!-- SECCIÓN: PANEL DE ADMINISTRADOR -->
+    <div id="seccionAdmin" class="hidden">
+      <div class="flex justify-between items-center border-b border-red-500/50 pb-3 mb-6">
+        <div><h2 class="text-xl font-tech-title text-red-400 uppercase tracking-widest">// PANEL DE ADMINISTRACIÓN</h2><p class="text-xs text-slate-400">Control maestro de parámetros globales de la red.</p></div>
+      </div>
+      
+      <div class="bg-black/50 border border-red-900 p-6 rounded-sm shadow-lg mb-8">
+        <h3 class="text-md font-tech-title text-red-300 uppercase tracking-wider mb-4 border-l-2 border-red-500 pl-2">Gestión de Patrocinadores</h3>
+        <button onclick="agregarPatrocinadorAdmin()" class="bg-red-600 hover:bg-red-500 text-black font-tech-title font-bold py-2 px-6 text-xs uppercase tracking-wider transition shadow-[0_0_15px_rgba(220,38,38,0.4)]">
+          ➕ Agregar Patrocinador / Estrella
+        </button>
+        <div id="listaPatrocinadoresAdmin" class="mt-4 flex flex-wrap gap-3 p-4 bg-black/80 border border-slate-800 rounded min-h-[60px]">
+          <!-- Se renderizan vía JS -->
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- MODAL: GUARDADO -->
@@ -339,10 +316,7 @@
   <!-- MODAL: CREAR MISION (SOLO ADMIN) -->
   <div id="modalMision" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-purple-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(168,85,247,0.2)] relative">
-      <div class="flex justify-between items-center border-b border-purple-900/80 pb-3 mb-4">
-        <h3 class="text-lg font-tech-title text-purple-400 uppercase tracking-wider">// ASIGNAR NUEVA MISIÓN</h3>
-        <button onclick="cerrarModalMision()" class="text-purple-400 hover:text-purple-200 text-xl font-bold">✕</button>
-      </div>
+      <div class="flex justify-between items-center border-b border-purple-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-purple-400 uppercase tracking-wider">// ASIGNAR NUEVA MISIÓN</h3><button onclick="cerrarModalMision()" class="text-purple-400 hover:text-purple-200 text-xl font-bold">✕</button></div>
       <form id="formMision" onsubmit="guardarMision(event)" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div><label class="block text-xs font-tech-title uppercase text-purple-300 mb-1">Tipo de Misión *</label><select id="misionTipo" onchange="toggleMisionDestinatario()" class="w-full tech-input px-3 py-2 text-sm rounded-sm bg-slate-900 text-purple-200"><option value="global">Misión Global (Todos)</option><option value="personal">Misión Personal (1 Jugador)</option></select></div>
@@ -356,22 +330,16 @@
     </div>
   </div>
 
-  <!-- OVERLAY COMPROBANTE -->
+  <!-- OVERLAY COMPROBANTE & MISIONES (Simplificado visualmente para el código) -->
   <div id="comprobanteCompraOverlay" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-slate-950 border-2 border-emerald-400 p-8 shadow-[0_0_50px_rgba(16,185,129,0.4)] text-center relative"><div class="text-emerald-400 text-6xl mb-3">⚡</div><h2 class="text-2xl md:text-3xl font-tech-title text-emerald-400 font-bold uppercase tracking-widest mb-1">// TRANSACCIÓN COMPLETADA</h2>
       <div class="bg-black/80 border border-emerald-900 p-6 rounded-sm mb-6 text-left space-y-3 font-tech-body mt-4">
         <div class="text-2xl font-tech-title text-emerald-300 font-bold border-b border-emerald-900 pb-2">👤 <span id="reciboUsuario">---</span></div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-          <div><span class="block text-xs font-tech-title text-slate-400">Objeto:</span><span id="reciboObjeto" class="text-lg font-tech-title text-cyan-300 font-bold">---</span></div>
-          <div><span class="block text-xs font-tech-title text-slate-400">Unidades:</span><span id="reciboCantidad" class="text-lg font-tech-title text-amber-300 font-bold">---</span></div>
-          <div><span class="block text-xs font-tech-title text-slate-400">Coste Total:</span><span id="reciboPrecioTotal" class="text-lg font-tech-title text-amber-400 font-bold">---</span></div>
-          <div><span class="block text-xs font-tech-title text-slate-400">Vendedor Recibió:</span><span id="reciboVendedor" class="text-md text-slate-200">---</span></div>
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"><div><span class="block text-xs font-tech-title text-slate-400">Objeto:</span><span id="reciboObjeto" class="text-lg font-tech-title text-cyan-300 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Unidades:</span><span id="reciboCantidad" class="text-lg font-tech-title text-amber-300 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Coste Total:</span><span id="reciboPrecioTotal" class="text-lg font-tech-title text-amber-400 font-bold">---</span></div><div><span class="block text-xs font-tech-title text-slate-400">Vendedor Recibió:</span><span id="reciboVendedor" class="text-md text-slate-200">---</span></div></div>
       </div><button onclick="cerrarComprobante()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase transition">✔ Entendido</button>
     </div>
   </div>
 
-  <!-- OVERLAY MISION NUEVA -->
   <div id="notificacionMisionOverlay" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-slate-950 border-2 border-purple-500 p-8 shadow-[0_0_50px_rgba(168,85,247,0.4)] text-center relative animate-pulse"><div class="text-purple-400 text-6xl mb-3">📜</div><h2 class="text-2xl md:text-3xl font-tech-title text-purple-400 font-bold uppercase tracking-widest mb-1">// NUEVA MISIÓN DETECTADA</h2><p id="alertaMisionSubtitulo" class="text-xs text-slate-400 font-tech-title uppercase mb-6 tracking-wider">SE TE HA ASIGNADO UN ENCARGO</p>
       <div class="bg-black/80 border border-purple-900 p-6 rounded-sm mb-6 text-center space-y-3 font-tech-body"><h3 id="alertaMisionTitulo" class="text-2xl font-tech-title text-purple-300 font-bold">Título Misión</h3><p id="alertaMisionRecompensa" class="text-amber-400 font-tech-title text-sm border border-amber-900/50 bg-amber-950/20 inline-block px-4 py-1 rounded">Recompensa: ???</p></div><button onclick="cerrarNotificacionMision()" class="bg-purple-600 hover:bg-purple-500 text-black font-tech-title font-bold py-3 px-8 text-sm uppercase transition shadow-[0_0_20px_rgba(168,85,247,0.5)]">✔ Revisar Tablón</button>
@@ -398,30 +366,36 @@
     let targetUidToEdit = null, targetEmailToEdit = null, cacheJugadores = {};
 
     try {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.database(); auth = firebase.auth();
+      firebase.initializeApp(firebaseConfig); db = firebase.database(); auth = firebase.auth();
       auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.error(e));
-      document.getElementById('estadoRed').textContent = '🟢 SERVIDOR GLOBAL ACTIVO';
-      document.getElementById('estadoRed').className = 'text-xs text-emerald-400 font-tech-title font-bold';
+      document.getElementById('estadoRed').textContent = '🟢 SERVIDOR GLOBAL ACTIVO'; document.getElementById('estadoRed').className = 'text-xs text-emerald-400 font-tech-title font-bold';
     } catch(e) { document.getElementById('estadoRed').textContent = '🔴 MODO LOCAL (CONFIGURA FIREBASE)'; }
 
     function verificarEsAdmin(email) { return email ? ADMIN_EMAILS.map(e => e.toLowerCase()).includes(email.toLowerCase()) : false; }
 
-    // Función de Reglas Especiales (Protección de Patrocinador y Deniques)
+    // BLOQUEO MAESTRO: Control exclusivo de Notas, Deniques y Patrocinadores
     function aplicarPermisos() {
       const esAdmin = verificarEsAdmin(currentUser?.email);
       const inpDeniques = document.getElementById('deniques');
-      const inpPatrocinador = document.getElementById('patrocinador');
+      const selPatrocinador = document.getElementById('patrocinador');
+      const inpNotas = document.getElementById('notas');
       
       if (!esAdmin) {
-        if (inpDeniques) inpDeniques.disabled = true; // Bloquea Deniques siempre
-        // Bloquea Patrocinador solo si el usuario ya registró uno
-        if (inpPatrocinador && inpPatrocinador.value.trim() !== '') inpPatrocinador.disabled = true;
-        else if (inpPatrocinador) inpPatrocinador.disabled = false;
+        if (inpDeniques) inpDeniques.disabled = true;
+        if (inpNotas) inpNotas.disabled = true; // Solo el admin tiene acceso a las "Notas del sistema"
+        
+        if (selPatrocinador) {
+          // Si el usuario normal ya había guardado un patrocinador antes, se le bloquea permanentemente
+          if (selPatrocinador.value !== '') selPatrocinador.disabled = true;
+          else selPatrocinador.disabled = false;
+        }
       } else {
         if (!esModoLectura) {
            if (inpDeniques) inpDeniques.disabled = false;
-           if (inpPatrocinador) inpPatrocinador.disabled = false;
+           if (selPatrocinador) selPatrocinador.disabled = false;
+           if (inpNotas) inpNotas.disabled = false;
+        } else {
+           if (inpNotas) inpNotas.disabled = true; // Bloquear en modo lectura incluso para admin
         }
       }
     }
@@ -430,41 +404,32 @@
       auth.onAuthStateChanged((user) => {
         if (user) {
           currentUser = user; targetUidToEdit = user.uid; targetEmailToEdit = user.email;
-          document.getElementById('authOverlay').classList.add('hidden');
-          document.getElementById('userEmailDisplay').textContent = `Usuario: ${user.email}`;
+          document.getElementById('authOverlay').classList.add('hidden'); document.getElementById('userEmailDisplay').textContent = `Usuario: ${user.email}`;
           
           if (verificarEsAdmin(user.email)) {
             document.getElementById('adminBadgeDisplay').classList.remove('hidden');
             document.getElementById('btnNuevaMisionAdmin').classList.remove('hidden');
+            document.getElementById('btnMenuAdmin').classList.remove('hidden'); // Botón Panel de Admin
           } else {
             document.getElementById('adminBadgeDisplay').classList.add('hidden');
             document.getElementById('btnNuevaMisionAdmin').classList.add('hidden');
+            document.getElementById('btnMenuAdmin').classList.add('hidden');
           }
           cargarFichaNube(user.uid);
         } else {
-          currentUser = null; targetUidToEdit = targetEmailToEdit = null;
-          document.getElementById('authOverlay').classList.remove('hidden');
+          currentUser = null; targetUidToEdit = targetEmailToEdit = null; document.getElementById('authOverlay').classList.remove('hidden');
         }
       });
     }
 
     function switchAuthTab(mode) {
-      authMode = mode;
-      const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit');
+      authMode = mode; const tL = document.getElementById('tabLogin'), tR = document.getElementById('tabRegister'), bS = document.getElementById('authBtnSubmit');
       document.getElementById('authError').classList.add('hidden');
-      if (mode === 'login') {
-        tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold";
-        tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema";
-      } else {
-        tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold";
-        tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta";
-      }
+      if (mode === 'login') { tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Ingresar al Sistema"; } else { tR.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold"; tL.className = "w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300"; bS.textContent = "Registrar Nueva Cuenta"; }
     }
-
     function handleAuthSubmit(e) {
       e.preventDefault(); const email = document.getElementById('authEmail').value.trim(), pass = document.getElementById('authPassword').value;
       const errBox = document.getElementById('authError'); errBox.classList.add('hidden');
-      if (!auth) return;
       if (authMode === 'login') auth.signInWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); });
       else auth.createUserWithEmailAndPassword(email, pass).catch(err => { errBox.textContent = err.message; errBox.classList.remove('hidden'); });
     }
@@ -474,20 +439,20 @@
     const puntosGuardadosBloqueados = { pv: '0', fuerza: '0', destreza: '0', constitucion: '0', inteligencia: '0', sentidos: '0' };
     const VALOR_BASE_ESTADISTICA = 10;
     const config = { pv: { mult: 50, unidad: 'PV' }, fuerza: { mult: 10, unidad: 'Kg' }, destreza: { mult: 10, unidad: 'm/s' }, constitucion: { mult: 30, unidad: 'Df' }, inteligencia: { mult: 100, unidad: 'J' }, sentidos: { mult: 10, unidad: 'm' } };
-    const unidadesEscalaBigInt = [
-      { val: 10n**33n, symbol: 'Dc' }, { val: 10n**30n, symbol: 'No' }, { val: 10n**27n, symbol: 'Oc' }, { val: 10n**24n, symbol: 'Sp' },
-      { val: 10n**21n, symbol: 'Sx' }, { val: 10n**18n, symbol: 'Qi' }, { val: 10n**15n, symbol: 'Qa' }, { val: 10n**12n, symbol: 'T' },
-      { val: 10n**9n, symbol: 'B' }, { val: 10n**6n, symbol: 'M' }, { val: 10n**3n, symbol: 'k' }
-    ];
+    const unidadesEscalaBigInt = [{ val: 10n**33n, symbol: 'Dc' }, { val: 10n**30n, symbol: 'No' }, { val: 10n**27n, symbol: 'Oc' }, { val: 10n**24n, symbol: 'Sp' }, { val: 10n**21n, symbol: 'Sx' }, { val: 10n**18n, symbol: 'Qi' }, { val: 10n**15n, symbol: 'Qa' }, { val: 10n**12n, symbol: 'T' }, { val: 10n**9n, symbol: 'B' }, { val: 10n**6n, symbol: 'M' }, { val: 10n**3n, symbol: 'k' }];
 
     function toggleMenu() { document.getElementById('sideDrawer').classList.toggle('open'); }
     function mostrarSeccion(s) {
-      toggleMenu(); document.getElementById('seccionEditor').classList.add('hidden'); document.getElementById('seccionJugadores').classList.add('hidden');
+      toggleMenu(); 
+      document.getElementById('seccionEditor').classList.add('hidden'); document.getElementById('seccionJugadores').classList.add('hidden');
       document.getElementById('seccionTienda').classList.add('hidden'); document.getElementById('seccionMisiones').classList.add('hidden');
+      document.getElementById('seccionAdmin').classList.add('hidden');
+      
       if (s === 'editor') document.getElementById('seccionEditor').classList.remove('hidden');
       if (s === 'jugadores') document.getElementById('seccionJugadores').classList.remove('hidden');
       if (s === 'tienda') document.getElementById('seccionTienda').classList.remove('hidden');
       if (s === 'misiones') document.getElementById('seccionMisiones').classList.remove('hidden');
+      if (s === 'admin' && verificarEsAdmin(currentUser?.email)) document.getElementById('seccionAdmin').classList.remove('hidden');
     }
 
     function parseTextoABigInt(strInput) {
@@ -501,13 +466,9 @@
       if (numPart % 1 !== 0) { let e = Math.floor(numPart), d = numPart - e; return BigInt(e) * multiplicador + BigInt(Math.floor(d * Number(multiplicador))); }
       return BigInt(Math.floor(numPart)) * multiplicador;
     }
-
     function formatearBigInt(bigNum) {
       if (bigNum === Infinity) return '∞'; if (typeof bigNum === 'bigint' && bigNum < 1000n) return bigNum.toString();
-      for (let i=0; i<unidadesEscalaBigInt.length; i++) {
-        const f = unidadesEscalaBigInt[i].val;
-        if (bigNum >= f) { const e = bigNum / f, r = (bigNum % f) / (f / 10n); return r === 0n ? `${e}${unidadesEscalaBigInt[i].symbol}` : `${e}.${r}${unidadesEscalaBigInt[i].symbol}`; }
-      } return bigNum.toString();
+      for (let i=0; i<unidadesEscalaBigInt.length; i++) { const f = unidadesEscalaBigInt[i].val; if (bigNum >= f) { const e = bigNum / f, r = (bigNum % f) / (f / 10n); return r === 0n ? `${e}${unidadesEscalaBigInt[i].symbol}` : `${e}.${r}${unidadesEscalaBigInt[i].symbol}`; } } return bigNum.toString();
     }
     function formatearConSeparadores(bigNum) { return bigNum === Infinity ? 'Infinito (∞)' : bigNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
     function toggleExpand(attr) { const el = document.getElementById(`${attr}_expand`); if(el) el.classList.toggle('hidden'); }
@@ -518,11 +479,9 @@
     function modificarPunto(attr, direccion) {
       if (esModoLectura) return; const m = obtenerMontoActual(); if (m <= 0n && m !== Infinity) return;
       const p = obtenerPuntosOtorgadosPorNivel(), u = obtenerPuntosUsadosTotalesBigInt(), d = p === Infinity ? Infinity : (p > u ? p - u : 0n);
-      if (direccion > 0) { const add = m < d ? m : d; if (add <= 0n) return; puntosExtraAsignados[attr] = (BigInt(puntosExtraAsignados[attr]) + add).toString();
-      } else { const lim = BigInt(puntosGuardadosBloqueados[attr]), act = BigInt(puntosExtraAsignados[attr]), maxRes = act > lim ? act - lim : 0n, res = m < maxRes ? m : maxRes; if (res <= 0n) return; puntosExtraAsignados[attr] = (act - res).toString(); }
+      if (direccion > 0) { const add = m < d ? m : d; if (add <= 0n) return; puntosExtraAsignados[attr] = (BigInt(puntosExtraAsignados[attr]) + add).toString(); } else { const lim = BigInt(puntosGuardadosBloqueados[attr]), act = BigInt(puntosExtraAsignados[attr]), maxRes = act > lim ? act - lim : 0n, res = m < maxRes ? m : maxRes; if (res <= 0n) return; puntosExtraAsignados[attr] = (act - res).toString(); }
       actualizarSistemas();
     }
-
     function actualizarSistemas() {
       const niv = obtenerNivelBigInt(); document.getElementById('nivelFormateado').textContent = `Nivel: ${formatearBigInt(niv)} (${formatearConSeparadores(niv)})`;
       const den = parseTextoABigInt(document.getElementById('deniques').value); document.getElementById('deniquesFormateado').textContent = `${formatearBigInt(den)} Deniques (${formatearConSeparadores(den)})`;
@@ -548,60 +507,78 @@
       const ficha = {
         uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido',
         clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, 
-        patrocinador: document.getElementById('patrocinador').value.trim(),
+        patrocinador: document.getElementById('patrocinador').value,
         nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, 
         deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, 
         puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, 
         habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value,
         habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, 
-        notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value,
-        timestamp: Date.now()
+        notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value, timestamp: Date.now()
       };
       
       if (db) db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Información guardada globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error: ' + e.message));
     }
 
-    function cargarFichaNube(uid) {
-      if (db) db.ref('jugadores/' + uid).once('value').then(s => { if(s.val()) cargarDatosEnInterfaz(s.val()); });
-    }
+    function cargarFichaNube(uid) { if (db) db.ref('jugadores/' + uid).once('value').then(s => { if(s.val()) cargarDatosEnInterfaz(s.val()); }); }
 
     if (db) {
+      
+      // PATROCINADORES (Cargar lista desde Firebase)
+      db.ref('patrocinadores').on('value', (snapshot) => {
+        const data = snapshot.val();
+        const selectObj = document.getElementById('patrocinador');
+        const adminList = document.getElementById('listaPatrocinadoresAdmin');
+        
+        const valorActual = selectObj.value; // Salvar valor seleccionado
+        
+        let optionsHTML = `<option value="">Sin Patrocinador</option><option value="El que le ganó al guión">El que le ganó al guión</option>`;
+        let adminHTML = `<span class="bg-red-950/40 border border-red-900 text-red-300 px-3 py-1 text-xs rounded-full shadow-[0_0_8px_rgba(220,38,38,0.2)]">El que le ganó al guión (Fijo)</span>`;
+
+        if (data) {
+          Object.keys(data).forEach(key => {
+            const n = data[key].nombre;
+            optionsHTML += `<option value="${n}">${n}</option>`;
+            adminHTML += `<span class="bg-slate-900 border border-slate-700 text-slate-300 px-3 py-1 text-xs rounded-full flex items-center gap-2">${n} <button onclick="eliminarPatrocinador('${key}')" class="text-red-500 hover:text-red-300 font-bold ml-1">✖</button></span>`;
+          });
+        }
+        selectObj.innerHTML = optionsHTML;
+        if (adminList) adminList.innerHTML = adminHTML;
+
+        // Si el jugador tenía un patrocinador que no está en la lista estándar, lo forzamos al menú temporalmente
+        if (valorActual && !Array.from(selectObj.options).some(o => o.value === valorActual)) { selectObj.add(new Option(valorActual, valorActual)); }
+        selectObj.value = valorActual;
+      });
+
       // LISTENER JUGADORES
       db.ref('jugadores').on('value', (snapshot) => {
         const data = snapshot.val(); cacheJugadores = data || {}; 
-        const cont = document.getElementById('contenedorListaJugadores'); cont.innerHTML = '';
-        const selectDestinatario = document.getElementById('misionDestinatario');
-        if (selectDestinatario && data) { selectDestinatario.innerHTML = Object.keys(data).map(uid => `<option value="${uid}">${data[uid].nombre || data[uid].email}</option>`).join(''); }
+        const cont = document.getElementById('contenedorListaJugadores'), selectDest = document.getElementById('misionDestinatario');
+        cont.innerHTML = '';
+        if (selectDest && data) selectDest.innerHTML = Object.keys(data).map(uid => `<option value="${uid}">${data[uid].nombre || data[uid].email}</option>`).join('');
 
         if (!data) return cont.innerHTML = `<div class="col-span-full text-center py-12 bg-black/40 p-6"><span class="text-4xl text-cyan-500/40 mb-2 block">🌐</span><p class="text-cyan-400 text-sm">NO HAY PERSONAJES</p></div>`;
         const esAdmin = verificarEsAdmin(currentUser?.email);
         cont.innerHTML = Object.keys(data).map(uid => {
           const pj = data[uid];
-          return `<div class="bg-black/80 border border-cyan-900 hover:border-cyan-400 p-4 flex flex-col justify-between shadow-md">
-              <div class="mb-3"><h3 class="font-tech-title text-cyan-300 font-bold truncate">${pj.nombre || 'Sin Nombre'}</h3><p class="text-xs text-slate-400 truncate">${pj.clase} | ${pj.raza}</p><div class="mt-2 text-xs font-mono text-cyan-400/80 bg-cyan-950/30 p-2 border border-cyan-900/50 flex justify-between"><span>Nivel: ${pj.nivel||'1'}</span><span class="text-amber-300 font-bold">💰 ${formatearBigInt(parseTextoABigInt(pj.deniques||'0'))}</span></div></div>
-              <div class="space-y-2"><button onclick='verPersonajeObjeto(${JSON.stringify(pj)})' class="w-full bg-cyan-950 hover:bg-cyan-400 hover:text-black border border-cyan-500 text-cyan-300 text-xs py-2 uppercase font-bold transition">👁️ ${esAdmin ? 'Inspeccionar/Editar' : 'Ver Ficha'}</button>${esAdmin ? `<button onclick="eliminarFichaAdmin('${uid}')" class="w-full bg-red-950 hover:bg-red-900 border border-red-600 text-red-400 text-xs py-1.5 uppercase font-bold transition">🗑️ Eliminar</button>` : ''}</div></div>`;
+          return `<div class="bg-black/80 border border-cyan-900 hover:border-cyan-400 p-4 flex flex-col justify-between shadow-md"><div class="mb-3"><h3 class="font-tech-title text-cyan-300 font-bold truncate">${pj.nombre || 'Sin Nombre'}</h3><p class="text-xs text-slate-400 truncate">${pj.clase} | ${pj.raza}</p><div class="mt-2 text-xs font-mono text-cyan-400/80 bg-cyan-950/30 p-2 border border-cyan-900/50 flex justify-between"><span>Nivel: ${pj.nivel||'1'}</span><span class="text-amber-300 font-bold">💰 ${formatearBigInt(parseTextoABigInt(pj.deniques||'0'))}</span></div></div><div class="space-y-2"><button onclick='verPersonajeObjeto(${JSON.stringify(pj)})' class="w-full bg-cyan-950 hover:bg-cyan-400 hover:text-black border border-cyan-500 text-cyan-300 text-xs py-2 uppercase font-bold transition">👁️ ${esAdmin ? 'Inspeccionar/Editar' : 'Ver Ficha'}</button>${esAdmin ? `<button onclick="eliminarFichaAdmin('${uid}')" class="w-full bg-red-950 hover:bg-red-900 border border-red-600 text-red-400 text-xs py-1.5 uppercase font-bold transition">🗑️ Eliminar</button>` : ''}</div></div>`;
         }).join('');
       });
 
-      // LISTENER TIENDA
+      // LISTENER TIENDA & MISIONES
       db.ref('tienda').on('value', (snapshot) => {
         const data = snapshot.val(); const cont = document.getElementById('contenedorTienda'); cont.innerHTML = '';
         if (!data) return cont.innerHTML = `<div class="col-span-full text-center py-12 bg-black/40 p-6"><p class="text-amber-400 text-sm">TIENDA VACÍA</p></div>`;
         const esAdmin = verificarEsAdmin(currentUser?.email);
         cont.innerHTML = Object.keys(data).map(key => {
           const item = data[key];
-          return `<div class="bg-black/90 border border-amber-900/80 hover:border-amber-400 p-4 shadow-lg flex flex-col justify-between">
-              <div><div class="flex justify-between items-start mb-2 border-b border-amber-900/50 pb-2"><div><span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${item.tipo}</span><h3 class="text-amber-300 font-bold mt-1">${item.nombre}</h3></div><div class="text-right"><span class="text-xs text-amber-400 font-bold">💰 ${formatearBigInt(parseTextoABigInt(item.precio))}</span></div></div><div class="text-xs font-tech-body mb-3"><p class="text-slate-300">Hab: ${item.habilidad}</p><div class="bg-slate-950 p-2 border border-slate-900 mt-2 text-slate-400">${item.descripcion}</div></div></div>
-              <div class="border-t border-slate-900 pt-3 mt-2 flex flex-col gap-2"><div class="flex justify-between text-[11px] text-slate-400"><span>Vend: <strong class="text-slate-200">${item.autor}</strong></span><input type="number" id="cant_buy_${key}" value="1" min="1" class="w-14 text-center tech-input text-xs"></div><button onclick="realizarCompraNube('${key}')" class="w-full bg-amber-600 hover:bg-amber-500 text-black py-2 uppercase font-bold text-xs">🛒 Comprar</button>${esAdmin ? `<button onclick="eliminarObjetoTiendaAdmin('${key}')" class="w-full bg-red-950 text-red-400 text-xs py-1.5 uppercase font-bold border border-red-900">🗑️ Eliminar</button>` : ''}</div></div>`;
+          return `<div class="bg-black/90 border border-amber-900/80 hover:border-amber-400 p-4 shadow-lg flex flex-col justify-between"><div><div class="flex justify-between items-start mb-2 border-b border-amber-900/50 pb-2"><div><span class="text-[10px] bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${item.tipo}</span><h3 class="text-amber-300 font-bold mt-1">${item.nombre}</h3></div><div class="text-right"><span class="text-xs text-amber-400 font-bold">💰 ${formatearBigInt(parseTextoABigInt(item.precio))}</span></div></div><div class="text-xs font-tech-body mb-3"><p class="text-slate-300">Hab: ${item.habilidad}</p><div class="bg-slate-950 p-2 border border-slate-900 mt-2 text-slate-400">${item.descripcion}</div></div></div><div class="border-t border-slate-900 pt-3 mt-2 flex flex-col gap-2"><div class="flex justify-between text-[11px] text-slate-400"><span>Vend: <strong class="text-slate-200">${item.autor}</strong></span><input type="number" id="cant_buy_${key}" value="1" min="1" class="w-14 text-center tech-input text-xs"></div><button onclick="realizarCompraNube('${key}')" class="w-full bg-amber-600 hover:bg-amber-500 text-black py-2 uppercase font-bold text-xs">🛒 Comprar</button>${esAdmin ? `<button onclick="eliminarObjetoTiendaAdmin('${key}')" class="w-full bg-red-950 text-red-400 text-xs py-1.5 uppercase font-bold border border-red-900">🗑️ Eliminar</button>` : ''}</div></div>`;
         }).join('');
       });
 
-      // LISTENER MISIONES
       db.ref('misiones').on('value', (snapshot) => {
-        const data = snapshot.val();
-        const contGlob = document.getElementById('contenedorMisionesGlobales'), contPers = document.getElementById('contenedorMisionesPersonales');
+        const data = snapshot.val(); const contGlob = document.getElementById('contenedorMisionesGlobales'), contPers = document.getElementById('contenedorMisionesPersonales');
         contGlob.innerHTML = ''; contPers.innerHTML = '';
-        if (!data) { contGlob.innerHTML = `<p class="text-xs text-slate-500">No hay misiones globales activas.</p>`; contPers.innerHTML = `<p class="text-xs text-slate-500">No tienes misiones personales asignadas.</p>`; return; }
+        if (!data) { contGlob.innerHTML = `<p class="text-xs text-slate-500">No hay misiones globales.</p>`; contPers.innerHTML = `<p class="text-xs text-slate-500">No hay misiones personales.</p>`; return; }
         const esAdmin = verificarEsAdmin(currentUser?.email);
         Object.keys(data).forEach(key => {
           const m = data[key];
@@ -614,13 +591,25 @@
         if(contGlob.innerHTML === '') contGlob.innerHTML = `<p class="text-xs text-slate-500">No hay misiones globales.</p>`;
         if(contPers.innerHTML === '') contPers.innerHTML = `<p class="text-xs text-slate-500">No tienes misiones personales.</p>`;
       });
-
       db.ref('misiones').limitToLast(1).on('child_added', (s) => { const m = s.val(); if (m && (Date.now() - m.timestamp < 10000)) if (m.tipo === 'global' || (m.tipo === 'personal' && currentUser && m.destinatario === currentUser.uid)) mostrarNotificacionMision(m); });
     }
 
+    // ACCIONES ADMINISTRATIVAS BÁSICAS
     function eliminarFichaAdmin(uid) { if (confirm('⚠️ ¿Borrar ficha permanentemente?')) db.ref('jugadores/' + uid).remove(); }
     function eliminarObjetoTiendaAdmin(key) { if (confirm('⚠️ ¿Eliminar objeto de la tienda?')) db.ref('tienda/' + key).remove(); }
     function eliminarMisionAdmin(key) { if (confirm('⚠️ ¿Eliminar esta misión?')) db.ref('misiones/' + key).remove(); }
+
+    function agregarPatrocinadorAdmin() {
+      const pName = prompt("Ingrese el nombre de la nueva Estrella o Patrocinador:");
+      if (pName && pName.trim() !== "") {
+        db.ref('patrocinadores').push({ nombre: pName.trim(), timestamp: Date.now() })
+          .then(() => alert("✅ Patrocinador agregado exitosamente a la Red."))
+          .catch(e => alert("❌ Error: " + e.message));
+      }
+    }
+    function eliminarPatrocinador(key) {
+      if(confirm('⚠️ ¿Estás seguro de eliminar esta Estrella del registro público?')) db.ref('patrocinadores/' + key).remove();
+    }
 
     function verPersonajeObjeto(pj) {
       const esAdmin = verificarEsAdmin(currentUser?.email);
@@ -643,19 +632,23 @@
       if (currentUser) cargarFichaNube(currentUser.uid);
     }
     
-    function bloquearDesbloquearInputs(b) { document.querySelectorAll('#seccionEditor input, #seccionEditor textarea').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); }
+    function bloquearDesbloquearInputs(b) { document.querySelectorAll('#seccionEditor input, #seccionEditor textarea, #seccionEditor select').forEach(el => b ? el.setAttribute('disabled', 'true') : el.removeAttribute('disabled')); }
     
     function cargarDatosEnInterfaz(f) {
       for (const k in f) {
         if (k === 'puntosExtraAsignados') Object.assign(puntosExtraAsignados, f[k]);
         else if (k === 'puntosGuardadosBloqueados') Object.assign(puntosGuardadosBloqueados, f[k]);
-        else if (document.getElementById(k)) document.getElementById(k).value = f[k];
+        else if (document.getElementById(k)) {
+          const el = document.getElementById(k);
+          // Verificar si el valor cargado en patrocinador no existe en el Select para inyectarlo temporalmente
+          if (k === 'patrocinador' && f[k] && !Array.from(el.options).some(o => o.value === f[k])) el.add(new Option(f[k], f[k]));
+          el.value = f[k];
+        }
       }
-      actualizarSistemas();
-      aplicarPermisos(); // Ejecutar bloqueo inteligente al final
+      actualizarSistemas(); aplicarPermisos();
     }
 
-    // TIENDA & TRANSACCIONES
+    // TIENDA & ECONOMÍA
     function abrirModalAgregarObjeto() { document.getElementById('modalTienda').classList.remove('hidden'); const n = document.getElementById('nombre').value.trim(); if(n) document.getElementById('tiendaAutor').value = n; }
     function cerrarModalAgregarObjeto() { document.getElementById('modalTienda').classList.add('hidden'); document.getElementById('formObjetoTienda').reset(); }
     function cambiarTipoFormularioObjeto() { document.getElementById('campoPuntosDinamico').classList.toggle('hidden', document.getElementById('tiendaTipo').value === 'Objeto'); }
@@ -666,71 +659,41 @@
       if (db) db.ref('tienda').push(o).then(() => { cerrarModalAgregarObjeto(); alert('🛒 Objeto publicado!'); }).catch(err => alert('❌ Error: ' + err.message));
     }
 
-    // LÓGICA DE TRANSACCIÓN BANCARIA AL COMPRAR
     function realizarCompraNube(key) {
-      if (!currentUser) return alert("❌ Debes iniciar sesión para comprar.");
-      
+      if (!currentUser) return alert("❌ Inicia sesión para comprar.");
       db.ref('tienda/' + key).once('value').then(snapItem => {
-        const item = snapItem.val(); if (!item) return alert("❌ El objeto ya no existe.");
-
+        const item = snapItem.val(); if (!item) return alert("❌ Objeto no existe.");
         const cant = parseInt(document.getElementById(`cant_buy_${key}`)?.value) || 1;
-        const precioUnitario = parseTextoABigInt(item.precio);
-        const precioTotal = precioUnitario !== Infinity ? precioUnitario * BigInt(cant) : Infinity;
+        const precioTotal = parseTextoABigInt(item.precio) !== Infinity ? parseTextoABigInt(item.precio) * BigInt(cant) : Infinity;
 
-        // Comprobar saldo comprador
         db.ref('jugadores/' + currentUser.uid).once('value').then(snapBuyer => {
-          const buyer = snapBuyer.val(); if (!buyer) return alert("❌ Crea y guarda tu personaje primero.");
+          const buyer = snapBuyer.val(); if (!buyer) return alert("❌ Guarda tu personaje primero.");
           const buyerDeniques = parseTextoABigInt(buyer.deniques || '0');
+          if (buyerDeniques !== Infinity && (precioTotal === Infinity || buyerDeniques < precioTotal)) return alert("❌ Fondos insuficientes.");
 
-          if (buyerDeniques !== Infinity && (precioTotal === Infinity || buyerDeniques < precioTotal)) {
-            return alert("❌ Fondos insuficientes. No tienes suficientes Deniques.");
-          }
-
-          // Saldo final comprador
-          const newBuyerDeniques = buyerDeniques === Infinity ? Infinity : buyerDeniques - precioTotal;
-          const buyerUpdate = newBuyerDeniques === Infinity ? '∞' : newBuyerDeniques.toString();
-          const updates = {}; updates[`/jugadores/${currentUser.uid}/deniques`] = buyerUpdate;
-
-          // Encontrar vendedor y sumarle fondos
-          let sellerPromise = Promise.resolve(null);
-          if (item.vendedorUid) { sellerPromise = db.ref('jugadores/' + item.vendedorUid).once('value'); } 
-          else { sellerPromise = db.ref('jugadores').orderByChild('nombre').equalTo(item.autor).once('value').then(s => s.exists() ? db.ref('jugadores/' + Object.keys(s.val())[0]).once('value') : null); }
+          const updates = {}; updates[`/jugadores/${currentUser.uid}/deniques`] = buyerDeniques === Infinity ? '∞' : (buyerDeniques - precioTotal).toString();
+          
+          let sellerPromise = item.vendedorUid ? db.ref('jugadores/' + item.vendedorUid).once('value') : db.ref('jugadores').orderByChild('nombre').equalTo(item.autor).once('value').then(s => s.exists() ? db.ref('jugadores/' + Object.keys(s.val())[0]).once('value') : null);
 
           sellerPromise.then(snapSeller => {
             if (snapSeller && snapSeller.exists()) {
-              const sellerUid = snapSeller.key, sellerData = snapSeller.val();
-              const sellerDeniques = parseTextoABigInt(sellerData.deniques || '0');
-              const newSellerDeniques = (sellerDeniques === Infinity || precioTotal === Infinity) ? Infinity : sellerDeniques + precioTotal;
-              
-              if (sellerUid !== currentUser.uid) { // No pagarse a sí mismo
-                updates[`/jugadores/${sellerUid}/deniques`] = newSellerDeniques === Infinity ? '∞' : newSellerDeniques.toString();
-              }
+              const sellerUid = snapSeller.key, sellerDeniques = parseTextoABigInt(snapSeller.val().deniques || '0');
+              if (sellerUid !== currentUser.uid) updates[`/jugadores/${sellerUid}/deniques`] = (sellerDeniques === Infinity || precioTotal === Infinity) ? '∞' : (sellerDeniques + precioTotal).toString();
             }
-
-            // Ejecutar transacción
             db.ref().update(updates).then(() => {
-              const ptStr = precioTotal !== Infinity ? `${formatearBigInt(precioTotal)} Deniques` : '∞';
-              const evt = { comprador: buyer.nombre || currentUser.email, objeto: item.nombre, cantidad: cant, precioTotal: ptStr, vendedor: item.autor, timestamp: Date.now() };
-              db.ref('compras_eventos').push(evt);
-              
-              if (!esModoLectura && targetUidToEdit === currentUser.uid) cargarFichaNube(currentUser.uid);
-              else if (targetUidToEdit) cargarFichaNube(targetUidToEdit);
-              
-              alert("✅ ¡Compra realizada y fondos transferidos con éxito!");
-            }).catch(e => alert("❌ Error en transacción: " + e.message));
+              db.ref('compras_eventos').push({ comprador: buyer.nombre || currentUser.email, objeto: item.nombre, cantidad: cant, precioTotal: precioTotal !== Infinity ? `${formatearBigInt(precioTotal)} Deniques` : '∞', vendedor: item.autor, timestamp: Date.now() });
+              if (!esModoLectura && targetUidToEdit === currentUser.uid) cargarFichaNube(currentUser.uid); else if (targetUidToEdit) cargarFichaNube(targetUidToEdit);
+              alert("✅ ¡Compra realizada con éxito!");
+            });
           });
         });
       });
     }
 
-    function mostrarComprobanteGlobal(d) {
-      document.getElementById('reciboUsuario').textContent = d.comprador; document.getElementById('reciboObjeto').textContent = d.objeto;
-      document.getElementById('reciboCantidad').textContent = `${d.cantidad} Unidades`; document.getElementById('reciboPrecioTotal').textContent = d.precioTotal;
-      document.getElementById('reciboVendedor').textContent = d.vendedor; document.getElementById('comprobanteCompraOverlay').classList.remove('hidden');
-    }
+    function mostrarComprobanteGlobal(d) { document.getElementById('reciboUsuario').textContent = d.comprador; document.getElementById('reciboObjeto').textContent = d.objeto; document.getElementById('reciboCantidad').textContent = `${d.cantidad} Unidades`; document.getElementById('reciboPrecioTotal').textContent = d.precioTotal; document.getElementById('reciboVendedor').textContent = d.vendedor; document.getElementById('comprobanteCompraOverlay').classList.remove('hidden'); }
     function cerrarComprobante() { document.getElementById('comprobanteCompraOverlay').classList.add('hidden'); }
 
-    // MISIONES FUNCIONALIDADES
+    // MODALES Y MISIONES
     function abrirModalMision() { document.getElementById('modalMision').classList.remove('hidden'); }
     function cerrarModalMision() { document.getElementById('modalMision').classList.add('hidden'); document.getElementById('formMision').reset(); toggleMisionDestinatario(); }
     function toggleMisionDestinatario() { document.getElementById('campoMisionDestinatario').classList.toggle('hidden', document.getElementById('misionTipo').value !== 'personal'); }
@@ -738,7 +701,7 @@
     function guardarMision(e) {
       e.preventDefault(); const t = document.getElementById('misionTipo').value;
       const m = { tipo: t, destinatario: t === 'personal' ? document.getElementById('misionDestinatario').value : 'global', titulo: document.getElementById('misionTitulo').value.trim(), descripcion: document.getElementById('misionDesc').value.trim(), recompensa: document.getElementById('misionRecompensa').value.trim(), timestamp: Date.now(), adminResponsable: currentUser?.email };
-      if (db) db.ref('misiones').push(m).then(() => { cerrarModalMision(); alert('📜 Misión enviada a la Red.'); }).catch(e => alert('❌ Error: ' + e.message));
+      if (db) db.ref('misiones').push(m).then(() => { cerrarModalMision(); alert('📜 Misión enviada a la Red.'); });
     }
     function mostrarNotificacionMision(m) {
       document.getElementById('alertaMisionTitulo').textContent = m.titulo;
