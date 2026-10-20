@@ -196,6 +196,25 @@
         </div>
       </div>
 
+      <!-- Sistema de EXP y Niveles Integrado -->
+      <div class="bg-black/60 border border-cyan-500/40 p-4 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+          <h3 class="text-sm font-tech-title text-cyan-400 uppercase">// Sistema de Experiencia (EXP)</h3>
+          <p class="text-xs text-slate-400">Gana EXP derrotando monstruos en mazmorras o completando misiones para subir de nivel.</p>
+        </div>
+        <div class="flex items-center gap-4 w-full md:w-auto">
+          <div class="text-right w-full">
+            <div class="flex justify-between text-xs font-mono text-cyan-300 mb-1">
+              <span>EXP: <strong id="expActualDisplay">0</strong> / <strong id="expMaxDisplay">1000</strong></span>
+              <span id="expPorcentajeDisplay">0%</span>
+            </div>
+            <div class="w-full md:w-64 bg-slate-900 border border-cyan-900 h-3 overflow-hidden">
+              <div id="expBarraProgreso" class="bg-cyan-500 h-full w-0 transition-all duration-300"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="mb-8">
         <label class="block text-xs font-tech-title uppercase text-purple-400 mb-2">// Patrocinado por:</label>
         <select id="patrocinador" class="w-full tech-input border-purple-900 p-2 font-tech-body text-lg">
@@ -275,9 +294,8 @@
         <h4 class="text-sm font-tech-title text-blue-300 border-b border-blue-900 pb-1 mb-3">Integrantes Activos:</h4>
         <div id="listaIntegrantesEquipo" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
       </div>
-    </div>
-
-    <!-- SECCIÓN: FACCIONES Y REINOS -->
+	</div>
+	    <!-- SECCIÓN: FACCIONES Y REINOS -->
     <div id="seccionFacciones" class="hidden">
       <div class="border-b border-indigo-500/50 pb-3 mb-6 flex justify-between items-center">
         <h2 class="text-xl font-tech-title text-indigo-400 uppercase tracking-widest">// FACCIONES Y REINOS</h2>
@@ -395,9 +413,8 @@
         </div>
       </div>
       <div id="contenedorTienda" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-    </div>
-
-    <!-- SECCIÓN: MISIONES -->
+	</div>
+	    <!-- SECCIÓN: MISIONES -->
     <div id="seccionMisiones" class="hidden">
       <div class="flex justify-between items-center border-b border-purple-500/50 pb-3 mb-6">
         <h2 class="text-xl font-tech-title text-purple-400 uppercase tracking-widest">// TABLÓN DE MISIONES</h2>
@@ -467,7 +484,7 @@
     </div>
 
   </div>
-    <!-- MODALES FLOTANTES -->
+      <!-- MODALES FLOTANTES -->
   <div id="modalConfirmarGuardado" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border-2 border-cyan-400 max-w-md w-full p-6 text-center shadow-[0_0_30px_rgba(0,240,255,0.3)]">
       <div class="text-cyan-400 text-5xl mb-3">⚠️</div><h3 class="text-lg font-tech-title text-cyan-400 uppercase tracking-wider mb-2">// ¿GUARDAR INFORMACIÓN?</h3><p class="text-xs text-slate-400 mb-6 font-tech-body">Al confirmar, los datos se actualizarán en el registro global.</p>
@@ -578,9 +595,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Puntos de Armadura (CA)</label><input type="text" id="bestiarioCa" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
           <div><label class="block text-xs font-tech-title uppercase text-red-300 mb-1">Puntos de Arma (Iniciativa)</label><input type="text" id="bestiarioIniciativa" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input px-3 py-1.5 text-sm border-red-900"></div>
-        </div>
-
-        <div class="border border-red-900/60 p-3 bg-red-950/10 space-y-2">
+		</div>
+		       <div class="border border-red-900/60 p-3 bg-red-950/10 space-y-2">
           <label class="block text-xs font-tech-title uppercase text-red-400 font-bold">// Estadísticas Base del Monstruo (Puntos Extra)</label>
           <div class="grid grid-cols-2 md:grid-cols-6 gap-2">
             <div><label class="text-[9px] text-red-300">PV Pts</label><input type="text" id="bestiario_pv" value="0" oninput="actualizarEstadisticasBestiarioModal()" class="w-full tech-input p-1 text-xs text-center border-red-900"></div>
@@ -643,7 +659,7 @@
       </div>
     </div>
   </div>
-  <!-- MODAL: CREAR MAZMORRA (ADMIN) -->
+    <!-- MODAL: CREAR MAZMORRA (ADMIN) -->
   <div id="modalMazmorra" class="hidden fixed inset-0 bg-black/85 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-rose-500 max-w-3xl w-full p-6 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-rose-900 pb-3 mb-4">
@@ -783,8 +799,7 @@
       </form>
     </div>
   </div>
-
-  <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
+    <div id="modalTienda" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] flex items-center justify-center p-4">
     <div class="bg-slate-950 border border-amber-500 max-w-xl w-full p-6 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
       <div class="flex justify-between items-center border-b border-amber-900/80 pb-3 mb-4"><h3 class="text-lg font-tech-title text-amber-400 uppercase tracking-wider">// REGISTRAR OBJETO EN LA TIENDA</h3><button onclick="cerrarModalAgregarObjeto()" class="text-amber-400 hover:text-amber-200 text-xl font-bold">✕</button></div>
       <form id="formObjetoTienda" onsubmit="guardarObjetoTienda(event)" class="space-y-4">
@@ -958,7 +973,7 @@
       if (numPart % 1 !== 0) { let e = Math.floor(numPart), d = numPart - e; return BigInt(e) * multiplicador + BigInt(Math.floor(d * Number(multiplicador))); }
       return BigInt(Math.floor(numPart)) * multiplicador;
     }
-    function formatearBigInt(bigNum) {
+	      function formatearBigInt(bigNum) {
       if (bigNum === Infinity) return '∞'; if (typeof bigNum === 'bigint' && bigNum < 1000n) return bigNum.toString();
       for (let i=0; i<unidadesEscalaBigInt.length; i++) { const f = unidadesEscalaBigInt[i].val; if (bigNum >= f) { const e = bigNum / f, r = (bigNum % f) / (f / 10n); return r === 0n ? `${e}${unidadesEscalaBigInt[i].symbol}` : `${e}.${r}${unidadesEscalaBigInt[i].symbol}`; } } return bigNum.toString();
     }
@@ -996,6 +1011,55 @@
       if (containerEmanador) {
         containerEmanador.classList.toggle('hidden', emanadorVal !== 'si');
       }
+
+      // Actualizar barra de EXP visual
+      actualizarBarraExpUI();
+    }
+
+    let expActualGlobal = 0;
+    function calcularExpMaxRequerida() {
+      const niv = Number(obtenerNivelBigInt()) || 1;
+      return niv * 1000;
+    }
+
+    function actualizarBarraExpUI() {
+      const expMax = calcularExpMaxRequerida();
+      const expActual = expActualGlobal;
+      let porcentaje = Math.min(100, Math.floor((expActual / expMax) * 100));
+      
+      const elAct = document.getElementById('expActualDisplay');
+      const elMax = document.getElementById('expMaxDisplay');
+      const elPorc = document.getElementById('expPorcentajeDisplay');
+      const elBarra = document.getElementById('expBarraProgreso');
+
+      if (elAct) elAct.textContent = expActual;
+      if (elMax) elMax.textContent = expMax;
+      if (elPorc) elPorc.textContent = porcentaje + '%';
+      if (elBarra) elBarra.style.width = porcentaje + '%';
+    }
+
+    function ganarExperiencia(cantidad) {
+      expActualGlobal += cantidad;
+      let expMax = calcularExpMaxRequerida();
+      let nivelActual = Number(obtenerNivelBigInt()) || 1;
+
+      let subioNivel = false;
+      while (expActualGlobal >= expMax) {
+        expActualGlobal -= expMax;
+        nivelActual += 1;
+        subioNivel = true;
+      }
+
+      document.getElementById('nivel').value = nivelActual.toString();
+      actualizarSistemas();
+      if (subioNivel) {
+        alert(`🎉 ¡FELICIDADES! Has subido al Nivel ${nivelActual}. Se han añadido puntos disponibles para tus parámetros.`);
+      }
+      if (currentUser) {
+        const uidToSave = targetUidToEdit || currentUser.uid;
+        db.ref('jugadores/' + uidToSave + '/expActual').set(expActualGlobal);
+        db.ref('jugadores/' + uidToSave + '/nivel').set(nivelActual.toString());
+      }
     }
 
     function procesarArchivoImagen(event, tipo) {
@@ -1003,14 +1067,15 @@
       lector.onload = function(e) { if (tipo === 'avatar') { base64AvatarLista = e.target.result; document.getElementById('avatarListaPreview').src = e.target.result; } else { base64FichaIlustracion = e.target.result; document.getElementById('fichaIlustracionPreview').src = e.target.result; } };
       lector.readAsDataURL(archivo);
     }
-        function solicitarGuardado() { if (esModoLectura) return; document.getElementById('modalConfirmarGuardado').classList.remove('hidden'); }
+
+    function solicitarGuardado() { if (esModoLectura) return; document.getElementById('modalConfirmarGuardado').classList.remove('hidden'); }
     function cancelarGuardado() { document.getElementById('modalConfirmarGuardado').classList.add('hidden'); }
     function ejecutarGuardadoConfirmado() {
       cancelarGuardado(); if (!currentUser) return;
       const uidToSave = targetUidToEdit || currentUser.uid, emailToSave = targetEmailToEdit || currentUser.email;
       Object.assign(puntosGuardadosBloqueados, puntosExtraAsignados);
       const ficha = {
-        uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido', conteoFicha: document.getElementById('conteoFicha').value || 'Ficha Principal [1]', clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, titulos: document.getElementById('titulosFicha').value, patrocinador: document.getElementById('patrocinador').value, seguirVia: document.getElementById('seguirVia').value, emanador: document.getElementById('emanadorDisplay').value, avatarListaUrl: base64AvatarLista, fichaIlustracionUrl: base64FichaIlustracion, nivel: document.getElementById('nivel').value, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value, habDefinitivas: document.getElementById('habDefinitivas').value, habEmanador: document.getElementById('habEmanador').value, habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value, isSecondChar: fichaActualCargada.isSecondChar || false, mainCharName: fichaActualCargada.mainCharName || '', ownerUid: fichaActualCargada.ownerUid || currentUser.uid, timestamp: Date.now()
+        uid: uidToSave, email: emailToSave, nombre: document.getElementById('nombre').value.trim() || 'Desconocido', conteoFicha: document.getElementById('conteoFicha').value || 'Ficha Principal [1]', clase: document.getElementById('clase').value, raza: document.getElementById('raza').value, titulos: document.getElementById('titulosFicha').value, patrocinador: document.getElementById('patrocinador').value, seguirVia: document.getElementById('seguirVia').value, emanador: document.getElementById('emanadorDisplay').value, avatarListaUrl: base64AvatarLista, fichaIlustracionUrl: base64FichaIlustracion, nivel: document.getElementById('nivel').value, expActual: expActualGlobal, ca: document.getElementById('ca').value, iniciativa: document.getElementById('iniciativa').value, deniques: document.getElementById('deniques').value, montoPuntos: document.getElementById('montoPuntos').value, puntosExtraAsignados, puntosGuardadosBloqueados, habClase: document.getElementById('habClase').value, habRaza: document.getElementById('habRaza').value, habUnicas: document.getElementById('habUnicas').value, habDefinitivas: document.getElementById('habDefinitivas').value, habEmanador: document.getElementById('habEmanador').value, habDesastre: document.getElementById('habDesastre').value, inventario: document.getElementById('inventario').value, notas: document.getElementById('notas').value, apariencia: document.getElementById('apariencia').value, isSecondChar: fichaActualCargada.isSecondChar || false, mainCharName: fichaActualCargada.mainCharName || '', ownerUid: fichaActualCargada.ownerUid || currentUser.uid, timestamp: Date.now()
       };
       db.ref('jugadores/' + uidToSave).set(ficha).then(() => { alert('⚡ ¡Datos guardados globalmente!'); actualizarSistemas(); aplicarPermisos(); }).catch(e => alert('❌ Error al guardar: ' + e.message));
     }
@@ -1018,6 +1083,7 @@
     function cargarFichaNube(uid) { db.ref('jugadores/' + uid).once('value').then(s => { cargarDatosEnInterfaz(s.exists() ? s.val() : {}, uid); }); }
     function cargarDatosEnInterfaz(f, uidRef) {
       fichaActualCargada = f || {}; 
+      expActualGlobal = parseInt(f?.expActual) || 0;
       if(!f || Object.keys(f).length === 0) {
           document.querySelectorAll('#seccionEditor input[type="text"], #seccionEditor textarea, #seccionEditor input[type="number"]').forEach(el => el.value = '');
           puntosExtraAsignados.pv='0';puntosExtraAsignados.fuerza='0';puntosExtraAsignados.destreza='0';puntosExtraAsignados.constitucion='0';puntosExtraAsignados.inteligencia='0';puntosExtraAsignados.sentidos='0';
@@ -1049,7 +1115,7 @@
       if (inpConteo) inpConteo.disabled = !esAdmin;
 
       if (!esAdmin) { 
-        if (inpDeniques) inpDeniques.disabled = true; 
+		        if (inpDeniques) inpDeniques.disabled = true; 
         if (inpNotas) inpNotas.disabled = true; 
         if (selPat) selPat.disabled = selPat.value !== ''; 
         if (selEmanador) selEmanador.disabled = true;
@@ -1146,26 +1212,7 @@
           listaAdmin.innerHTML = adminHtml || '<span class="text-xs text-slate-500">No hay patrocinadores registrados.</span>';
         }
       });
-
-      db.ref('forja_pendiente').on('value', snap => {
-        const data = snap.val() || {};
-        const cont = document.getElementById('contenedorForjaPendiente');
-        if (!cont) return;
-        const esAdmin = verificarEsAdmin(currentUser?.email);
-        cont.innerHTML = Object.keys(data).length === 0 ? '<p class="text-xs text-slate-500 col-span-full">No hay propuestas pendientes en la forja.</p>' : Object.keys(data).map(key => {
-          const item = data[key];
-          return `<div class="bg-black/90 border border-orange-900 p-4 text-xs space-y-2 shadow-md flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between font-bold text-orange-300 mb-1"><span>${item.nombre} (${item.tipo})</span><span>Req: Niv ${item.nivelReq}</span></div>
-              <p class="text-slate-300 mb-2">${item.descripcion}</p>
-              <p class="text-[10px] text-slate-400 font-mono">Propuesto por: ${item.autorNombre}</p>
-            </div>
-            ${esAdmin ? `<button onclick="aprobarForja('${key}')" class="w-full bg-orange-600 hover:bg-orange-500 text-black font-bold py-1.5 uppercase tracking-wide mt-2">✔ Aprobar y Enviar a Tienda</button>` : ''}
-          </div>`;
-        }).join('');
-      });
-
-      db.ref('bestiario_pendiente').on('value', snap => {
+		      db.ref('bestiario_pendiente').on('value', snap => {
         const data = snap.val() || {};
         const cont = document.getElementById('contenedorBestiarioPendiente');
         if (!cont) return;
@@ -1277,12 +1324,13 @@
         Object.keys(data).forEach(key => {
           const m = data[key];
           const denVal = m.deniques || 0;
-          const btnReclamar = `<button onclick="reclamarMision('${key}', ${denVal})" class="mt-3 bg-emerald-600 hover:bg-emerald-500 text-black font-tech-title text-xs py-1.5 px-4 font-bold uppercase w-full">🎁 Reclamar Recompensa</button>`;
+          const expVal = m.exp || 500;
+          const btnReclamar = `<button onclick="reclamarMision('${key}', ${denVal}, ${expVal})" class="mt-3 bg-emerald-600 hover:bg-emerald-500 text-black font-tech-title text-xs py-1.5 px-4 font-bold uppercase w-full">🎁 Reclamar Recompensa (+${expVal} EXP)</button>`;
           
           const tarjeta = `<div class="bg-black/80 border border-purple-900/60 p-4 relative shadow-md flex flex-col justify-between">
             ${esAdmin ? `<button onclick="borrarMisionAdmin('${key}')" class="absolute top-2 right-2 text-red-400 hover:text-red-200 text-xs font-bold">🗑️</button>` : ''}
             <div><h4 class="font-tech-title text-purple-300 font-bold mb-1">${m.titulo}</h4><p class="text-xs text-slate-300 mb-3">${m.descripcion}</p></div>
-            <div class="border-t border-purple-900/50 pt-2 text-[11px] text-amber-400 font-mono mb-2">Recompensa: ${denVal > 0 ? formatearBigInt(BigInt(denVal)) + ' Deniques' : ''} ${m.recompensa ? '| ' + m.recompensa : ''}</div>
+            <div class="border-t border-purple-900/50 pt-2 text-[11px] text-amber-400 font-mono mb-2">Recompensa: ${denVal > 0 ? formatearBigInt(BigInt(denVal)) + ' Deniques' : ''} + ${expVal} EXP ${m.recompensa ? '| ' + m.recompensa : ''}</div>
             ${btnReclamar}
           </div>`;
 
@@ -1293,9 +1341,8 @@
         if (!hayGlob) contGlob.innerHTML = '<p class="text-xs text-slate-500">No hay misiones globales.</p>';
         if (!hayPers) contPers.innerHTML = '<p class="text-xs text-slate-500">No hay misiones personales asignadas.</p>';
       });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
+	  }
+	      document.addEventListener("DOMContentLoaded", () => {
       if(db) {
         db.ref('mazmorras').on('value', snap => {
           const data = snap.val() || {}; const cont = document.getElementById('contenedorMazmorras'); if(!cont) return;
@@ -1409,9 +1456,8 @@
         document.getElementById('modalMazmorra').classList.add('hidden');
         alert("🕳️ Portal de Mazmorra abierto exitosamente.");
       });
-    }
-
-    function borrarMazmorraAdmin(key) { if(confirm("🗑️ ¿Cerrar y eliminar esta mazmorra?")) db.ref('mazmorras/' + key).remove(); }
+	  }
+	      function borrarMazmorraAdmin(key) { if(confirm("🗑️ ¿Cerrar y eliminar esta mazmorra?")) db.ref('mazmorras/' + key).remove(); }
     function eliminarFichaAdmin(uid) { if(confirm("🗑️ ¿Estás seguro de eliminar permanentemente esta ficha del sistema?")) db.ref('jugadores/' + uid).remove(); }
 
     function calcularAtributoConvergente(nivelStr, puntosExtraStr, iniciativaOrCaStr, multiplicador) {
@@ -1459,7 +1505,7 @@
         </div>`;
       });
 
-const bossImg = m.boss.imagen ? `<img src="${m.boss.imagen}" class="w-12 h-12 object-cover border border-red-700 rounded">` : '';
+      const bossImg = m.boss.imagen ? `<img src="${m.boss.imagen}" class="w-12 h-12 object-cover border border-red-700 rounded">` : '';
       const bPv = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.pv, 0, config.pv.mult));
       const bFue = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.fuerza, m.boss.arma, config.fuerza.mult));
       const bDes = formatearBigInt(calcularAtributoConvergente(m.boss.nivel, m.boss.destreza, m.boss.arma, config.destreza.mult));
@@ -1484,7 +1530,8 @@ const bossImg = m.boss.imagen ? `<img src="${m.boss.imagen}" class="w-12 h-12 ob
 
     function entrarMazmorra(key, colapsoActivo) {
       const textoColapso = colapsoActivo ? "⚠️ ¡RUPTURA / COLAPSO DE MAZMORRA ACTIVADA! Los monstruos tienen sus atributos multiplicados x10." : "⚔️ Entrando a la mazmorra con éxito.";
-      alert(textoColapso + "\n¡Has completado la incursión y obtenido la recompensa!");
+      ganarExperiencia(1500);
+      alert(textoColapso + "\n¡Has completado la incursión con éxito y obtenido +1500 EXP!");
     }
 
     function convocarEquipoMazmorra(mazId) {
@@ -1546,9 +1593,8 @@ const bossImg = m.boss.imagen ? `<img src="${m.boss.imagen}" class="w-12 h-12 ob
         return;
       }
       const node = tipo === 'invite_equipo' ? `equipos/${refId}/miembros` : `facciones/${refId}/miembros`, val = tipo === 'invite_equipo' ? true : (rango || 'Miembro'); db.ref(`${node}/${currentUser.uid}`).set(val).then(() => { db.ref(`mensajes/${idMsg}`).remove(); alert("✅ Te has unido."); }).catch(e => alert(e.message)); 
-    }
-
-    function abrirModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.remove('hidden'); }
+	  }
+	      function abrirModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.remove('hidden'); }
     function cerrarModalCorreoAdmin() { document.getElementById('modalCorreoAdmin').classList.add('hidden'); document.getElementById('formCorreoAdmin').reset(); }
     function toggleCorreoDestinatario() { document.getElementById('campoDestinatarioEspecifico').classList.toggle('hidden', document.getElementById('correoTipo').value !== 'personal'); }
     function enviarCorreoAdminSubmit(e) {
@@ -1642,9 +1688,8 @@ const bossImg = m.boss.imagen ? `<img src="${m.boss.imagen}" class="w-12 h-12 ob
       if (prev) {
         prev.textContent = `PV: ${pvConv} | Fue: ${fueConv} | Des: ${desConv} | Con: ${conConv} | Int: ${intConv} | St: ${stConv}`;
       }
-    }
-
-    function abrirModalProponerMonstruo() { 
+	  }
+	      function abrirModalProponerMonstruo() { 
       base64BestiarioImagen = ''; 
       document.getElementById('formBestiario').reset(); 
       document.getElementById('bestiarioImgPreview').src = 'https://via.placeholder.com/150/3f0000/ff0000?text=Previa'; 
@@ -1746,7 +1791,7 @@ const bossImg = m.boss.imagen ? `<img src="${m.boss.imagen}" class="w-12 h-12 ob
         const item = snapItem.val(); if (!item) return; const cant = parseInt(document.getElementById(`cant_buy_${key}`)?.value) || 1; const precioTotal = parseTextoABigInt(item.precio) !== Infinity ? parseTextoABigInt(item.precio) * BigInt(cant) : Infinity; const realCurrentUid = currentUser.uid + suffixFichaActiva;
         db.ref('jugadores/' + realCurrentUid).once('value').then(snapBuyer => {
           const buyer = snapBuyer.val(); if (!buyer) return; const buyerDeniques = parseTextoABigInt(buyer.deniques || '0'); if (buyerDeniques !== Infinity && (precioTotal === Infinity || buyerDeniques < precioTotal)) return alert("❌ Fondos insuficientes.");
-const updates = {}; updates[`/jugadores/${realCurrentUid}/deniques`] = buyerDeniques === Infinity ? '∞' : (buyerDeniques - precioTotal).toString();
+          const updates = {}; updates[`/jugadores/${realCurrentUid}/deniques`] = buyerDeniques === Infinity ? '∞' : (buyerDeniques - precioTotal).toString();
           let sellerPromise = item.vendedorUid ? db.ref('jugadores/' + item.vendedorUid).once('value') : db.ref('jugadores').orderByChild('nombre').equalTo(item.autor).once('value').then(s => s.exists() ? db.ref('jugadores/' + Object.keys(s.val())[0]).once('value') : null);
           sellerPromise.then(snapSeller => {
             if (snapSeller && snapSeller.exists()) { const sellerUid = snapSeller.key, sellerDeniques = parseTextoABigInt(snapSeller.val().deniques || '0'); if (sellerUid !== realCurrentUid) updates[`/jugadores/${sellerUid}/deniques`] = (sellerDeniques === Infinity || precioTotal === Infinity) ? '∞' : (sellerDeniques + precioTotal).toString(); }
@@ -1757,11 +1802,11 @@ const updates = {}; updates[`/jugadores/${realCurrentUid}/deniques`] = buyerDeni
           });
         });
       });
-    }
-    function mostrarComprobanteGlobal(d) { document.getElementById('reciboUsuario').textContent = d.comprador; document.getElementById('reciboObjeto').textContent = d.objeto; document.getElementById('reciboCantidad').textContent = `${d.cantidad} Unidades`; document.getElementById('reciboPrecioTotal').textContent = d.precioTotal; document.getElementById('reciboVendedor').textContent = d.vendedor; document.getElementById('comprobanteCompraOverlay').classList.remove('hidden'); }
+	  }
+	      function mostrarComprobanteGlobal(d) { document.getElementById('reciboUsuario').textContent = d.comprador; document.getElementById('reciboObjeto').textContent = d.objeto; document.getElementById('reciboCantidad').textContent = `${d.cantidad} Unidades`; document.getElementById('reciboPrecioTotal').textContent = d.precioTotal; document.getElementById('reciboVendedor').textContent = d.vendedor; document.getElementById('comprobanteCompraOverlay').classList.remove('hidden'); }
     function cerrarComprobante() { document.getElementById('comprobanteCompraOverlay').classList.add('hidden'); }
 
-    function reclamarMision(key, deniquesCantidad) {
+    function reclamarMision(key, deniquesCantidad, expCantidad) {
       if (!currentUser) return;
       const realUid = targetUidToEdit || (currentUser.uid + suffixFichaActiva);
       db.ref('jugadores/' + realUid).once('value').then(snap => {
@@ -1770,7 +1815,8 @@ const updates = {}; updates[`/jugadores/${realCurrentUid}/deniques`] = buyerDeni
         const nuevosDeniques = denActuales === Infinity ? '∞' : (denActuales + BigInt(deniquesCantidad)).toString();
         
         db.ref('jugadores/' + realUid + '/deniques').set(nuevosDeniques).then(() => {
-          alert(`🎉 ¡Recompensa reclamada con éxito! Se añadieron ${deniquesCantidad} Deniques a tu ficha.`);
+          ganarExperiencia(expCantidad || 500);
+          alert(`🎉 ¡Recompensa reclamada con éxito! Se añadieron ${deniquesCantidad} Deniques y +${expCantidad || 500} EXP a tu ficha.`);
           db.ref('misiones/' + key).remove();
           cargarFichaNube(realUid);
         });
@@ -1790,6 +1836,7 @@ const updates = {}; updates[`/jugadores/${realCurrentUid}/deniques`] = buyerDeni
         titulo: document.getElementById('misionTitulo').value.trim(),
         descripcion: document.getElementById('misionDesc').value.trim(),
         deniques: parseInt(document.getElementById('misionDeniques').value) || 0,
+        exp: 800,
         recompensa: document.getElementById('misionRecompensa').value.trim(),
         timestamp: Date.now()
       };
@@ -1931,9 +1978,8 @@ const updates = {}; updates[`/jugadores/${realCurrentUid}/deniques`] = buyerDeni
           });
         });
       });
-    }
-
-    function adminReiniciarTorneo() {
+	  }
+	      function adminReiniciarTorneo() {
       if (confirm("🗑️ ¿Deseas reiniciar el torneo y borrar todas las inscripciones y llaves?")) {
         db.ref('torneo').set({
           estado: 'cerrado',
