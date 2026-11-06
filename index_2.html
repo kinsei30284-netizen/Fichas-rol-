@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Enclave - Sistema RPG</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <style>
+    .bg-dark-900 { background-color: #0f172a; }
+    .bg-dark-800 { background-color: #1e293b; }
+    .bg-dark-700 { background-color: #334155; }
+    .text-gold { color: #f59e0b; }
+    .border-gold { border-color: #f59e0b; }
+    .bg-gold { background-color: #f59e0b; }
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #0f172a; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-dark-900 text-slate-100 min-h-screen flex flex-col font-sans">
+  
+  <!-- Header / Navbar -->
+  <header class="bg-dark-800 border-b border-slate-700 sticky top-0 z-50">
+    <div class="max-w-7xl mx-mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid font-shield-halved text-gold text-2xl"></i>
+        <h1 class="text-xl font-bold tracking-wider text-amber-400">EL ENCLAVE</h1>
+        <span id="adminBadgeDisplay" class="hidden bg-red-900 text-red-200 text-xs px-2 py-0.5 rounded border border-red-500 font-semibold">ADMIN</span>
+      </div>
+
+      <nav class="flex items-center space-x-4">
+        <button onclick="mostrarSeccion('editor')" class="hover:text-amber-400 transition flex items-center gap-2"><i class="fa-solid fa-user-shield"></i> Personaje</button>
+        <button onclick="mostrarSeccion('tienda')" class="hover:text-amber-400 transition flex items-center gap-2"><i class="fa-solid fa-store"></i> Mercado</button>
+        <button id="btnMenuAdmin" onclick="mostrarSeccion('seccionAdmin')" class="hidden hover:text-red-400 transition flex items-center gap-2 text-red-400 font-semibold"><i class="fa-solid fa-user-gear"></i> Panel Admin</button>
+        <button id="btnAuthAction" onclick="abrirModalAuth()" class="bg-amber-600 hover:bg-amber-500 px-3 py-1.5 rounded text-sm font-semibold transition">Iniciar Sesión</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6">
+    
+    <!-- SECCIÓN PERSONAJE / EDITOR -->
+    <section id="editor" class="space-y-6">
+      <div class="bg-dark-800 rounded-lg p-5 border border-slate-700 shadow-xl">
+        <h2 class="text-xl font-bold text-amber-400 mb-4 border-b border-slate-700 pb-2"><i class="fa-solid fa-id-card"></i> Ficha de Personaje</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Nombre del Personaje</label>
+            <input type="text" id="nombrePersonaje" class="w-full bg-dark-900 border border-slate-700 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-500" placeholder="Ej: Arthur Pendelton">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Título / Clase</label>
+            <input type="text" id="tituloPersonaje" class="w-full bg-dark-900 border border-slate-700 rounded px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-500" placeholder="Ej: Paladín del Alba">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN PANEL ADMIN -->
+    <section id="seccionAdmin" class="hidden space-y-6">
+      <div class="bg-dark-800 rounded-lg p-5 border border-red-900/50 shadow-xl">
+        <h2 class="text-xl font-bold text-red-400 mb-4 border-b border-slate-700 pb-2"><i class="fa-solid fa-user-gear"></i> Panel de Administración</h2>
+        <p class="text-sm text-slate-400 mb-4">Gestión del enclave, forja de objetos, bestiario y eventos de torneo.</p>
+        
+        <div class="flex flex-wrap gap-3">
+          <button id="btnNuevaMisionAdmin" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded text-sm font-semibold transition"><i class="fa-solid fa-scroll"></i> Crear Misión</button>
+          <button id="btnAdminFaccion" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded text-sm font-semibold transition"><i class="fa-solid fa-flag"></i> Crear Facción</button>
+          <button id="btnNuevaMazmorraAdmin" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded text-sm font-semibold transition"><i class="fa-solid fa-dungeon"></i> Crear Mazmorra</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div id="panelAdminForja" class="bg-dark-900 p-4 rounded border border-slate-700">
+            <h3 class="font-bold text-amber-400 mb-2">Forja Administrativa</h3>
+            <p class="text-xs text-slate-400">Creación e inyección directa de objetos al mercado global.</p>
+          </div>
+          <div id="panelAdminBestiario" class="bg-dark-900 p-4 rounded border border-slate-700">
+            <h3 class="font-bold text-amber-400 mb-2">Gestor del Bestiario</h3>
+            <p class="text-xs text-slate-400">Configuración de entidades y criaturas del enclave.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN TIENDA / MERCADO -->
+    <section id="tienda" class="hidden space-y-6">
+      <div class="bg-dark-800 rounded-lg p-5 border border-slate-700 shadow-xl">
+        <h2 class="text-xl font-bold text-amber-400 mb-4 border-b border-slate-700 pb-2"><i class="fa-solid fa-store"></i> Mercado de Deniques</h2>
+        <div id="contenedorTienda" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <p class="text-slate-400 text-sm">Cargando inventario del mercado...</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Configuración Firebase (Reemplaza con tus claves de Firebase)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDummyKeyForTemplatePurposesOnly",
+      authDomain: "el-enclave-rpg.firebaseapp.com",
+      databaseURL: "https://el-enclave-rpg-default-rtdb.firebaseio.com",
+      projectId: "el-enclave-rpg",
+      storageBucket: "el-enclave-rpg.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:abcdef123456"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const db = firebase.database();
+    const auth = firebase.auth();
+
+    // Lista fija de administradores
+    const ADMIN_EMAILS = [
+      "kinsei30284@gmail.com", 
+      "clamorventus.7.7.7@gmail.com", 
+      "of.lazarusjann@gmail.com", 
+      "frederickcaicedi@gmail.com"
+    ];
+    
+    const adminEmailsAutorizados = new Set();
+    let currentUser = null;
+    let patrocinadoresCache = [];
+
+    function normalizarCorreoAdmin(email) { 
+      return String(email || '').trim().toLowerCase(); 
+    }
+    
+    function claveCorreoAdmin(email) { 
+      return normalizarCorreoAdmin(email).replace(/\./g, ','); 
+    }
+
+    // VERIFICACIÓN DE ADMINISTRADOR SIN EXIGIR emailVerified NI TOKEN
+    function verificarEsAdmin(email) {
+      const correo = normalizarCorreoAdmin(email || currentUser?.email);
+      if (!correo || !currentUser) return false;
+      return ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo) || adminEmailsAutorizados.has(correo);
+    }
+
+    function actualizarInterfazAdmin() {
+      const esAdmin = verificarEsAdmin(currentUser?.email);
+      const ids = ['adminBadgeDisplay','btnMenuAdmin','btnNuevaMisionAdmin','btnAdminFaccion','btnNuevaMazmorraAdmin','panelAdminForja','panelAdminBestiario','controlesAdminTorneo'];
+      ids.forEach(id => { 
+        const el = document.getElementById(id); 
+        if(el) el.classList.toggle('hidden', !esAdmin); 
+      });
+      const seccionAdmin = document.getElementById('seccionAdmin');
+      if (!esAdmin && seccionAdmin && !seccionAdmin.classList.contains('hidden')) {
+        mostrarSeccion('editor');
+      }
+    }
+
+    // CARGA DE PERMISOS DIRECTA SIN EXIGIR emailVerified NI RECUPERACIÓN DE TOKEN O RELOAD OBLIGATORIO
+    async function cargarPermisoAdministrador(user) {
+      adminEmailsAutorizados.clear();
+      if (!user) return false;
+      try {
+        currentUser = auth.currentUser || user;
+        if (currentUser && currentUser.email) {
+          const correo = normalizarCorreoAdmin(currentUser.email);
+          if (ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo)) {
+            adminEmailsAutorizados.add(correo);
+            return true;
+          }
+          const snap = await db.ref('admin_emails/' + claveCorreoAdmin(correo)).once('value');
+          if (snap.exists()) {
+            adminEmailsAutorizados.add(correo);
+          }
+        }
+      } catch (e) { 
+        console.warn('[Admin registry]', e); 
+      }
+      return verificarEsAdmin(currentUser?.email);
+    }
+
+    function mostrarSeccion(id) {
+      ['editor', 'seccionAdmin', 'tienda'].forEach(sec => {
+        const el = document.getElementById(sec);
+        if (el) el.classList.add('hidden');
+      });
+      const objetivo = document.getElementById(id);
+      if (objetivo) objetivo.classList.remove('hidden');
+    }
+
+    auth.onAuthStateChanged(async (user) => {
+      currentUser = user;
+      const btnAuth = document.getElementById('btnAuthAction');
+      if (user) {
+        if (btnAuth) btnAuth.innerText = 'Cerrar Sesión';
+        await cargarPermisoAdministrador(user);
+      } else {
+        if (btnAuth) btnAuth.innerText = 'Iniciar Sesión';
+        adminEmailsAutorizados.clear();
+      }
+      actualizarInterfazAdmin();
+    });
+
+    function abrirModalAuth() {
+      if (auth.currentUser) {
+        auth.signOut();
+      } else {
+        const email = prompt("Introduce tu correo electrónico:");
+        const password = prompt("Introduce tu contraseña:");
+        if (email && password) {
+          auth.signInWithEmailAndPassword(email, password).catch(err => alert("Error al iniciar sesión: " + err.message));
+        }
+      }
+    }
+  </script>
+</body>
+</html>
