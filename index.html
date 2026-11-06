@@ -4917,29 +4917,39 @@
   </div>
 
 <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', async () => {
-    try {
-      const registration =
-        await navigator.serviceWorker.register('./sw.js', {
-          scope: './',
-          updateViaCache: 'none'
-        });
+// Desactivar Service Worker anterior y limpiar caché del RPG.
+(async () => {
+  try {
+    const appScope = new URL('./', window.location.href).href;
 
-      await registration.update();
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
 
-      console.log(
-        '[RPG] Service Worker registrado:',
-        registration.scope
-      );
-    } catch (error) {
-      console.error(
-        '[RPG] Error al registrar Service Worker:',
-        error
+      await Promise.all(
+        registrations
+          .filter(registration =>
+            registration.scope === appScope ||
+            registration.scope.startsWith(appScope)
+          )
+          .map(registration => registration.unregister())
       );
     }
-  });
-}
+
+    if ('caches' in window) {
+      const cacheNames = await caches.keys();
+
+      await Promise.all(
+        cacheNames
+          .filter(name => name.startsWith('rpg-shell-'))
+          .map(name => caches.delete(name))
+      );
+    }
+
+    console.info('[RPG] Caché anterior desactivada.');
+  } catch (error) {
+    console.warn('[RPG] Error limpiando caché:', error);
+  }
+})();
 </script>
     
 </body>
