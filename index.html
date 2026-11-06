@@ -3085,48 +3085,47 @@
     function normalizarCorreoAdmin(email) { return String(email || '').trim().toLowerCase(); }
     function claveCorreoAdmin(email) { return normalizarCorreoAdmin(email).replace(/\./g, ','); }
     function verificarEsAdmin(email) {
-      const correo = normalizarCorreoAdmin(email);
-      if (!correo || !currentUser || normalizarCorreoAdmin(currentUser.email) !== correo || currentUser.emailVerified !== true) return false;
-      return ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo) || adminEmailsAutorizados.has(correo);
-    }
-    function actualizarInterfazAdmin() {
-      const esAdmin = verificarEsAdmin(currentUser?.email);
-      const ids = ['adminBadgeDisplay','btnMenuAdmin','btnNuevaMisionAdmin','btnAdminCorreo','btnAdminFaccion','btnNuevaMazmorraAdmin','panelAdminForja','panelAdminBestiario','controlesAdminTorneo'];
-      ids.forEach(id => { const el=document.getElementById(id); if(el) el.classList.toggle('hidden', !esAdmin); });
-      const seccionAdmin=document.getElementById('seccionAdmin');
-      if (!esAdmin && seccionAdmin && !seccionAdmin.classList.contains('hidden')) mostrarSeccion('editor');
-      renderizarPatrocinadoresAdmin(patrocinadoresCache);
-    }
-    async function cargarPermisoAdministrador(user) {
-      adminEmailsAutorizados.clear();
-      if (!user) return false;
-      try {
-        await user.reload();
-        currentUser = auth.currentUser || user;
-        if (currentUser.emailVerified === true) await currentUser.getIdToken(true);
-        if (currentUser.emailVerified === true && currentUser.email) {
-          const correo = normalizarCorreoAdmin(currentUser.email);
-          if (ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo)) return true;
-          const snap = await db.ref('admin_emails/' + claveCorreoAdmin(correo)).once('value');
-          if (snap.exists()) adminEmailsAutorizados.add(correo);
-        }
-      } catch (e) { console.warn('[Admin registry]', e); }
-      return verificarEsAdmin(currentUser?.email);
-    }
+  const correo = normalizarCorreoAdmin(email);
 
-    if (auth) {
-      auth.onAuthStateChanged(async (user) => {
-        if (user) {
-          currentUser = user;
-          await cargarPermisoAdministrador(user);
-            console.log('[DIAGNÓSTICO ADMIN]', {
-  email: currentUser.email,
-  emailVerified: currentUser.emailVerified,
-  uid: currentUser.uid,
-  correoEnLista: ADMIN_EMAILS.some(
-    e => normalizarCorreoAdmin(e) === normalizarCorreoAdmin(currentUser.email)
-  )
-});
+  if (
+    !correo ||
+    !currentUser ||
+    normalizarCorreoAdmin(currentUser.email) !== correo ||
+    currentUser.emailVerified !== true
+  ) {
+    return false;
+  }
+
+  return (
+    ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo) ||
+    adminEmailsAutorizados.has(correo)
+  );
+}
+
+function actualizarInterfazAdmin() {
+  const esAdmin = verificarEsAdmin(currentUser?.email);
+
+  const ids = [
+    'adminBadgeDisplay',
+    'btnMenuAdmin',
+    'btnNuevaMisionAdmin',
+    'btnAdminCorreo',
+    'btnAdminFaccion',
+    'btnNuevaMazmorraAdmin',
+    'panelAdminForja',
+    'panelAdminBestiario',
+    'controlesAdminTorneo'
+  ];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('hidden', !esAdmin);
+  });
+
+  const seccionAdmin = document.getElementById('seccionAdmin');
+
+  if (
+
           currentUser = auth.currentUser || currentUser;
           suffixFichaActiva = '';
           targetUidToEdit = currentUser.uid; targetEmailToEdit = currentUser.email;
@@ -3149,7 +3148,155 @@
       e.preventDefault();
       const email = document.getElementById('authEmail').value.trim();
       const pass = document.getElementById('authPassword').value;
-      const errBox = document.getElementById('authError');
+      const errBox =
+function verificarEsAdmin(email) {
+  const correo = normalizarCorreoAdmin(email);
+
+  if (
+    !correo ||
+    !currentUser ||
+    normalizarCorreoAdmin(currentUser.email) !== correo ||
+    currentUser.emailVerified !== true
+  ) {
+    return false;
+  }
+
+  return (
+    ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo) ||
+    adminEmailsAutorizados.has(correo)
+  );
+}
+
+function actualizarInterfazAdmin() {
+  const esAdmin = verificarEsAdmin(currentUser?.email);
+
+  const ids = [
+    'adminBadgeDisplay',
+    'btnMenuAdmin',
+    'btnNuevaMisionAdmin',
+    'btnAdminCorreo',
+    'btnAdminFaccion',
+    'btnNuevaMazmorraAdmin',
+    'panelAdminForja',
+    'panelAdminBestiario',
+    'controlesAdminTorneo'
+  ];
+
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('hidden', !esAdmin);
+  });
+
+  const seccionAdmin = document.getElementById('seccionAdmin');
+
+  if (
+    !esAdmin &&
+    seccionAdmin &&
+    !seccionAdmin.classList.contains('hidden')
+  ) {
+    mostrarSeccion('editor');
+  }
+
+  renderizarPatrocinadoresAdmin(patrocinadoresCache);
+}
+
+async function cargarPermisoAdministrador(user) {
+  adminEmailsAutorizados.clear();
+
+  if (!user) return false;
+
+  try {
+    await user.reload();
+    currentUser = auth.currentUser || user;
+
+    // Diagnóstico temporal visible en pantalla.
+    alert(
+      'DIAGNÓSTICO ADMIN\n' +
+      'Correo: ' + currentUser.email + '\n' +
+      'Correo verificado: ' + currentUser.emailVerified + '\n' +
+      'Correo en lista: ' +
+      ADMIN_EMAILS.some(e =>
+        normalizarCorreoAdmin(e) === normalizarCorreoAdmin(currentUser.email)
+      )
+    );
+
+    if (currentUser.emailVerified === true) {
+      await currentUser.getIdToken(true);
+    }
+
+    if (currentUser.emailVerified === true && currentUser.email) {
+      const correo = normalizarCorreoAdmin(currentUser.email);
+
+      if (
+        ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo)
+      ) {
+        return true;
+      }
+
+      const snap = await db
+        .ref('admin_emails/' + claveCorreoAdmin(correo))
+        .once('value');
+
+      if (snap.exists()) {
+        adminEmailsAutorizados.add(correo);
+      }
+    }
+  } catch (e) {
+    console.warn('[Admin registry]', e);
+  }
+
+  return verificarEsAdmin(currentUser?.email);
+}
+
+if (auth) {
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      currentUser = user;
+
+      await cargarPermisoAdministrador(user);
+
+      currentUser = auth.currentUser || currentUser;
+
+      suffixFichaActiva = '';
+      targetUidToEdit = currentUser.uid;
+      targetEmailToEdit = currentUser.email;
+
+      renderizarPatrocinadoresAdmin(patrocinadoresCache);
+
+      document.getElementById('authOverlay').classList.add('hidden');
+
+      document.getElementById('userEmailDisplay').textContent =
+        `Usuario: ${currentUser.email}`;
+
+      document.getElementById('configUidDisplay').value =
+        currentUser.uid;
+
+      actualizarInterfazAdmin();
+
+      db.ref('jugadores/' + currentUser.uid + '_2').on('value', snap => {
+        const selector = document.getElementById('selectorPersonajes');
+
+        if (selector) {
+          selector.classList.toggle('hidden', !snap.exists());
+        }
+      });
+
+      cargarFichaNube(targetUidToEdit);
+      inicializarSistemasNuevos();
+
+    } else {
+      currentUser = null;
+      adminEmailsAutorizados.clear();
+      targetUidToEdit = null;
+      suffixFichaActiva = '';
+
+      actualizarInterfazAdmin();
+
+      document.getElementById('authOverlay').classList.remove('hidden');
+    }
+  });
+      }
+      document.getElementById('authError');
       const submitButton = document.getElementById('authBtnSubmit');
       errBox.classList.add('hidden');
 
