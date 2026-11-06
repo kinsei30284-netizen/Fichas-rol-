@@ -3119,6 +3119,14 @@
         if (user) {
           currentUser = user;
           await cargarPermisoAdministrador(user);
+            console.log('[DIAGNÓSTICO ADMIN]', {
+  email: currentUser.email,
+  emailVerified: currentUser.emailVerified,
+  uid: currentUser.uid,
+  correoEnLista: ADMIN_EMAILS.some(
+    e => normalizarCorreoAdmin(e) === normalizarCorreoAdmin(currentUser.email)
+  )
+});
           currentUser = auth.currentUser || currentUser;
           suffixFichaActiva = '';
           targetUidToEdit = currentUser.uid; targetEmailToEdit = currentUser.email;
