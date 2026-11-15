@@ -3101,14 +3101,23 @@
       }
     }
 
-    function normalizarCorreoAdmin(email) { return String(email || '').trim().toLowerCase(); }
-    function verificarEsAdmin(email) {
-      const correo = normalizarCorreoAdmin(email);
-      if (!correo || !currentUser || normalizarCorreoAdmin(currentUser.email) !== correo || currentUser.emailVerified !== true) return false;
-      return ADMIN_EMAILS.some(e => normalizarCorreoAdmin(e) === correo);
-    }
-    function actualizarInterfazAdmin() {
-      const esAdmin = verificarEsAdmin(currentUser?.email);
+    function normalizarCorreoAdmin(email) {
+  return String(email || '').trim().toLowerCase();
+}
+
+function verificarEsAdmin(email) {
+  const correo = normalizarCorreoAdmin(email);
+
+  if (
+    !correo ||
+    !currentUser ||
+    normalizarCorreoAdmin(currentUser.email) !== correo
+  ) return false;
+
+  return ADMIN_EMAILS.some(
+    e => normalizarCorreoAdmin(e) === correo
+  );
+}
       const ids = ['adminBadgeDisplay','btnMenuAdmin','btnNuevaMisionAdmin','btnAdminCorreo','btnAdminFaccion','btnNuevaMazmorraAdmin','panelAdminForja','panelAdminBestiario','controlesAdminTorneo'];
       ids.forEach(id => { const el=document.getElementById(id); if(el) el.classList.toggle('hidden', !esAdmin); });
       const seccionAdmin=document.getElementById('seccionAdmin');
