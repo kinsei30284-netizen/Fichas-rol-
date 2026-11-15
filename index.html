@@ -71,7 +71,7 @@
         <button id="tabLogin" onclick="switchAuthTab('login')" class="w-1/2 py-2 font-tech-title text-xs uppercase text-cyan-400 border-b-2 border-cyan-400 font-bold">Iniciar Sesión</button>
         <button id="tabRegister" onclick="switchAuthTab('register')" class="w-1/2 py-2 font-tech-title text-xs uppercase text-slate-500 hover:text-cyan-300">Crear Cuenta</button>
       </div>
-      <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+      <form id="authForm" onsubmit="event.preventDefault(); handleAuthSubmit(event); return false;" class="space-y-4">
         <div><label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Correo Electrónico</label><input type="email" id="authEmail" required class="w-full tech-input p-2.5 rounded-sm text-sm"></div>
         <div><label class="block text-xs font-tech-title text-cyan-400 uppercase mb-1">Contraseña</label><input type="password" id="authPassword" required minlength="6" class="w-full tech-input p-2.5 rounded-sm text-sm"></div>
         <p id="authError" class="text-xs text-red-400 font-mono hidden text-center"></p>
